@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'widget_tweaks',
     'crispy_bootstrap5',
+    'index.apps.IndexConfig',
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
@@ -80,6 +81,12 @@ TEMPLATES = [
         },
     },
 ]
+
+# Custom allauth signup form
+ACCOUNT_FORMS = {
+    'signup': 'index.forms.SignUpForm',
+}
+
 ACCOUNT_EMAIL_REQUIRED = True
 
 WSGI_APPLICATION = 'pizza_time.wsgi.application'
