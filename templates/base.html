@@ -28,18 +28,36 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="{% url 'index' %}">Home</a>
                     </li>
+                    {% if user.is_authenticated %}
+                    <!-- user is logged-in -->
                     <li class="nav-item">
-                        
+                        <a href="{% url 'profile' %}" class="nav-link" aria-current="page">
+                            Profile
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'account_signup' %}">Register</a>
+                        <a href="{% url '' %}" class="nav-link" aria-current="page">
+                            Make Reservation
+                        </a>
                     </li>
                     <li class="nav-item">
-                        
+                        <a href="{% url 'account_logout' %}" class="nav-link" aria-current="page">
+                            Sign Out
+                        </a>
+                    </li>
+                    {% else %}
+                    <!-- user is not logged-in -->
+                    <li class="nav-item">
+                        <a href="{% url 'account_signup' %}" class="nav-link" aria-current="page">
+                            Register
+                        </a>
                     </li>
                     <li class="nav-item">
-                        
+                        <a href="{% url 'account_login' %}" class="nav-link" aria-current="page">
+                            Sign In
+                        </a>
                     </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
