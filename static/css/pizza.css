@@ -1,0 +1,7 @@
+
+
+
+/* Button styles */
+.password_reset .form-control, .password_reset button {
+    width: 100%;  /* Forces elements to expand to the full width of their parent */
+}
