@@ -26,3 +26,15 @@ class PizzaSignUpForm(UserCreationForm):
     zip_code = forms.CharField(
         max_length=10, required=True, validators=[
             validate_customer_zip_code])
+
+    class Meta:
+        """
+        Configures PizzaSignUpForm to use the User model and define form fields.
+        """
+        model = User
+        fields = (
+            'first_name', 'last_name', 'email', 'password1', 'password2',
+            'phone_number', 'street_address', 'city', 'zip_code'
+        )
+
+
