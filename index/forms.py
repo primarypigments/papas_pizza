@@ -5,7 +5,7 @@ from .validators import validate_customer_phone_number, validate_customer_street
 
 class PizzaSignUpForm(UserCreationForm):
     """
-    Form for user signup with personal 
+    Form for user signup with personal
     info and address, extending UserCreationForm.
     """
     first_name = forms.CharField(
