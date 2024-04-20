@@ -38,3 +38,16 @@ class PizzaSignUpForm(UserCreationForm):
         )
 
 
+class PasswordResetForm(forms.Form):
+    """
+    Form for requesting a password reset via email.
+    """
+    email = forms.EmailField()
+
+    def __init__(self, *args, **kwargs):
+        """
+        Initializes the form with an optional initial email value.
+        """
+        super(PasswordResetForm, self).__init__(*args, **kwargs)
+        if 'initial' in kwargs:
+            self.fields['email'].initial = kwargs['initial'].get('email', '')
