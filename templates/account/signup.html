@@ -18,10 +18,7 @@
       <form method="post" action="{% url 'account_signup' %}" class="needs-validation" novalidate>
         {% csrf_token %}
         {{ form|crispy }}
-        <div class="form-check mb-3">
-          <input type="checkbox" class="form-check-input" id="subscribeNews">
-          <label class="form-check-label" for="subscribeNews">{% trans "Subscribe to Newsletter" %}</label>
-        </div>
+       
         <button type="submit" class="btn btn-primary">{% trans "Register" %}</button>
       </form>
     </div>
