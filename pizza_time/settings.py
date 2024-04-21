@@ -38,6 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'allauth',
     'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.twitter',
     'crispy_forms',
     'widget_tweaks',
     'crispy_bootstrap5',
@@ -84,7 +88,7 @@ TEMPLATES = [
 
 # Custom allauth signup form
 ACCOUNT_FORMS = {
-    'signup': 'index.forms.SignUpForm',
+    'signup': 'index.forms.PizzaSignUpForm',
 }
 
 ACCOUNT_EMAIL_REQUIRED = True
@@ -135,6 +139,12 @@ AUTHENTICATION_BACKENDS = (
     # `allauth` specific authentication methods, such as login by e-mail
     "allauth.account.auth_backends.AuthenticationBackend",
 )
+
+# allauth social account settings
+
+SOCIALACCOUNT_QUERY_EMAIL = True
+SOCIALACCOUNT_EMAIL_REQUIRED = True
+SOCIALACCOUNT_STORE_TOKENS = True
 
 SITE_ID = 1
 LOGIN_REDIRECT_URL = '/'
