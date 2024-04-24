@@ -29,3 +29,17 @@ class Cart(models.Model):
     """
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='cart')
 
+
+    def add_item(self, item, quantity=1):
+        """
+        Adds a specified quantity of an item to the cart,
+        creating or updating the cart item.
+        """
+        cart_item, created = CartItem.objects.get_or_create(
+            item=item, cart=self, 
+            defaults={'quantity': quantity}
+        )
+        if not created:
+            cart_item.quantity += quantity
+        cart_item.save()
+
