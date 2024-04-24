@@ -43,3 +43,12 @@ class Cart(models.Model):
             cart_item.quantity += quantity
         cart_item.save()
 
+
+    def remove_item(self, cart_item):
+        """
+        Removes a specified 
+        cart item from the cart.
+        """
+        cart_item.delete()
+
+
