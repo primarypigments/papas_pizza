@@ -68,3 +68,13 @@ class Cart(models.Model):
         return f"Cart for {self.user.username} with {self.items.count()} items"
 
 
+class CartItem(models.Model):
+    """
+    Represents an item in a shopping cart,
+    including the linked menu item, quantity, and subtotal.
+    """
+    item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=1)
+    subtotal = models.DecimalField(max_digits=10, decimal_places=2, editable=False)
+    cart = models.ForeignKey(Cart, related_name='items', on_delete=models.CASCADE)
+
