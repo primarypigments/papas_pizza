@@ -52,3 +52,11 @@ class CartAdmin(admin.ModelAdmin):
         return sum(item.quantity for item in obj.items.all())
 
 
+    def total_price(self, obj):
+        """
+        Calls the total_price method of Cart model
+        to get the total price of all items in the cart.
+        Used in the admin list display.
+        """
+        return obj.total_price()
+
