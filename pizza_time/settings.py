@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'crispy_bootstrap5',
     'index.apps.IndexConfig',
+    'menu_cart',
 ]
+
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
@@ -109,6 +111,23 @@ else:
         }
     }
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        '': {  # This will handle log messages from various applications
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
