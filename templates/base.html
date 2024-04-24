@@ -31,18 +31,23 @@
                     {% if user.is_authenticated %}
                     <!-- user is logged-in -->
                     <li class="nav-item">
-                        <a href="{% url 'profile' %}" class="nav-link" aria-current="page">
+                        
                             Profile
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{% url '' %}" class="nav-link" aria-current="page">
-                            Make Reservation
+                        <a href="{% url 'menu' %}" class="nav-link" aria-current="page">
+                                Menu
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="{% url 'account_logout' %}" class="nav-link" aria-current="page">
                             Sign Out
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'cart' %}" class="nav-link" aria-current="page">
+                            view cart
                         </a>
                     </li>
                     {% else %}
@@ -56,6 +61,11 @@
                         <a href="{% url 'account_login' %}" class="nav-link" aria-current="page">
                             Sign In
                         </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'menu' %}" class="nav-link" aria-current="page">
+                                Menu
+                         </a>
                     </li>
                     {% endif %}
                 </ul>
