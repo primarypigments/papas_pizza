@@ -24,3 +24,15 @@ class CartItemInline(admin.TabularInline):
     readonly_fields = ['subtotal']
 
 
+class CartAdmin(admin.ModelAdmin):
+    """
+    Admin interface options for Cart model.
+    Configures list display to show user, a comma-separated
+    list of added items, total quantity of items, and total price.
+    Includes CartItemInline to manage cart
+    items within the cart's admin view.
+    """
+    list_display = ('user', 'display_added_items', 'total_quantity', 'total_price')
+    inlines = [CartItemInline]
+
+
