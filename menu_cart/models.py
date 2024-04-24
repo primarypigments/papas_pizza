@@ -61,3 +61,10 @@ class Cart(models.Model):
 
 
     def __str__(self):
+        """
+        Returns a descriptive string indicating
+        the owner and number of items in the cart.
+        """
+        return f"Cart for {self.user.username} with {self.items.count()} items"
+
+
