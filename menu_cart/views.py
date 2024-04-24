@@ -1,11 +1,27 @@
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import MenuItem, CartItem, Cart
+from .forms import CartAddItemForm, UpdateCartItemForm
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
+
+
+def menu_view(request):
+    """Display the menu with all available menu items."""
+    menu_items = MenuItem.objects.all()
+    return render(request, 'menu/menu.html', {'menu_items': menu_items})
+
+
 @login_required
 def cart_view(request):
     cart = get_object_or_404(Cart, user=request.user)
     cart_items = cart.items.all()  # Retrieve all cart items
-    print(f"Viewing cart for {request.user.username}, Items count: {cart_items.count()}")
+    print(f"Viewing cart for {request.user.username},Items count:{cart_items.count()}")
     for item in cart_items:
         print(f"Item: {item.item.name}, Quantity: {item.quantity}")
-    return render(request, 'cart/cart.html', {'cart': cart, 'cart_items': cart_items})
+    return render(
+        request, 'cart/cart.html', {'cart': cart, 'cart_items': cart_items})
+
+    
 @login_required
 def update_item(request, item_id):
     cart = request.user.cart
@@ -15,13 +31,14 @@ def update_item(request, item_id):
         action = form.cleaned_data['action']
         
         if action == 'increment':
-            cart_item.quantity += 1  
+            cart_item.quantity += 1
         elif action == 'decrement':
-            cart_item.quantity = max(1, cart_item.quantity - 1)  
+            cart_item.quantity = max(1, cart_item.quantity - 1) 
 
         cart_item.save()
 
     return redirect('cart')
+
 
 @login_required
 @require_POST
@@ -31,11 +48,12 @@ def remove_item(request, item_id):
     cart.remove_item(cart_item)
     return redirect('cart')
 
+
 @login_required
 @require_POST
 def checkout(request):
     cart = request.user.cart
-    cart.items.clear() 
+    cart.items.clear()
     cart.save()
     return redirect('order_success') # i still need to work on this
 
@@ -49,7 +67,8 @@ def add_to_cart(request, item_id):
     form = CartAddItemForm(request.POST)
     if form.is_valid():
         quantity = form.cleaned_data['quantity']
-        cart_item, created = CartItem.objects.get_or_create(item=item, cart=cart, defaults={'quantity': quantity})
+        cart_item, created = CartItem.objects.get_or_create(
+            item=item, cart=cart, defaults={'quantity': quantity})
         if not created:
             cart_item.quantity += quantity
             cart_item.save()
