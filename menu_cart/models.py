@@ -22,3 +22,10 @@ class MenuItem(models.Model):
         return self.name
 
 
+class Cart(models.Model):
+    """
+    Represents a shopping cart for a user,
+    uniquely linked via one-to-one relationship.
+    """
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='cart')
+
