@@ -40,3 +40,20 @@ def checkout(request):
     return redirect('order_success') # i still need to work on this
 
 
+@login_required
+@require_POST
+def add_to_cart(request, item_id):
+    print("Adding to cart...")
+    item = get_object_or_404(MenuItem, id=item_id)
+    cart, created = Cart.objects.get_or_create(user=request.user)
+    form = CartAddItemForm(request.POST)
+    if form.is_valid():
+        quantity = form.cleaned_data['quantity']
+        cart_item, created = CartItem.objects.get_or_create(item=item, cart=cart, defaults={'quantity': quantity})
+        if not created:
+            cart_item.quantity += quantity
+            cart_item.save()
+        print(f"Item added: {cart_item.quantity} x {cart_item.item.name} to cart ID {cart.id}")
+    else:
+        print("Form not valid")
+    return redirect('menu')
