@@ -1,7 +1,11 @@
+import logging
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .validators import validate_customer_phone_number, validate_customer_street_address, validate_customer_city, validate_customer_zip_code
+from .models import PizzaUserProfile
+
+logger = logging.getLogger(__name__)
 
 class PizzaSignUpForm(UserCreationForm):
     """
@@ -37,6 +41,25 @@ class PizzaSignUpForm(UserCreationForm):
             'phone_number', 'street_address', 'city', 'zip_code'
         )
 
+    def try_save(self, request, commit=True):
+        logger.debug("Attempting to save the user")
+        user = super().save(commit=False)
+        user.username = self.cleaned_data['email']
+        if commit:
+            user.save()
+            logger.debug("User saved successfully")
+            # Save user profile
+            PizzaUserProfile.objects.create(
+                user=user,
+                phone_number=self.cleaned_data['phone_number'],
+                street_address=self.cleaned_data['street_address'],
+                city=self.cleaned_data['city'],
+                zip_code=self.cleaned_data['zip_code']
+            )
+            logger.debug("User profile saved successfully")
+        else:
+            logger.debug("Save not committed")
+        return user, None
 
 class PasswordResetForm(forms.Form):
     """
