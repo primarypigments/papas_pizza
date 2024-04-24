@@ -30,3 +30,13 @@ def remove_item(request, item_id):
     cart_item = get_object_or_404(CartItem, id=item_id, cart=cart)
     cart.remove_item(cart_item)
     return redirect('cart')
+
+@login_required
+@require_POST
+def checkout(request):
+    cart = request.user.cart
+    cart.items.clear() 
+    cart.save()
+    return redirect('order_success') # i still need to work on this
+
+
