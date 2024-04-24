@@ -78,3 +78,13 @@ class CartItem(models.Model):
     subtotal = models.DecimalField(max_digits=10, decimal_places=2, editable=False)
     cart = models.ForeignKey(Cart, related_name='items', on_delete=models.CASCADE)
 
+
+    def save(self, *args, **kwargs):
+        """
+        Overridden save method to calculate and update
+        the subtotal whenever a cart item is saved.
+        """
+        self.subtotal = self.item.price * self.quantity
+        super().save(*args, **kwargs)
+
+
