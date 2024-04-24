@@ -36,3 +36,10 @@ class CartAdmin(admin.ModelAdmin):
     inlines = [CartItemInline]
 
 
+    def display_added_items(self, obj):
+        """
+        Returns a comma-separated string of item
+        names in the cart for display in the admin list.
+        """
+        return ', '.join([item.item.name for item in obj.items.all()])
+
