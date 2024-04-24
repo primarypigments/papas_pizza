@@ -46,7 +46,7 @@ class Cart(models.Model):
 
     def remove_item(self, cart_item):
         """
-        Removes a specified 
+        Removes a specified
         cart item from the cart.
         """
         cart_item.delete()
@@ -54,7 +54,7 @@ class Cart(models.Model):
 
     def total_price(self):
         """
-        Calculates the total 
+        Calculates the total
         price of all items in the cart.
         """
         return sum(item.subtotal for item in self.items.all())
@@ -88,3 +88,9 @@ class CartItem(models.Model):
         super().save(*args, **kwargs)
 
 
+    def __str__(self):
+        """
+        Returns a string representation of
+        the cart item, showing quantity and item name.
+        """
+        return f"{self.quantity} x {self.item.name}"
