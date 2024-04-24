@@ -52,3 +52,12 @@ class Cart(models.Model):
         cart_item.delete()
 
 
+    def total_price(self):
+        """
+        Calculates the total 
+        price of all items in the cart.
+        """
+        return sum(item.subtotal for item in self.items.all())
+
+
+    def __str__(self):
