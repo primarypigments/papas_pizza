@@ -7,3 +7,13 @@ class CartAddItemForm(forms.ModelForm):
         model = CartItem
         fields = ['quantity']
 
+    def clean_quantity(self):
+        """
+        Ensures that the quantity is a positive integer before saving the form.
+        Raises a ValidationError if the quantity is less than or equal to zero.
+        """
+        quantity = self.cleaned_data['quantity']
+        if quantity <= 0:
+            raise forms.ValidationError("Quantity must be a positive integer")
+        return quantity
+
