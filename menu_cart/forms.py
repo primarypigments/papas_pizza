@@ -32,3 +32,14 @@ class UpdateCartItemForm(forms.Form):
     quantity = forms.IntegerField(min_value=1)
     action = forms.CharField(max_length=10)
 
+
+    def clean_quantity(self):
+        """
+        Validates that the quantity is at least 1.
+        Raises a ValidationError if the quantity is less than 1,
+        ensuring that there's always at least one item or more.
+        """
+        quantity = self.cleaned_data['quantity']
+        if quantity < 1:
+            raise forms.ValidationError("Quantity must be at least 1")
+        return quantity
