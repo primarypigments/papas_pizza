@@ -60,3 +60,9 @@ class CartAdmin(admin.ModelAdmin):
         """
         return obj.total_price()
 
+    display_added_items.short_description = 'Added Items'
+    total_quantity.short_description = 'Total Quantity'
+    total_price.short_description = 'Total Price'
+
+admin.site.register(MenuItem, MenuItemAdmin)
+admin.site.register(Cart, CartAdmin)
