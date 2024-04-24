@@ -9,6 +9,8 @@ urlpatterns = [
     path("accounts/", include("allauth.urls")),
     
     path("", include("index.urls")),
+
+    path('', include('menu_cart.urls')),
 ]
 
 if settings.DEBUG:
