@@ -22,3 +22,11 @@ def update_item(request, item_id):
         cart_item.save()
 
     return redirect('cart')
+
+@login_required
+@require_POST
+def remove_item(request, item_id):
+    cart = request.user.cart
+    cart_item = get_object_or_404(CartItem, id=item_id, cart=cart)
+    cart.remove_item(cart_item)
+    return redirect('cart')
