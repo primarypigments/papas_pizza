@@ -1,5 +1,8 @@
 from django.shortcuts import render
 from .forms import PasswordResetForm
+from django.contrib.auth.decorators import login_required
+from .models import PizzaUserProfile
+from menu_cart.models import CartItem, Cart
 
 
 def index(request):
@@ -32,3 +35,25 @@ def password_reset_request(request):
             pass
 
     return render(request, 'your_template_name.html', {'form': form})
+
+
+@login_required
+def profile(request):
+    """
+    Displays the user's profile with related information.
+    """
+    profiles = PizzaUserProfile.objects.filter(user=request.user)
+
+    try:
+        user_cart = Cart.objects.get(user=request.user)
+        cart_items = CartItem.objects.filter(cart=user_cart)
+    except Cart.DoesNotExist:
+        cart_items = []
+
+    template = "profile/profile.html"
+    context = {
+        "profiles": profiles,
+        "cart_items": cart_items
+    }
+    return render(request, template, context)
+    
