@@ -80,21 +80,37 @@ def checkout(request):
 @require_POST
 def add_to_cart(request, item_id):
     """
-    Adds a specified quantity of an item to the
-    user's cart from the menu. Redirects back to the menu.
+    Processes the addition of a menu item to the
+    user's shopping cart via a POST request.
+    This function handles retrieving or creating the
+    cart item, updating quantities,
+    calculating the subtotal with selected toppings, and saving the changes.
     """
-    print("Adding to cart...")
     item = get_object_or_404(MenuItem, id=item_id)
     cart, created = Cart.objects.get_or_create(user=request.user)
     form = CartAddItemForm(request.POST)
     if form.is_valid():
         quantity = form.cleaned_data['quantity']
+        selected_toppings = request.POST.getlist('toppings')
         cart_item, created = CartItem.objects.get_or_create(
-            item=item, cart=cart, defaults={'quantity': quantity})
+            item=item, cart=cart,
+            defaults={'quantity': quantity, 'subtotal': 0}
+        )
         if not created:
             cart_item.quantity += quantity
-            cart_item.save()
-        print(f"Item added: {cart_item.quantity} x {cart_item.item.name} to cart ID {cart.id}")
+        
+        # Calculate subtotal for the item based on base price and toppings
+        toppings = Topping.objects.filter(id__in=selected_toppings)
+        toppings_total = sum(topping.price * quantity for topping in toppings)
+        cart_item.subtotal += item.price * quantity + toppings_total
+
+        # Save the updated cart item
+        cart_item.save()
+
+        # Add the selected toppings to the cart item
+        cart_item.toppings.add(*toppings)
+    return redirect('menu')
+
     else:
         print("Form not valid")
     return redirect('menu')
