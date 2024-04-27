@@ -26,7 +26,8 @@ class MenuItem(models.Model):
     """
     name = models.CharField(max_length=55)
     description = models.TextField()
-    price = models.DecimalField(max_digits=6, decimal_places=2, validators=[validate_non_negative])
+    price = models.DecimalField(
+        max_digits=6, decimal_places=2, validators=[validate_non_negative])
     image = models.ImageField(upload_to='static/images')
 
 
@@ -43,8 +44,8 @@ class Cart(models.Model):
     Represents a shopping cart for a user,
     uniquely linked via one-to-one relationship.
     """
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='cart')
-
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name='cart')
 
     def add_item(self, item, quantity=1):
         """
@@ -59,7 +60,6 @@ class Cart(models.Model):
             cart_item.quantity += quantity
         cart_item.save()
 
-
     def remove_item(self, cart_item):
         """
         Removes a specified
@@ -67,14 +67,12 @@ class Cart(models.Model):
         """
         cart_item.delete()
 
-
     def total_price(self):
         """
         Calculates the total
         price of all items in the cart.
         """
         return sum(item.subtotal for item in self.items.all())
-
 
     def __str__(self):
         """
