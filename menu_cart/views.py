@@ -143,6 +143,19 @@ def menu_view(request):
                 logger.warning("Form is invalid.")
                 logger.warning(item_form.errors)  # Log form errors
     else:
-        print("Form not valid")
+        logger.info("Rendering menu page")
+        
+        menu_items = MenuItem.objects.all()
+        item_form = MenuItemForm()
+        template = 'menu/menu.html'
+        context = {
+            'menu_items': menu_items,
+            'item_form': item_form,
+            'toppings': Topping.objects.all(),
+        }
+        return render(request, template, context)
+    
+    # In case none of the conditions are met, log an error and return a redirect to the menu page
+    logger.error("No valid conditions met. Redirecting to menu page.")
     return redirect('menu')
     
