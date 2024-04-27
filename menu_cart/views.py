@@ -1,16 +1,19 @@
+# django imports
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import MenuItem, CartItem, Cart
-from .forms import CartAddItemForm, UpdateCartItemForm
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
+from django.contrib import messages
+from django.db import transaction
+from django.db.models import Sum
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+# custom imports
+from .forms import MenuItemForm
+from .models import MenuItem, CartItem, Cart, Topping
+from .forms import CartAddItemForm, UpdateCartItemForm
 
-
-def menu_view(request):
-    """
-    Displays the menu page with all available menu items from the database.
-    """
-    menu_items = MenuItem.objects.all()
-    return render(request, 'menu/menu.html', {'menu_items': menu_items})
+import logging
 
 
 @login_required
@@ -195,3 +198,18 @@ def edit_menu_item(request, item_id):
     return render(request, template, context)
 
 
+@login_required
+def delete_menu_item(request, item_id):
+    """
+    View function for deleting a specific MenuItem identified by item_id. This function
+    is restricted to superusers only, ensuring secure management of menu items.
+    """
+    if not request.user.is_superuser:
+        messages.error(request, "Access denied. Invalid credentials.")
+        return redirect('menu')
+
+    menu_item = get_object_or_404(MenuItem, id=item_id)
+
+    menu_item.delete()
+    messages.success(request, "Menu Item deleted!")
+    return redirect('menu')
