@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import MenuItem, CartItem, Cart
+from .models import MenuItem, CartItem, Cart, Topping
+
 
 class MenuItemAdmin(admin.ModelAdmin):
     """
@@ -20,7 +21,7 @@ class CartItemInline(admin.TabularInline):
     """
     model = CartItem
     extra = 0
-    fields = ['item', 'quantity', 'subtotal']
+    fields = ['item', 'quantity', 'subtotal', 'toppings']
     readonly_fields = ['subtotal']
 
 
@@ -66,3 +67,4 @@ class CartAdmin(admin.ModelAdmin):
 
 admin.site.register(MenuItem, MenuItemAdmin)
 admin.site.register(Cart, CartAdmin)
+admin.site.register(Topping)
