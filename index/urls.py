@@ -6,4 +6,6 @@ urlpatterns = [
     
     path("accounts/", include('allauth.urls')),
 
+    path('profile/', views.profile, name='profile'),
+
 ]
