@@ -86,27 +86,25 @@ class Cart(models.Model):
 
 class CartItem(models.Model):
     """
-    Represents an item in a shopping cart,
-    including the linked menu item, quantity, and subtotal.
+     Represents an item in a shopping cart,
+     including details about the quantity,
+    the linked menu item, and its calculated
+    subtotal. Each cart item can also
+    have multiple associated toppings
     """
     item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
-    subtotal = models.DecimalField(max_digits=10, decimal_places=2, editable=False)
-    cart = models.ForeignKey(Cart, related_name='items', on_delete=models.CASCADE)
-
-
-    def save(self, *args, **kwargs):
-        """
-        Overridden save method to calculate and update
-        the subtotal whenever a cart item is saved.
-        """
-        self.subtotal = self.item.price * self.quantity
-        super().save(*args, **kwargs)
-
+    subtotal = models.DecimalField(
+        default=0, max_digits=10, decimal_places=2, editable=False)
+    cart = models.ForeignKey(
+        Cart, related_name='items', on_delete=models.CASCADE)
+    toppings = models.ManyToManyField('Topping', blank=True)
 
     def __str__(self):
         """
-        Returns a string representation of
-        the cart item, showing quantity and item name.
+        Returns a string representation of the cart item
+         displaying the quantity
+        and the name of the menu item. Useful for quick
+        identification in logs or views.
         """
         return f"{self.quantity} x {self.item.name}"
