@@ -111,6 +111,37 @@ def add_to_cart(request, item_id):
         cart_item.toppings.add(*toppings)
     return redirect('menu')
 
+def menu_view(request):
+    logger = logging.getLogger(__name__)
+    logger.info("Entering menu_view function")
+    
+    if request.method == 'POST':
+        logger.info("Processing POST request")
+        
+        if 'add_item' in request.POST:
+            logger.info("Add item form submitted")
+            
+            item_form = MenuItemForm(request.POST, request.FILES)
+            if item_form.is_valid():
+                logger.info("Form is valid. Saving new item.")
+                
+                item_form.save()
+                return redirect('menu')
+            else:
+                logger.warning("Form is invalid.")
+                logger.warning(item_form.errors)  # Log form errors
+        else:
+            item_id = request.POST.get('item_id')
+            item = MenuItem.objects.get(pk=item_id)
+            item_form = MenuItemForm(request.POST, request.FILES, instance=item)
+            if item_form.is_valid():
+                logger.info("Form is valid. Saving edited item.")
+                
+                item_form.save()
+                return redirect('menu')
+            else:
+                logger.warning("Form is invalid.")
+                logger.warning(item_form.errors)  # Log form errors
     else:
         print("Form not valid")
     return redirect('menu')
