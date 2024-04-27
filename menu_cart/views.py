@@ -164,4 +164,34 @@ def menu_view(request):
     # In case none of the conditions are met, log an error and return a redirect to the menu page
     logger.error("No valid conditions met. Redirecting to menu page.")
     return redirect('menu')
-    
+
+
+@login_required
+def edit_menu_item(request, item_id):
+    """
+    View function for editing an existing menu item. This function is accessible
+    only by superusers. It handles the retrieval and updating of a MenuItem object.
+    """
+    if not request.user.is_superuser:
+        messages.error(request, "Access denied. Invalid credentials.")
+        return redirect('menu')
+
+    menu_item = get_object_or_404(MenuItem, id=item_id)
+
+    if request.method == "POST":
+        item_form = MenuItemForm(request.POST or None, request.FILES, instance=menu_item)
+        if item_form.is_valid():
+            item_form.save()
+            messages.success(request, "Menu Item updated!")
+            return redirect('menu')
+        messages.error(request, "Error, please try again!")
+
+    item_form = MenuItemForm(instance=menu_item)
+    template = 'menu/edit_menu_item.html'
+    context = {
+        'menu_item': menu_item,
+        'item_form': item_form,
+    }
+    return render(request, template, context)
+
+
