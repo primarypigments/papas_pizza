@@ -111,7 +111,13 @@ def add_to_cart(request, item_id):
         cart_item.toppings.add(*toppings)
     return redirect('menu')
 
+
 def menu_view(request):
+    """
+    View function for displaying the menu page and processing item additions or updates.
+    It handles both GET and POST requests: GET requests render the menu page with available
+    items and an item form, while POST requests handle the addition or updating of menu items.
+    """
     logger = logging.getLogger(__name__)
     logger.info("Entering menu_view function")
     
