@@ -3,6 +3,22 @@ from django.contrib.auth.models import User
 from .validators import validate_non_negative, validate_positive
 
 
+class Topping(models.Model):
+    """
+    Represents a topping for a pizza or
+    other food item in a database.
+    """
+    name = models.CharField(max_length=100)
+    price = models.DecimalField(max_digits=4, decimal_places=2)
+
+    def __str__(self):
+        """
+        Return the string representation of the
+        Topping, which is its name.
+        """
+        return self.name
+
+
 class MenuItem(models.Model):
     """
     Represents an item on a menu, including name,
