@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<!-- Toggle Buttons for Sections -->
+<div class="container mt-5 text-center">
+  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+    <label class="btn btn-secondary active">
+      <input type="radio" name="sections" id="profiles" autocomplete="off" checked> Profiles
+    </label>
+    <label class="btn btn-secondary">
+      <input type="radio" name="sections" id="cart_items" autocomplete="off"> Cart Items
+    </label>
+  </div>
+</div>
+
+<!-- Profiles Section -->
+<section id="profile_section" class="mt-5">
+  <div class="container">
+    <h2 class="text-center mb-4">{{ request.user }}'s Profile</h2>
+    {% for index in profiles %}
+    <div class="row {% cycle 'bg-secondary text-light' 'bg-secondary bg-gradient bg-opacity-50 text-dark' %}">
+      <!-- Responsive grid setup for each column -->
+      <div class="col-12 col-md-4 col-lg-2">
+        Email: <i class="fas fa-envelope"></i> {{ index.user.email }}
+      </div>
+      <div class="col-12 col-md-4 col-lg-2">
+        First Name: <i class="fa-solid fa-phone"></i> {{ index.user.first_name }}
+      </div>
+      <div class="col-12 col-md-4 col-lg-2">
+        Last Name: <i class="fa-solid fa-phone"></i> {{ index.user.last_name }}
+      </div>
+      <div class="col-12 col-md-6 col-lg-2">
+        Street Address: <i class="fa-solid fa-clock"></i> {{ index.street_address }}
+      </div>
+      <div class="col-12 col-md-6 col-lg-2">
+        City: <i class="fa-solid fa-location-dot"></i> {{ index.city }}
+      </div>
+      <div class="col-12 col-md-6 col-lg-2">
+        Phone: <i class="fa-solid fa-phone"></i> {{ index.phone_number }}
+      </div>
+    </div>
+    {% empty %}
+    <div class="row text-center">
+      <div class="col">
+        You do not have any profiles currently.
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- Cart Items Section -->
+<section id="cart_items_section" class="mt-5" style="display:none;">
+  <div class="container">
+    <h2 class="text-center mb-4">Cart Items</h2>
+    {% for menu_cart in cart_items %}
+    <div class="row {% cycle 'bg-secondary text-light' 'bg-secondary bg-gradient bg-opacity-50 text-dark' %}">
+      <div class="col-12 col-md-4">
+        Item: <i class="fas fa-envelope"></i> {{ menu_cart.item.name }}
+      </div>
+      <div class="col-12 col-md-4">
+        Quantity: <i class="fa-solid fa-phone"></i> {{ menu_cart.quantity }}
+      </div>
+      <div class="col-12 col-md-4">
+        Subtotal: <i class="fa-solid fa-phone"></i> {{ menu_cart.subtotal }}
+      </div>
+    </div>
+    {% empty %}
+    <div class="row text-center">
+      <div class="col">
+        You do not have any cart items currently.
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  // Listen for changes on each radio input
+  document.querySelectorAll('input[name="sections"]').forEach(input => {
+    input.addEventListener('change', function () {
+      // Toggle visibility based on which radio is selected
+      const showProfiles = document.getElementById('profiles').checked;
+      document.getElementById('profile_section').style.display = showProfiles ? '' : 'none';
+      document.getElementById('cart_items_section').style.display = showProfiles ? 'none' : '';
+    });
+  });
+});
+</script>
+
+{% endblock %}
