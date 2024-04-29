@@ -16,6 +16,19 @@ from .forms import CartAddItemForm, UpdateCartItemForm
 import logging
 
 
+class SuperUserCheckMixin(LoginRequiredMixin, UserPassesTestMixin):
+    """
+      A mixin that ensures a view can only be accessed by superusers. This mixin combines
+    LoginRequiredMixin and UserPassesTestMixin to first verify that a user is authenticated
+    and then checks if the user is a superuser.
+    """
+    def test_func(self):
+        """
+        Determine if the currently authenticated user is a superuser.
+        """
+        return self.request.user.is_superuser
+
+
 @login_required
 def cart_view(request):
     """
