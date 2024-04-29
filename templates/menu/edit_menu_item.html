@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <h2>
+            Editing {{ menu_item.name }}
+        </h2>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <!-- Form for Editing Item -->
+            <form method="post" action="{% url 'edit_menu_item' menu_item.id %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ item_form.as_p }}
+                <button type="submit" class="btn btn-warning">Update</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
