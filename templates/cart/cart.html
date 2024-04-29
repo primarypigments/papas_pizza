@@ -10,13 +10,6 @@
             <div class="row g-0">
               <div class="col-lg-8">
                 <div class="p-5">
-                  {% if cart %}
-                    <p>Debug: Cart object found.</p>
-                    <p>Debug: User: {{ cart.user }}</p>
-                    <p>Debug: Total items in cart: {{ cart_items.count }}</p>
-                  {% else %}
-                    <p>Debug: Cart object not found or empty.</p>
-                  {% endif %}
                   <div class="d-flex justify-content-between align-items-center mb-5">
                     <h1 class="fw-bold mb-0 text-black">Shopping Cart</h1>
                     <h6 class="mb-0 text-muted">Total Items: {{ cart_items.count }}</h6>
@@ -61,7 +54,6 @@
                   {% empty %}
                     <p>No items in your cart.</p>
                   {% endfor %}
-                  <p>Debug: Finished rendering cart items.</p>
                   <div class="pt-5">
                     <h6 class="mb-0"><a href="{% url 'menu' %}" class="text-body"><i class="fas fa-long-arrow-alt-left me-2"></i>Back to menu</a></h6>
                   </div>
@@ -74,22 +66,6 @@
                   <div class="d-flex justify-content-between mb-4">
                     <h5 class="text-uppercase">Items: {{ cart_items.count }}</h5>
                     <h5>Total: € {{ cart.total_price|floatformat:2 }}</h5>
-                  </div>
-
-                  <h5 class="text-uppercase mb-3">Shipping</h5>
-                  <div class="mb-4 pb-2">
-                    <select class="form-select">
-                      <option value="1">Standard-Delivery- €5.00</option>
-                      <option value="2">Express-Delivery- €15.00</option>
-                    </select>
-                  </div>
-
-                  <h5 class="text-uppercase mb-3">Discount Code</h5>
-                  <div class="mb-5">
-                    <div class="form-outline">
-                      <input type="text" id="discountCode" class="form-control form-control-lg" />
-                      <label class="form-label" for="discountCode">Enter your code</label>
-                    </div>
                   </div>
 
                   <hr class="my-4">
