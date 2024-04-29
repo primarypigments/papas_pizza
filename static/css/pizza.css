@@ -1,7 +1,38 @@
-
-
-
-/* Button styles */
-.password_reset .form-control, .password_reset button {
-    width: 100%;  /* Forces elements to expand to the full width of their parent */
+.modal img {
+    max-height: 400px; /* Adjust as needed */
+    width: auto;
+    display: block;
+    margin: 0 auto; /* Centers the image */
 }
+
+html, body {
+    height: 100%;
+}
+
+body > footer {
+    position: sticky;
+    top: 100vh;
+}
+
+
+
+@media (min-width: 1025px) {
+    .h-custom {
+    height: 100vh !important;
+    }
+    }
+    
+    .card-registration .select-input.form-control[readonly]:not([disabled]) {
+    font-size: 1rem;
+    line-height: 2.15;
+    padding-left: .75em;
+    padding-right: .75em;
+    }
+    
+    .card-registration .select-arrow {
+    top: 13px;
+    }
+    
+    .bg-grey {
+    background-color: #eae8e8;
+    }
