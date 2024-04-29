@@ -37,10 +37,21 @@ def cart_view(request):
     """
     cart = get_object_or_404(Cart, user=request.user)
     cart_items = cart.items.all()
+    cart_total = 0  # Initialize cart total
+    
     print(f"Viewing cart for {request.user.username}, Items count: {cart_items.count()}")
     for item in cart_items:
-        print(f"Item: {item.item.name}, Quantity: {item.quantity}")
-    return render(request, 'cart/cart.html', {'cart': cart, 'cart_items': cart_items})
+        item_total = item.quantity * item.item.price  # Calculate total for this item
+        cart_total += item_total  # Add to cart total
+        print(f"Item: {item.item.name}, Quantity: {item.quantity}, Subtotal: {item_total}")
+
+    # Now `cart_total` is the total price of all items in the cart
+    context = {
+        'cart': cart,
+        'cart_items': cart_items,
+        'cart_total': cart_total  # Include the cart total in the context
+    }
+    return render(request, 'cart/cart.html', context)
 
 
 @login_required
