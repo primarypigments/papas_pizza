@@ -4,11 +4,40 @@
 {% block content %}
 <div class="container mt-5">
     <div class="row">
+        {% if user.is_superuser %}
+        <!-- Button to Open the Modal for Adding a New Item -->
+        <div class="col-12 mb-4">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addItemModal">
+                Add New Item
+            </button>
+        </div>
+
+        <!-- Modal for Adding New Item -->
+        <div class="modal fade" id="addItemModal" tabindex="-1" aria-labelledby="addItemModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addItemModalLabel">Add New Menu Item</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Form for Adding New Item -->
+                        <form method="post" action="{% url 'menu' %}" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ item_form.as_p }}
+                            <button type="submit">Add Item</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
         {% for item in menu_items %}
         <div class="col-md-4 mb-4">
             <div class="card" style="width: 18rem;">
                 {% if item.image %}
-                <img src="{% static 'images/mississippi_mud.jpg' %}" alt="Description">
+                <img src="{{ item.image.url }}" alt="{{ item.name }}" class="card-img-top">
                 {% else %}
                 <img src="{% static 'default.jpg' %}" class="card-img-top" alt="Default Image">
                 {% endif %}
@@ -16,29 +45,73 @@
                     <h5 class="card-title">{{ item.name }}</h5>
                     <p class="card-text">{{ item.description }}</p>
                     <p class="card-text">${{ item.price }}</p>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#itemModal{{ item.id }}">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#itemModal{{ item.id }}">
                         View Details
                     </button>
+                    <a href="{% url 'edit_menu_item' item.id %}" class="btn btn-warning">
+                        Edit
+                    </a>
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                        data-bs-target="#deleteItemModal{{ item.id }}">
+                        Delete
+                    </button>
+
                 </div>
             </div>
-        </div>
-        <!-- Modal -->
-        <div class="modal fade" id="itemModal{{ item.id }}" tabindex="-1" aria-labelledby="itemModalLabel{{ item.id }}" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="itemModalLabel{{ item.id }}">{{ item.name }}</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <!-- Modal for Viewing Details -->
+            <div class="modal fade" id="itemModal{{ item.id }}" tabindex="-1"
+                aria-labelledby="itemModalLabel{{ item.id }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="itemModalLabel{{ item.id }}">{{ item.name }}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            {% if item.image %}
+                            <img src="{{ item.image.url }}" alt="{{ item.name }}" class="img-fluid">
+                            {% else %}
+                            <img src="{% static 'default.jpg' %}" alt="Default Image" class="img-fluid">
+                            {% endif %}
+                            <p>{{ item.description }}</p>
+                            <p>Base Price: ${{ item.price }}</p>
+                            <form method="post" action="{% url 'add_to_cart' item.id %}">
+                                {% csrf_token %}
+                                {% for topping in toppings %}
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="toppings" value="{{ topping.id }}">
+                                    <label class="form-check-label" for="topping{{ topping.id }}">
+                                        {{ topping.name }} (+${{ topping.price }})
+                                    </label>
+                                </div>
+                                {% endfor %}
+                                <label for="quantity">Quantity:</label>
+                                <input type="number" name="quantity" id="quantity" min="1" max="99" value="1">
+                                <br>
+                                <button type="submit">Order this Pizza</button>
+                                <input type="hidden" name="item_id" value="{{ item.id }}">
+                            </form>
+                        </div>
                     </div>
-                    <div class="modal-body">
-                        
-                        <p>{{ item.description }}</p>
-                        <p>Price: ${{ item.price }}</p>
-                        <form method="post" action="{% url 'add_to_cart' item.id %}">
-                            {% csrf_token %}
-                            <input type="number" name="quantity" min="1" class="form-control" value="1">
-                            <button type="submit" class="btn btn-danger mt-2">Add to Cart</button>
-                        </form>
+                </div>
+            </div>
+
+            <div class="modal fade" id="deleteItemModal{{ item.id }}" tabindex="-1"
+                aria-labelledby="deleteItemModalLabel{{ item.id }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteItemModalLabel{{ item.id }}">Confirm Deletion</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Are you sure you want to delete "{{ item.name }}"?
+                        </div>
+                        <div class="modal-footer">
+                            <a href="{% url 'delete_menu_item' item.id %}" class="btn btn-danger">Delete</a>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -46,4 +119,8 @@
         {% endfor %}
     </div>
 </div>
+{% endblock %}
+
+{% block javascript %}
+<!-- <script src="{% static 'js/menu_form.js' %}"></script> -->
 {% endblock %}
