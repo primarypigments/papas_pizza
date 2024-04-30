@@ -31,28 +31,16 @@ class SuperUserCheckMixin(LoginRequiredMixin, UserPassesTestMixin):
 
 @login_required
 def cart_view(request):
-    """
-    Displays the user's shopping cart page, listing
-    all items currently in the cart.
-    """
-    cart = get_object_or_404(Cart, user=request.user)
-    cart_items = cart.items.all()
-    cart_total = 0  # Initialize cart total
-    
-    print(f"Viewing cart for {request.user.username}, Items count: {cart_items.count()}")
-    for item in cart_items:
-        item_total = item.quantity * item.item.price  # Calculate total for this item
-        cart_total += item_total  # Add to cart total
-        print(f"Item: {item.item.name}, Quantity: {item.quantity}, Subtotal: {item_total}")
+    """ Display the user's shopping cart from session. """
+    cart_items = request.session.get('cart', {})
+    # Ensure conversion of subtotal from string to Decimal before summing
+    cart_total = sum(Decimal(item['subtotal']) for item in cart_items.values())
 
-    # Now `cart_total` is the total price of all items in the cart
     context = {
-        'cart': cart,
-        'cart_items': cart_items,
-        'cart_total': cart_total  # Include the cart total in the context
+        'cart_items': cart_items.items(),  # Pass items as (id, details)
+        'cart_total': cart_total,
     }
     return render(request, 'cart/cart.html', context)
-
 
 @login_required
 def update_item(request, item_id):
