@@ -65,13 +65,14 @@ def update_item(request, item_id):
 @login_required
 @require_POST
 def remove_item(request, item_id):
-    """
-    Removes a specified item from the
-    user's cart and redirects to the cart page.
-    """
-    cart = request.user.cart
-    cart_item = get_object_or_404(CartItem, id=item_id, cart=cart)
-    cart.remove_item(cart_item)
+    """Removes a specified item from the user's session cart."""
+    cart = request.session.get('cart', {})
+    if str(item_id) in cart:
+        del cart[str(item_id)]
+
+        # Update session
+        request.session['cart'] = cart
+
     return redirect('cart')
 
 
