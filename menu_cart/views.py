@@ -108,36 +108,39 @@ def checkout(request):
 @login_required
 @require_POST
 def add_to_cart(request, item_id):
-    """
-    Processes the addition of a menu item to the
-    user's shopping cart via a POST request.
-    This function handles retrieving or creating the
-    cart item, updating quantities,
-    calculating the subtotal with selected toppings, and saving the changes.
-    """
     item = get_object_or_404(MenuItem, id=item_id)
-    cart, created = Cart.objects.get_or_create(user=request.user)
+    cart = request.session.get('cart', {})
+
+    # Initialize cart item data
+    cart_item = cart.get(str(item_id), {
+        'quantity': 0,
+        'price': str(item.price),
+        'name': item.name,
+        'subtotal': '0.00',
+        'image_url': item.image.url if item.image else None,
+        'toppings': []
+    })
+
     form = CartAddItemForm(request.POST)
     if form.is_valid():
         quantity = form.cleaned_data['quantity']
         selected_toppings = request.POST.getlist('toppings')
-        cart_item, created = CartItem.objects.get_or_create(
-            item=item, cart=cart,
-            defaults={'quantity': quantity, 'subtotal': 0}
-        )
-        if not created:
-            cart_item.quantity += quantity
-        
-        # Calculate subtotal for the item based on base price and toppings
+
+        # Retrieve toppings and calculate their total price
         toppings = Topping.objects.filter(id__in=selected_toppings)
-        toppings_total = sum(topping.price * quantity for topping in toppings)
-        cart_item.subtotal += item.price * quantity + toppings_total
+        topping_details = [{'name': topping.name, 'price': str(topping.price)} for topping in toppings]
+        toppings_total = sum(Decimal(topping.price) for topping in toppings) * quantity
 
-        # Save the updated cart item
-        cart_item.save()
+        # Update quantity and subtotal
+        cart_item['quantity'] += quantity
+        cart_item['toppings'].extend(topping_details)  # Add topping details for display
+        current_subtotal = Decimal(cart_item['subtotal']) + (Decimal(cart_item['price']) * quantity) + toppings_total
+        cart_item['subtotal'] = str(current_subtotal)
 
-        # Add the selected toppings to the cart item
-        cart_item.toppings.add(*toppings)
+        # Update session
+        cart[str(item_id)] = cart_item
+        request.session['cart'] = cart
+
     return redirect('menu')
 
 
