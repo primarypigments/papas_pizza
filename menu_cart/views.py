@@ -43,24 +43,21 @@ def cart_view(request):
     return render(request, 'cart/cart.html', context)
 
 @login_required
+@require_POST
 def update_item(request, item_id):
-    """
-    Updates the quantity of a specific item in the
-    user's cart, either incrementing or decrementing it.
-    Redirects back to the cart page.
-    """
-    cart = request.user.cart
+    """Updates the quantity of a specific item in the user's session cart."""
+    cart = request.session.get('cart', {})
     form = UpdateCartItemForm(request.POST)
     if form.is_valid():
-        cart_item = get_object_or_404(CartItem, id=item_id, cart=cart)
         action = form.cleaned_data['action']
-        
-        if action == 'increment':
-            cart_item.quantity += 1
-        elif action == 'decrement':
-            cart_item.quantity = max(1, cart_item.quantity - 1) 
-        
-        cart_item.save()
+        if item_id in cart:
+            if action == 'increment':
+                cart[str(item_id)]['quantity'] += 1
+            elif action == 'decrement':
+                cart[str(item_id)]['quantity'] = max(1, cart[str(item_id)]['quantity'] - 1)
+
+            # Update session
+            request.session['cart'] = cart
 
     return redirect('cart')
 
