@@ -79,15 +79,31 @@ def remove_item(request, item_id):
 @login_required
 @require_POST
 def checkout(request):
+    """ Transfers session cart to database 
+    upon checkout and clears the session. 
     """
-    Clears all items from the user's cart upon
-    checkout and redirects to a success page.
-    """
-    cart = request.user.cart
-    cart.items.clear()
-    cart.save()
-    return redirect('order_success') # this is not finished
-
+    cart_data = request.session.get('cart', {})
+    
+    if cart_data:
+        with transaction.atomic():
+            new_cart = Cart.objects.create(user=request.user)
+            for item_id, item_details in cart_data.items():
+                item = MenuItem.objects.get(id=item_id)
+                cart_item = CartItem.objects.create(
+                    cart=new_cart,
+                    item=item,
+                    quantity=item_details['quantity'],
+                    subtotal=item_details['subtotal']
+                )
+                # Assume toppings are stored in session with their IDs
+                toppings = Topping.objects.filter(id__in=item_details.get('toppings', []))
+                cart_item.toppings.set(toppings)
+            
+            # Optionally clear the session cart
+            del request.session['cart']
+            new_cart.save()
+        return redirect('order_success')
+    
 
 @login_required
 @require_POST
