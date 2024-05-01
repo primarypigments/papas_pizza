@@ -2,8 +2,12 @@ import logging
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.utils.translation import gettext_lazy as _
 from .validators import validate_customer_phone_number, validate_customer_street_address, validate_customer_city, validate_customer_zip_code
-from .models import PizzaUserProfile
+from .models import PizzaUserProfile, NewsletterSubscription
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Field
+
 
 logger = logging.getLogger(__name__)
 
@@ -56,7 +60,8 @@ class PizzaSignUpForm(UserCreationForm):
 
     class Meta:
         """
-        Configures PizzaSignUpForm to use the User model and define form fields.
+        Configures PizzaSignUpForm to use the
+        User model and define form fields.
         """
         model = User
         fields = (
@@ -90,6 +95,7 @@ class PizzaSignUpForm(UserCreationForm):
         else:
             logger.debug("Save not committed")
         return user, None
+
 
 class PizzaSignInForm(forms.Form):
     email = forms.EmailField(widget=forms.EmailInput(
