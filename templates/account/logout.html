@@ -1,21 +1,39 @@
 {% extends "base.html" %}
-
 {% load i18n %}
 
 {% block head_title %}{% trans "Sign Out" %}{% endblock head_title %}
 
 {% block content %}
-<h1>{% trans "Sign Out" %}</h1>
+<style>
+  .form-account-heading {
+    margin-bottom: 1rem;
+  }
 
-<p>{% trans 'Are you sure you want to sign out?' %}</p>
+  .form-account {
+    max-width: 600px;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    border: 1px solid #ced4da;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: auto;
+    text-align: center;
+  }
+</style>
 
-<form method="post" action="{% url 'account_logout' %}">
-  {% csrf_token %}
-  {% if redirect_field_value %}
-  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
-  {% endif %}
-  <button type="submit">{% trans 'Sign Out' %}</button>
-</form>
-
-
+<div class="container my-5">
+  <div class="form-account shadow">
+    <h2 class="form-account-heading">{% trans "Sign Out" %}</h2>
+    <p>{% trans 'Are you sure you want to sign out?' %}</p>
+    <form method="post" action="{% url 'account_logout' %}">
+      {% csrf_token %}
+      {% if redirect_field_value %}
+      <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+      {% endif %}
+      <div class="mt-4 d-flex justify-content-center">
+        <button type="submit" class="btn btn-dark btn-block btn-lg">{% trans 'Sign Out' %}</button>
+      </div>
+    </form>
+  </div>
+</div>
 {% endblock content %}
