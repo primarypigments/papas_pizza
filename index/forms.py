@@ -61,17 +61,21 @@ class PizzaSignUpForm(UserCreationForm):
         model = User
         fields = (
             'first_name', 'last_name', 'email', 'password1', 'password2',
-            'phone_number', 'street_address', 'city', 'zip_code'
+            'phone_number', 'street_address', 'city', 'zip_code',
+            'newsletter_subscribe'
         )
 
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.form_show_labels = False  
+
+
     def try_save(self, request, commit=True):
-        logger.debug("Attempting to save the user")
-        user = super().save(commit=False)
-        user.username = self.cleaned_data['email']
+        user, _ = super().try_save(request, commit=False)
         if commit:
             user.save()
-            logger.debug("User saved successfully")
-            # Save user profile
             PizzaUserProfile.objects.create(
                 user=user,
                 phone_number=self.cleaned_data['phone_number'],
@@ -79,7 +83,10 @@ class PizzaSignUpForm(UserCreationForm):
                 city=self.cleaned_data['city'],
                 zip_code=self.cleaned_data['zip_code']
             )
-            logger.debug("User profile saved successfully")
+            # Check if user opted for newsletter subscription
+            if self.cleaned_data.get('newsletter_subscribe'):
+                NewsletterSubscription.objects.create(email=user.email)
+            logger.debug("User and profile saved successfully")
         else:
             logger.debug("Save not committed")
         return user, None
