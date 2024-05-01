@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .forms import PasswordResetForm
+from .forms import PasswordResetForm, PizzaSignUpForm, PizzaSignInForm
 from django.contrib.auth.decorators import login_required
 from .models import PizzaUserProfile
 from menu_cart.models import CartItem, Cart
@@ -57,3 +57,8 @@ def profile(request):
     }
     return render(request, template, context)
     
+
+def my_signup_view(request):
+    form = PizzaSignUpForm()
+    return render(request, 'accounts/signup.html', {'form': form})
+
