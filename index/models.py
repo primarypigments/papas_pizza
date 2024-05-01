@@ -30,3 +30,19 @@ class PizzaUserProfile(models.Model):
     with the user profile.
         """
         return self.user.username
+        
+        
+class NewsletterSubscription(models.Model):
+    """
+    Represents a subscription to a newsletter.
+
+    This model stores the email addresses of
+    subscribers and the date they subscribed.
+    Each subscriber's email must be unique to avoid duplicate entries.
+    """
+    email = models.EmailField(unique=True)
+    date_subscribed = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.email
+        
