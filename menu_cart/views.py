@@ -12,8 +12,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .forms import MenuItemForm
 from .models import MenuItem, CartItem, Cart, Topping
 from .forms import CartAddItemForm, UpdateCartItemForm
+from decimal import Decimal
+
+
+from django.http import HttpResponse, HttpResponseServerError
 
 import logging
+
+logger = logging.getLogger(__name__)
 
 
 class SuperUserCheckMixin(LoginRequiredMixin, UserPassesTestMixin):
@@ -33,49 +39,98 @@ class SuperUserCheckMixin(LoginRequiredMixin, UserPassesTestMixin):
 def cart_view(request):
     """ Display the user's shopping cart from session. """
     cart_items = request.session.get('cart', {})
-    # Ensure conversion of subtotal from string to Decimal before summing
-    cart_total = sum(Decimal(item['subtotal']) for item in cart_items.values())
+    cart_total = Decimal('0.00')
+    display_items = []
+
+    # Convert cart items into a list suitable for display
+    for key, item_details in cart_items.items():
+        item_id, *toppings_key = key.split('-')
+        item_details['id'] = item_id
+        item_details['toppings_key'] = '-'.join(toppings_key) if toppings_key else ''
+        
+        # Recalculate subtotal to ensure it's always up-to-date
+        base_price = Decimal(item_details['price'])
+        toppings_total = sum(Decimal(topping['price']) for topping in item_details.get('toppings', []))
+        item_details['subtotal'] = str((base_price + toppings_total) * item_details['quantity'])
+        
+        cart_total += Decimal(item_details['subtotal'])
+        display_items.append(item_details)
+    
+    context = {
+        'cart_items': display_items,
+        'cart_total': cart_total,
+    }
+    return render(request, 'cart/cart.html', context)
+
 
     context = {
-        'cart_items': cart_items.items(),  # Pass items as (id, details)
+        'cart_items': display_items,  # Use this list for rendering in the template
         'cart_total': cart_total,
     }
     return render(request, 'cart/cart.html', context)
 
 @login_required
-@require_POST
 def update_item(request, item_id):
-    """Updates the quantity of a specific item in the user's session cart."""
+    logger.debug("Received POST data: %s", request.POST)  # Log all POST data for debugging
     cart = request.session.get('cart', {})
+
     form = UpdateCartItemForm(request.POST)
     if form.is_valid():
         action = form.cleaned_data['action']
-        if item_id in cart:
-            if action == 'increment':
-                cart[str(item_id)]['quantity'] += 1
-            elif action == 'decrement':
-                cart[str(item_id)]['quantity'] = max(1, cart[str(item_id)]['quantity'] - 1)
+        item_key = request.POST.get('item_key')  # Assumes item_key is passed directly in POST
 
-            # Update session
+        logger.debug("Attempting to update item with key: %s", item_key)
+
+        if item_key and item_key in cart:
+            current_item = cart[item_key]
+            if action == 'increment':
+                current_item['quantity'] += 1
+            elif action == 'decrement':
+                current_item['quantity'] = max(1, current_item['quantity'] - 1)
+
+            base_price = Decimal(current_item['price'])
+            toppings_total = sum(Decimal(topping['price']) for topping in current_item.get('toppings', []))
+            new_subtotal = (base_price + toppings_total) * current_item['quantity']
+            current_item['subtotal'] = str(new_subtotal)
+
             request.session['cart'] = cart
+            request.session.modified = True
+            logger.debug("Updated item in cart: %s, new details: %s", item_key, cart[item_key])
+        else:
+            logger.error("Item key '%s' not found in cart. Available keys: %s", item_key, list(cart.keys()))
+            return HttpResponseServerError("Item key not found in cart.")
+    else:
+        logger.error("Form errors: %s", form.errors)
 
     return redirect('cart')
-
 
 @login_required
 @require_POST
-def remove_item(request, item_id):
+def remove_item(request, item_id, toppings_key=None):
     """Removes a specified item from the user's session cart."""
     cart = request.session.get('cart', {})
-    if str(item_id) in cart:
-        del cart[str(item_id)]
+    
+    # Construct item key always with a dash for consistency, similar to add_to_cart and update_item
+    toppings_key_part = toppings_key if toppings_key else ""
+    item_key = f"{item_id}-{toppings_key_part}" if toppings_key_part else f"{item_id}-"
 
-        # Update session
+    # Debugging: Print item key to verify
+    logger.debug("Attempting to remove item with key: %s", item_key)
+
+    # Debugging: Print cart contents
+    logger.debug("Cart contents: %s", cart)
+
+    if item_key in cart:
+        del cart[item_key]
         request.session['cart'] = cart
+        request.session.modified = True
+        logger.debug("Removed item %s from cart.", item_key)
+        return redirect('cart')  # Successfully removed, redirect to cart view
+    else:
+        logger.error("Item key '%s' not found in cart.", item_key)
+        return HttpResponseServerError("Item key not found in cart.")  # Return an error response if item key not found
 
-    return redirect('cart')
-
-
+        
 @login_required
 @require_POST
 def checkout(request):
@@ -106,43 +161,59 @@ def checkout(request):
     
 
 @login_required
-@require_POST
 def add_to_cart(request, item_id):
     item = get_object_or_404(MenuItem, id=item_id)
     cart = request.session.get('cart', {})
-
-    # Initialize cart item data
-    cart_item = cart.get(str(item_id), {
-        'quantity': 0,
-        'price': str(item.price),
-        'name': item.name,
-        'subtotal': '0.00',
-        'image_url': item.image.url if item.image else None,
-        'toppings': []
-    })
 
     form = CartAddItemForm(request.POST)
     if form.is_valid():
         quantity = form.cleaned_data['quantity']
         selected_toppings = request.POST.getlist('toppings')
 
-        # Retrieve toppings and calculate their total price
-        toppings = Topping.objects.filter(id__in=selected_toppings)
-        topping_details = [{'name': topping.name, 'price': str(topping.price)} for topping in toppings]
-        toppings_total = sum(Decimal(topping.price) for topping in toppings) * quantity
+        # Sorting toppings to create a consistent key, always include a dash
+        sorted_toppings = sorted(int(tid) for tid in selected_toppings)
+        toppings_key = "-".join(map(str, sorted_toppings)) if sorted_toppings else ""
+        cart_key = f"{item_id}-{toppings_key}" if toppings_key else f"{item_id}-"  # Always include dash
 
-        # Update quantity and subtotal
-        cart_item['quantity'] += quantity
-        cart_item['toppings'].extend(topping_details)  # Add topping details for display
-        current_subtotal = Decimal(cart_item['subtotal']) + (Decimal(cart_item['price']) * quantity) + toppings_total
-        cart_item['subtotal'] = str(current_subtotal)
+        # Initialize or update cart item data
+        if cart_key in cart:
+            cart_item = cart[cart_key]
+            cart_item['quantity'] += quantity
+            new_subtotal = Decimal(
+                cart_item['subtotal']) + (Decimal(item.price) + Decimal(sum(
+                    Topping.objects.filter(
+                        id__in=sorted_toppings).values_list(
+                            'price', flat=True))) * quantity)
+            cart_item['subtotal'] = str(new_subtotal)
+        else:
+            # Calculate total price for toppings
+            toppings = Topping.objects.filter(id__in=sorted_toppings)
+            topping_details = [{'name': topping.name, 'price': str(
+                topping.price)} for topping in toppings]
+            toppings_total = sum(
+                Decimal(topping.price) for topping in toppings) * quantity
+
+            # New cart item
+            cart[cart_key] = {
+                'quantity': quantity,
+                'price': str(item.price),
+                'name': item.name,
+                'subtotal': str(Decimal(item.price) * quantity + toppings_total),
+                'image_url': item.image.url if item.image else None,
+                'toppings': topping_details
+            }
 
         # Update session
-        cart[str(item_id)] = cart_item
         request.session['cart'] = cart
+        request.session.modified = True
 
     return redirect('menu')
 
+
+    return redirect('menu')
+
+
+logger = logging.getLogger(__name__)
 
 def menu_view(request):
     """
@@ -150,53 +221,62 @@ def menu_view(request):
     It handles both GET and POST requests: GET requests render the menu page with available
     items and an item form, while POST requests handle the addition or updating of menu items.
     """
-    logger = logging.getLogger(__name__)
     logger.info("Entering menu_view function")
-    
+
     if request.method == 'POST':
         logger.info("Processing POST request")
-        
+
         if 'add_item' in request.POST:
             logger.info("Add item form submitted")
-            
             item_form = MenuItemForm(request.POST, request.FILES)
             if item_form.is_valid():
                 logger.info("Form is valid. Saving new item.")
-                
                 item_form.save()
                 return redirect('menu')
             else:
                 logger.warning("Form is invalid.")
                 logger.warning(item_form.errors)  # Log form errors
+                return render(request, 'menu/menu.html', {
+                    'menu_items': MenuItem.objects.all(),
+                    'item_form': item_form,
+                    'toppings': Topping.objects.all(),
+                    'form_errors': item_form.errors
+                })
         else:
             item_id = request.POST.get('item_id')
-            item = MenuItem.objects.get(pk=item_id)
-            item_form = MenuItemForm(request.POST, request.FILES, instance=item)
+            if not item_id:
+                logger.error("No item_id provided in the POST request.")
+                return HttpResponse("Item ID is required.", status=400)
+
+            item = get_object_or_404(MenuItem, pk=item_id)
+            item_form = MenuItemForm(
+                request.POST, request.FILES, instance=item)
             if item_form.is_valid():
                 logger.info("Form is valid. Saving edited item.")
-                
                 item_form.save()
                 return redirect('menu')
             else:
                 logger.warning("Form is invalid.")
                 logger.warning(item_form.errors)  # Log form errors
+                return render(request, 'menu/edit_menu_item.html', {
+                    'menu_item': item,
+                    'item_form': item_form,
+                    'form_errors': item_form.errors
+                })
     else:
         logger.info("Rendering menu page")
-        
         menu_items = MenuItem.objects.all()
         item_form = MenuItemForm()
-        template = 'menu/menu.html'
         context = {
             'menu_items': menu_items,
             'item_form': item_form,
             'toppings': Topping.objects.all(),
         }
-        return render(request, template, context)
-    
+        return render(request, 'menu/menu.html', context)
+
     # In case none of the conditions are met, log an error and return a redirect to the menu page
     logger.error("No valid conditions met. Redirecting to menu page.")
     return redirect('menu')
-
 
 @login_required
 def edit_menu_item(request, item_id):
@@ -242,3 +322,4 @@ def delete_menu_item(request, item_id):
     menu_item.delete()
     messages.success(request, "Menu Item deleted!")
     return redirect('menu')
+
