@@ -91,6 +91,29 @@ class PizzaSignUpForm(UserCreationForm):
             logger.debug("Save not committed")
         return user, None
 
+class PizzaSignInForm(forms.Form):
+    email = forms.EmailField(widget=forms.EmailInput(
+        attrs={'placeholder': _('Email')}))
+    password = forms.CharField(widget=forms.PasswordInput(
+        attrs={'placeholder': _('Password')}))
+    remember_me = forms.BooleanField(widget=forms.CheckboxInput(
+        attrs={'class': 'custom-checkbox'}), label=_('Remember Me'))
+
+
+    def __init__(self, *args, **kwargs):
+        super(PizzaSignInForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_show_labels = False
+        self.helper.layout = Layout(
+            Field('email', placeholder=_('Email'), css_class='mb-2'),
+            Field('password', placeholder=_('Password'), css_class='mb-2'),
+            'remember_me',  # This field will keep its label
+        )
+    
+
+
+        
+
 class PasswordResetForm(forms.Form):
     """
     Form for requesting a password reset via email.
