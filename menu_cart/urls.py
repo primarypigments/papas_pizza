@@ -9,6 +9,9 @@ urlpatterns = [
     views.remove_item, name='remove_item_with_toppings'),
 
     path('checkout/', views.checkout, name='checkout'),
+    path(
+        'checkout/success/<int:id>/',
+        views.checkout_success, name='checkout_success'),
     path('add-to-cart/<int:item_id>/', views.add_to_cart, name='add_to_cart'),
     path('menu/', views.menu_view, name='menu'),
     path('cart/', views.cart_view, name='cart'),
