@@ -45,8 +45,9 @@ class Cart(models.Model):
     Represents a shopping cart for a user,
     uniquely linked via one-to-one relationship.
     """
-    user = models.OneToOneField(
+    user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='cart')
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def add_item(self, item, quantity=1):
         """

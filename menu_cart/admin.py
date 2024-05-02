@@ -33,7 +33,9 @@ class CartAdmin(admin.ModelAdmin):
     Includes CartItemInline to manage cart
     items within the cart's admin view.
     """
-    list_display = ('user', 'display_added_items', 'total_quantity', 'total_price')
+    list_display = (
+        'user', 'display_added_items',
+        'total_quantity', 'total_price', 'created_at')
     inlines = [CartItemInline]
 
 
@@ -64,6 +66,7 @@ class CartAdmin(admin.ModelAdmin):
     display_added_items.short_description = 'Added Items'
     total_quantity.short_description = 'Total Quantity'
     total_price.short_description = 'Total Price'
+
 
 admin.site.register(MenuItem, MenuItemAdmin)
 admin.site.register(Cart, CartAdmin)
