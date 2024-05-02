@@ -1,9 +1,12 @@
-from django.shortcuts import render
 from .forms import PasswordResetForm, PizzaSignUpForm, PizzaSignInForm
 from django.contrib.auth.decorators import login_required
 from .models import PizzaUserProfile
 from menu_cart.models import CartItem, Cart
+from django.shortcuts import render, redirect
+import logging
+from django.contrib import messages
 
+logger = logging.getLogger(__name__)
 
 def index(request):
     """
