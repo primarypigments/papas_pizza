@@ -59,6 +59,24 @@ def profile(request):
     
 
 def my_signup_view(request):
-    form = PizzaSignUpForm()
-    return render(request, 'accounts/signup.html', {'form': form})
+    if request.method == 'POST':
+        form = PizzaSignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            messages.success(request, 'Account created successfully!')
+            logger.info(f"New user signed up: {user.username}")
 
+            if form.cleaned_data.get('newsletter_subscribe'):
+                messages.info(request, 'Thank you for signing' 
+                'up for the newsletter!')
+
+            return redirect('index')
+        else:
+            logger.warning("Signup form validation failed")
+            for field, errors in form.errors.items():
+                logger.debug(f"{field}: {errors}")
+            return render(request, 'account/signup.html', {'form': form})
+    else:
+        form = PizzaSignUpForm()
+    return render(request, 'account/signup.html', {'form': form})
+    
