@@ -38,14 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
     'cloudinary_storage',
+    'django.contrib.staticfiles',
     'django.contrib.sites',
+    'cloudinary',
     'allauth',
     'allauth.account',
     'crispy_forms',
     'widget_tweaks',
-    'cloudinary',
     'crispy_bootstrap5',
     'index.apps.IndexConfig',
     'menu_cart',
@@ -190,6 +190,8 @@ STATIC_URL = "/static/"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"), ]
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
+MEDIA_URL = "/media/"
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -216,8 +218,8 @@ CLOUDINARY_STORAGE = {
     "API_KEY": os.environ.get("CLOUNDINARY_API_KEY"),
     "API_SECRET": os.environ.get("CLOUNDINARY_API_SECRET"),
 }
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 #Stripe
 
