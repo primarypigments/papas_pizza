@@ -141,12 +141,9 @@ def checkout(request):
     if cart_data:
         with transaction.atomic():
             # Check if the user already has a cart
-            new_cart, created = Cart.objects.get_or_create(user=request.user)
-            if not created:
-                # Handle the case where the cart already exists
-                # Perhaps clear the existing items or update them
-                # new_cart.items.all().delete()  # Optionally clear existing items
-                pass
+            new_cart = Cart.objects.create(
+                user=request.user
+            )
             items_for_stripe = []
 
             for cart_key, item_details in cart_data.items():
@@ -191,11 +188,11 @@ def checkout(request):
                         [request.user.email],
                         fail_silently=False,
                     )
+                    del request.session['cart']
                     return redirect(session.url) 
                 except stripe.error.StripeError as e:
                     return render(request, 'error.html', {'message': str(e)})
 
-            del request.session['cart']
             return redirect('order_success')
 
     return render(request, 'checkout/checkout.html', {'cart_total': cart_total})
