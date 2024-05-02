@@ -196,7 +196,7 @@ def checkout(request):
                     return redirect(session.url, id=new_cart.id)
                     # return redirect(checkout_success, new_cart.id) 
                 except stripe.error.StripeError as e:
-                    return render(request, 'error.html', {'message': str(e)})
+                    return render(request, 'checkout/error.html', {'message': str(e)})
 
             return redirect('order_success')
 
