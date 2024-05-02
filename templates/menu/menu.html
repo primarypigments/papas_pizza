@@ -48,8 +48,8 @@
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                         data-bs-target="#itemModal{{ item.id }}">
                         View Details
-                        {% if user.is_superuser %}
                     </button>
+                    {% if user.is_superuser %}
                     <a href="{% url 'edit_menu_item' item.id %}" class="btn btn-warning">
                         Edit
                     </a>
@@ -76,8 +76,8 @@
                                 </div>
                             </div>
                         </div>
-                        {% endif %}
                     </div>
+                    {% endif %}
                 </div>
             </div>
             <!-- Modal for Viewing Details -->
@@ -102,7 +102,7 @@
                                 {% for topping in toppings %}
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="toppings"
-                                        value="{{ topping.id }}">
+                                        value="{{ topping.id }}" id="topping{{ topping.id }}">
                                     <label class="form-check-label" for="topping{{ topping.id }}">
                                         {{ topping.name }} (+€{{ topping.price }})
                                     </label>
