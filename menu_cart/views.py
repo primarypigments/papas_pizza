@@ -178,18 +178,23 @@ def checkout(request):
                         payment_method_types=['card'],
                         line_items=items_for_stripe,
                         mode='payment',
-                        success_url=request.build_absolute_uri('/success/'),
+                        success_url=request.build_absolute_uri('/checkout/success/'),
                         cancel_url=request.build_absolute_uri('/cancel/'),
                     )
                     send_mail(
-                        'Order Confirmation',
-                        'Your order has been placed successfully.',
-                        'noreplymoicecream@gmail.com',
+                        "Pappa's Pizza Order Confirmation",
+                        (
+                            "Your order has been placed successfully.\n\n"
+                            f"Order Total: {cart_item.subtotal}",
+                            f"Order Date: {new_cart.created_at}",
+                        ),
+                        settings.DEFAULT_FROM_EMAIL,
                         [request.user.email],
                         fail_silently=False,
                     )
                     del request.session['cart']
-                    return redirect(session.url) 
+                    return redirect(session.url, id=new_cart.id)
+                    # return redirect(checkout_success, new_cart.id) 
                 except stripe.error.StripeError as e:
                     return render(request, 'error.html', {'message': str(e)})
 
@@ -288,6 +293,7 @@ def menu_view(request):
     logger.error("No valid conditions met. Redirecting to menu page.")
     return redirect('menu')
 
+
 @login_required
 def edit_menu_item(request, item_id):
     """
@@ -333,3 +339,11 @@ def delete_menu_item(request, item_id):
     messages.success(request, "Menu Item deleted!")
     return redirect('menu')
 
+
+def checkout_success(request, id):
+    cart = get_object_or_404(Cart, id=id)
+    template = "checkout/success.html"
+    context = {
+        "cart": cart,
+    }
+    return render(request, template, context)
