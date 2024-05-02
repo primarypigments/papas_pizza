@@ -5,28 +5,10 @@
 {% block head_title %}{% trans "Sign In" %}{% endblock head_title %}
 
 {% block content %}
-<style>
-  .form-account-heading {
-    margin-bottom: 1rem;
-  }
 
-  .form-account {
-    max-width: 600px;
-    background: #fff;
-    padding: 2rem;
-    border-radius: 0.5rem;
-    border: 1px solid #ced4da;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin: auto;
-  }
-  .form-account label:not(.include-label) {
-    display: none;
-  }
-  
-</style>
 
 <div class="container my-5">
-  <div class="form-account shadow">
+  <div class="form-account-login shadow">
     <h2 class="form-account-heading">{% trans "Sign In" %}</h2>
     <form method="post" action="{% url 'account_login' %}" class="needs-validation" novalidate>
       {% csrf_token %}

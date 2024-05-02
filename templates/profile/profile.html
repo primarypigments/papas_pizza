@@ -6,10 +6,10 @@
 <div class="container mt-5 text-center">
   <div class="btn-group btn-group-toggle" data-toggle="buttons">
     <label class="btn btn-secondary active">
-      <input type="radio" name="sections" id="profiles" autocomplete="off" checked> Profiles
+      <input type="radio" name="sections" id="profiles" autocomplete="off" checked> Profile
     </label>
     <label class="btn btn-secondary">
-      <input type="radio" name="sections" id="cart_items" autocomplete="off"> Cart Items
+      <input type="radio" name="sections" id="cart_items" autocomplete="off"> Orders
     </label>
   </div>
 </div>
@@ -17,61 +17,94 @@
 <!-- Profiles Section -->
 <section id="profile_section" class="mt-5">
   <div class="container">
-    <h2 class="text-center mb-4">{{ request.user }}'s Profile</h2>
-    {% for index in profiles %}
+    <h2 class="text-center mb-4">{{ profile.user.first_name }}'s Profile</h2>
     <div class="row {% cycle 'bg-secondary text-light' 'bg-secondary bg-gradient bg-opacity-50 text-dark' %}">
       <!-- Responsive grid setup for each column -->
       <div class="col-12 col-md-4 col-lg-2">
-        Email: <i class="fas fa-envelope"></i> {{ index.user.email }}
+        <i class="fas fa-envelope"></i>
+        Email:<br>
+        {{ profile.user.email }}
+        <br><br>
       </div>
       <div class="col-12 col-md-4 col-lg-2">
-        First Name: <i class="fa-solid fa-phone"></i> {{ index.user.first_name }}
+        <i class="fas fa-user"></i>
+        First Name:<br>
+        <strong>{{ profile.user.first_name }}</strong>
+        <br><br>
       </div>
       <div class="col-12 col-md-4 col-lg-2">
-        Last Name: <i class="fa-solid fa-phone"></i> {{ index.user.last_name }}
+        <i class="fas fa-user"></i>
+        Last Name:<br>
+        <strong>{{ profile.user.last_name }}</strong>
+        <br><br>
       </div>
       <div class="col-12 col-md-6 col-lg-2">
-        Street Address: <i class="fa-solid fa-clock"></i> {{ index.street_address }}
+        <i class="fas fa-home"></i>
+        Street Address:<br>
+        <strong>{{ profile.street_address }}</strong>
+        <br><br>
       </div>
       <div class="col-12 col-md-6 col-lg-2">
-        City: <i class="fa-solid fa-location-dot"></i> {{ index.city }}
+        <i class="fas fa-location-dot"></i>
+        City:<br>
+        <strong>{{ profile.city }}</strong>
+        <br><br>
       </div>
       <div class="col-12 col-md-6 col-lg-2">
-        Phone: <i class="fa-solid fa-phone"></i> {{ index.phone_number }}
+        <i class="fas fa-phone"></i>
+        Phone:<br>
+        <strong>{{ profile.phone_number }}</strong>
       </div>
     </div>
-    {% empty %}
-    <div class="row text-center">
-      <div class="col">
-        You do not have any profiles currently.
-      </div>
-    </div>
-    {% endfor %}
   </div>
 </section>
 
 <!-- Cart Items Section -->
 <section id="cart_items_section" class="mt-5" style="display:none;">
   <div class="container">
-    <h2 class="text-center mb-4">Cart Items</h2>
-    {% for menu_cart in cart_items %}
-    <div class="row {% cycle 'bg-secondary text-light' 'bg-secondary bg-gradient bg-opacity-50 text-dark' %}">
-      <div class="col-12 col-md-4">
-        Item: <i class="fas fa-envelope"></i> {{ menu_cart.item.name }}
+    <h2 class="text-center mb-4">Orders</h2>
+    {% for cart in carts %}
+      {% for pizza in cart.items.all %}
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 my-3 p-3 {% cycle 'bg-secondary text-light' 'bg-secondary bg-gradient bg-opacity-50 text-dark' %}">
+        <div class="col">
+          <i class="fas fa-pizza-slice"></i> <strong>{{ pizza.item.name }}</strong>
+          <br>
+            {% for topping in pizza.toppings.all %}
+              <em>
+                - {{ topping.name }} (+€{{ topping.price }})<br>
+              </em>
+            {% empty %}
+              <em>No additional toppings selected</em>
+            {% endfor %}
+            <br>
+        </div>
+        <div class="col">
+          Quantity: {{ pizza.quantity }}
+          <br><br>
+        </div>
+        <div class="col">
+          Total: €{{ pizza.subtotal }}
+          <br><br>
+        </div>
+        <div class="col">
+          Ordered on:<br>
+          {{ cart.created_at|date:"F nS, Y @ G:i" }}
+          <br><br>
+        </div>
       </div>
-      <div class="col-12 col-md-4">
-        Quantity: <i class="fa-solid fa-phone"></i> {{ menu_cart.quantity }}
+      {% empty %}
+      <div class="row text-center">
+        <div class="col">
+          You do not have any previous orders.
+        </div>
       </div>
-      <div class="col-12 col-md-4">
-        Subtotal: <i class="fa-solid fa-phone"></i> {{ menu_cart.subtotal }}
-      </div>
-    </div>
+      {% endfor %}
     {% empty %}
-    <div class="row text-center">
-      <div class="col">
-        You do not have any cart items currently.
+      <div class="row text-center">
+        <div class="col">
+          You have not made any purchases yet.
+        </div>
       </div>
-    </div>
     {% endfor %}
   </div>
 </section>

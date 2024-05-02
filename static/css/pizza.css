@@ -21,6 +21,47 @@ body > footer {
   }
 
 
+ 
+  .form-signup-heading {
+    margin-bottom: 1rem;
+  }
+
+  .form-signup {
+    max-width: 600px;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    border: 1px solid #ced4da;
+    /* Bootstrap 5's border color for outlined inputs */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* This adds the shadow */
+    margin: auto;
+  }
+
+  .form-account-login {
+    max-width: 600px;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    border: 1px solid #ced4da;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: auto;
+  }
+  .form-account-login label:not(.include-label) {
+    display: none;
+  }
+  
+  .form-account {
+    max-width: 600px;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    border: 1px solid #ced4da;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: auto;
+  }
+ 
+
 @media (min-width: 1025px) {
  
     .card-registration .select-input.form-control[readonly]:not([disabled]) {
