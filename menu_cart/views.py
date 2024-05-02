@@ -11,7 +11,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.conf import settings
 # custom imports
 from .forms import MenuItemForm
-from .models import MenuItem, CartItem, Cart, Topping, PurchasedCart
+from .models import MenuItem, CartItem, Cart, Topping
 from .forms import CartAddItemForm, UpdateCartItemForm
 from django.core.mail import send_mail 
 from decimal import Decimal
