@@ -65,12 +65,6 @@ def cart_view(request):
     return render(request, 'cart/cart.html', context)
 
 
-    context = {
-        'cart_items': display_items,  # Use this list for rendering in the template
-        'cart_total': cart_total,
-    }
-    return render(request, 'cart/cart.html', context)
-
 @login_required
 def update_item(request, item_id):
     logger.debug("Received POST data: %s", request.POST)  # Log all POST data for debugging
@@ -206,7 +200,7 @@ def checkout(request):
 
     return render(request, 'checkout/checkout.html', {'cart_total': cart_total})
 
-    
+
 def add_to_cart(request, item_id):
     item = get_object_or_404(MenuItem, id=item_id)
     cart = request.session.get('cart', {})
@@ -256,10 +250,8 @@ def add_to_cart(request, item_id):
     return redirect('menu')
 
 
-    return redirect('menu')
-
-
 logger = logging.getLogger(__name__)
+
 
 def menu_view(request):
     """
