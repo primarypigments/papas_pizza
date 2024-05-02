@@ -71,7 +71,7 @@
           <br>
             {% for topping in pizza.toppings.all %}
               <em>
-                - {{ topping.name }} (+€{{ topping.price }})<br>
+                &nbsp; - {{ topping.name }} (+€{{ topping.price }})<br>
               </em>
             {% empty %}
               <em>No additional toppings selected</em>
@@ -88,7 +88,8 @@
         </div>
         <div class="col">
           Ordered on:<br>
-          {{ cart.created_at|date:"F nS, Y @ G:i" }}
+          {{ cart.created_at|date:"n F, Y" }}<br>
+          {{ cart.created_at|date:"@G:i" }}
           <br><br>
         </div>
       </div>
