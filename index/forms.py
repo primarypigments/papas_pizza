@@ -3,12 +3,12 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
-from .validators import validate_customer_phone_number, validate_customer_street_address, validate_customer_city, validate_customer_zip_code
+from .validators import (
+    validate_customer_phone_number, validate_customer_street_address,
+    validate_customer_city, validate_customer_zip_code)
 from .models import PizzaUserProfile, NewsletterSubscription
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field
-import uuid
-
 
 
 logger = logging.getLogger(__name__)
@@ -83,7 +83,7 @@ class PizzaSignUpForm(UserCreationForm):
         user = super().save(commit=False)
     
         if not user.username:
-            user.username = str(uuid.uuid4())  
+            user.username = self.cleaned_data['email']  
 
         if commit:
             user.save()
