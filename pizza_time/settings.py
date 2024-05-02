@@ -22,8 +22,8 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", False)
 
-ALLOWED_HOSTS = ['8000-primarypigme-papaspizza-qedyxbyhnxl.ws-eu110.gitpod.io', 'pappapizza-88bb126828cc.herokuapp.com']
-CSRF_TRUSTED_ORIGINS = ['https://8000-primarypigme-papaspizza-qedyxbyhnxl.ws-eu110.gitpod.io', 'https://pappapizza-88bb126828cc.herokuapp.com']
+ALLOWED_HOSTS = []
+CSRF_TRUSTED_ORIGINS = []
 host = os.environ.get("HOST")
 if host:
     ALLOWED_HOSTS.append(host)
