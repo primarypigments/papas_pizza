@@ -8,12 +8,14 @@ from django.db.models import Sum
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.conf import settings
 # custom imports
 from .forms import MenuItemForm
-from .models import MenuItem, CartItem, Cart, Topping
+from .models import MenuItem, CartItem, Cart, Topping, PurchasedCart
 from .forms import CartAddItemForm, UpdateCartItemForm
+from django.core.mail import send_mail 
 from decimal import Decimal
-
+import stripe
 
 from django.http import HttpResponse, HttpResponseServerError
 
@@ -131,36 +133,80 @@ def remove_item(request, item_id, toppings_key=None):
         return HttpResponseServerError("Item key not found in cart.")  # Return an error response if item key not found
 
         
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
+
 @login_required
 @require_POST
 def checkout(request):
-    """ Transfers session cart to database 
-    upon checkout and clears the session. 
-    """
+    """Create a Stripe checkout session and
+    redirect to Stripe's payment form."""
     cart_data = request.session.get('cart', {})
-    
+    cart_total = Decimal('0.00')
+
     if cart_data:
         with transaction.atomic():
-            new_cart = Cart.objects.create(user=request.user)
-            for item_id, item_details in cart_data.items():
+            # Check if the user already has a cart
+            new_cart, created = Cart.objects.get_or_create(user=request.user)
+            if not created:
+                # Handle the case where the cart already exists
+                # Perhaps clear the existing items or update them
+                # new_cart.items.all().delete()  # Optionally clear existing items
+                pass
+            items_for_stripe = []
+
+            for cart_key, item_details in cart_data.items():
+                item_id, toppings_key = (cart_key.split('-', 1) + [""])[:2]
                 item = MenuItem.objects.get(id=item_id)
+                quantity = int(item_details['quantity'])
+                price_per_item = Decimal(item_details['subtotal']) / quantity  
+
                 cart_item = CartItem.objects.create(
                     cart=new_cart,
                     item=item,
-                    quantity=item_details['quantity'],
+                    quantity=quantity,
                     subtotal=item_details['subtotal']
                 )
-                # Assume toppings are stored in session with their IDs
-                toppings = Topping.objects.filter(id__in=item_details.get('toppings', []))
+                toppings = Topping.objects.filter(id__in=(toppings_key.split('-') if toppings_key else []))
                 cart_item.toppings.set(toppings)
-            
-            # Optionally clear the session cart
-            del request.session['cart']
-            new_cart.save()
-        return redirect('order_success')
-    
 
-@login_required
+                items_for_stripe.append({
+                    'price_data': {
+                        'currency': 'eur',
+                        'product_data': {
+                            'name': item.name,
+                        },
+                        'unit_amount': int(price_per_item * 100), 
+                    },
+                    'quantity': quantity,
+                })
+
+            if items_for_stripe:
+                try:
+                    session = stripe.checkout.Session.create(
+                        payment_method_types=['card'],
+                        line_items=items_for_stripe,
+                        mode='payment',
+                        success_url=request.build_absolute_uri('/success/'),
+                        cancel_url=request.build_absolute_uri('/cancel/'),
+                    )
+                    send_mail(
+                        'Order Confirmation',
+                        'Your order has been placed successfully.',
+                        'noreplymoicecream@gmail.com',
+                        [request.user.email],
+                        fail_silently=False,
+                    )
+                    return redirect(session.url) 
+                except stripe.error.StripeError as e:
+                    return render(request, 'error.html', {'message': str(e)})
+
+            del request.session['cart']
+            return redirect('order_success')
+
+    return render(request, 'checkout/checkout.html', {'cart_total': cart_total})
+
+    
 def add_to_cart(request, item_id):
     item = get_object_or_404(MenuItem, id=item_id)
     cart = request.session.get('cart', {})
