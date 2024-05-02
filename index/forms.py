@@ -7,6 +7,8 @@ from .validators import validate_customer_phone_number, validate_customer_street
 from .models import PizzaUserProfile, NewsletterSubscription
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field
+import uuid
+
 
 
 logger = logging.getLogger(__name__)
@@ -77,8 +79,12 @@ class PizzaSignUpForm(UserCreationForm):
         self.helper.form_show_labels = False  
 
 
-    def try_save(self, request, commit=True):
-        user, _ = super().try_save(request, commit=False)
+    def save(self, commit=True):
+        user = super().save(commit=False)
+    
+        if not user.username:
+            user.username = str(uuid.uuid4())  
+
         if commit:
             user.save()
             PizzaUserProfile.objects.create(
@@ -88,14 +94,14 @@ class PizzaSignUpForm(UserCreationForm):
                 city=self.cleaned_data['city'],
                 zip_code=self.cleaned_data['zip_code']
             )
-            # Check if user opted for newsletter subscription
+
+        # Check if user opted for newsletter subscription
             if self.cleaned_data.get('newsletter_subscribe'):
                 NewsletterSubscription.objects.create(email=user.email)
+        
             logger.debug("User and profile saved successfully")
-        else:
-            logger.debug("Save not committed")
-        return user, None
 
+            return user
 
 class PizzaSignInForm(forms.Form):
     email = forms.EmailField(widget=forms.EmailInput(
