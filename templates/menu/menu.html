@@ -75,14 +75,15 @@
                             <img src="{% static 'default.jpg' %}" alt="Default Image" class="img-fluid">
                             {% endif %}
                             <p>{{ item.description }}</p>
-                            <p>Base Price: ${{ item.price }}</p>
+                            <p>Base Price: €{{ item.price }}</p>
                             <form method="post" action="{% url 'add_to_cart' item.id %}">
                                 {% csrf_token %}
                                 {% for topping in toppings %}
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="toppings" value="{{ topping.id }}">
+                                    <input class="form-check-input" type="checkbox" name="toppings"
+                                        value="{{ topping.id }}">
                                     <label class="form-check-label" for="topping{{ topping.id }}">
-                                        {{ topping.name }} (+${{ topping.price }})
+                                        {{ topping.name }} (+€{{ topping.price }})
                                     </label>
                                 </div>
                                 {% endfor %}
