@@ -43,7 +43,7 @@
                     <a class="nav-link" href="{% url 'cart' %}">
                         <i class="fas fa-pizza-slice fa-2x"></i>
                         <span class="badge bg-danger">
-                            {% if cart_total %}${{ cart_total|floatformat:2 }}{% else %}0.00{% endif %}
+                            {% if cart_total %}€{{ cart_total|floatformat:2 }}{% else %}€0.00{% endif %}
                         </span>
                     </a>
                 </li>

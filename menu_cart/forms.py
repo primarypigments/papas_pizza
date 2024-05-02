@@ -76,5 +76,5 @@ class MenuItemForm(forms.ModelForm):
             'description': 'Enter a brief description of the pizza.',
         }
         labels = {
-            'price': 'Price ($)'
+            'price': 'Price (€)'
         }
