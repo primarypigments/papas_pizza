@@ -262,45 +262,20 @@ def menu_view(request):
     logger.info("Entering menu_view function")
 
     if request.method == 'POST':
-        logger.info("Processing POST request")
-
-        if 'add_item' in request.POST:
-            logger.info("Add item form submitted")
-            item_form = MenuItemForm(request.POST, request.FILES)
-            if item_form.is_valid():
-                logger.info("Form is valid. Saving new item.")
-                item_form.save()
-                return redirect('menu')
-            else:
-                logger.warning("Form is invalid.")
-                logger.warning(item_form.errors)  # Log form errors
-                return render(request, 'menu/menu.html', {
-                    'menu_items': MenuItem.objects.all(),
-                    'item_form': item_form,
-                    'toppings': Topping.objects.all(),
-                    'form_errors': item_form.errors
-                })
+        item_form = MenuItemForm(request.POST, request.FILES)
+        if item_form.is_valid():
+            logger.info("Form is valid. Saving new item.")
+            item_form.save()
+            return redirect('menu')
         else:
-            item_id = request.POST.get('item_id')
-            if not item_id:
-                logger.error("No item_id provided in the POST request.")
-                return HttpResponse("Item ID is required.", status=400)
-
-            item = get_object_or_404(MenuItem, pk=item_id)
-            item_form = MenuItemForm(
-                request.POST, request.FILES, instance=item)
-            if item_form.is_valid():
-                logger.info("Form is valid. Saving edited item.")
-                item_form.save()
-                return redirect('menu')
-            else:
-                logger.warning("Form is invalid.")
-                logger.warning(item_form.errors)  # Log form errors
-                return render(request, 'menu/edit_menu_item.html', {
-                    'menu_item': item,
-                    'item_form': item_form,
-                    'form_errors': item_form.errors
-                })
+            logger.warning("Form is invalid.")
+            logger.warning(item_form.errors)  # Log form errors
+            return render(request, 'menu/menu.html', {
+                'menu_items': MenuItem.objects.all(),
+                'item_form': item_form,
+                'toppings': Topping.objects.all(),
+                'form_errors': item_form.errors
+            })
     else:
         logger.info("Rendering menu page")
         menu_items = MenuItem.objects.all()
