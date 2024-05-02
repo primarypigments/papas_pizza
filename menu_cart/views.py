@@ -1,5 +1,5 @@
 # django imports
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.contrib import messages
@@ -178,7 +178,9 @@ def checkout(request):
                         payment_method_types=['card'],
                         line_items=items_for_stripe,
                         mode='payment',
-                        success_url=request.build_absolute_uri('/checkout/success/'),
+                        success_url=request.build_absolute_uri(
+                            reverse('checkout_success', kwargs={'id': new_cart.id})
+                        ),
                         cancel_url=request.build_absolute_uri('/cancel/'),
                     )
                     send_mail(
@@ -195,7 +197,7 @@ def checkout(request):
                     )
                     del request.session['cart']
                     return redirect(session.url, id=new_cart.id)
-                    # return redirect(checkout_success, new_cart.id) 
+                    return redirect(reverse('checkout_success', kwargs={'id': new_cart.id}))
                 except stripe.error.StripeError as e:
                     return render(request, 'checkout/error.html', {'message': str(e)})
 
