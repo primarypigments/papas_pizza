@@ -2,7 +2,7 @@ from .forms import PasswordResetForm, PizzaSignUpForm, PizzaSignInForm
 from django.contrib.auth.decorators import login_required
 from .models import PizzaUserProfile
 from menu_cart.models import CartItem, Cart
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 import logging
 from django.contrib import messages
 
@@ -45,18 +45,21 @@ def profile(request):
     """
     Displays the user's profile with related information.
     """
-    profiles = PizzaUserProfile.objects.filter(user=request.user)
+    profile = get_object_or_404(PizzaUserProfile, user=request.user)
 
-    try:
-        user_cart = Cart.objects.get(user=request.user)
-        cart_items = CartItem.objects.filter(cart=user_cart)
-    except Cart.DoesNotExist:
-        cart_items = []
+    carts = Cart.objects.filter(user=request.user)
+
+    # try:
+    #     user_cart = Cart.objects.get(user=request.user)
+    #     cart_items = CartItem.objects.filter(cart=user_cart)
+    # except Cart.DoesNotExist:
+    #     cart_items = []
 
     template = "profile/profile.html"
     context = {
-        "profiles": profiles,
-        "cart_items": cart_items
+        "profile": profile,
+        # "cart_items": cart_items,
+        "carts": carts,
     }
     return render(request, template, context)
     
