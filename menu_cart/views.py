@@ -184,9 +184,10 @@ def checkout(request):
                     send_mail(
                         "Pappa's Pizza Order Confirmation",
                         (
-                            "Your order has been placed successfully.\n\n"
-                            f"Order Total: {cart_item.subtotal}",
-                            f"Order Date: {new_cart.created_at}",
+                            f"Your order has been placed successfully.\n\n"
+                            f"Order Total: {cart_item.subtotal}\n"
+                            f"Order Date: {new_cart.created_at}\n\n"
+                            "Thank you, from Pappa's Pizza!"
                         ),
                         settings.DEFAULT_FROM_EMAIL,
                         [request.user.email],
