@@ -4,124 +4,120 @@
 
 <!-- Toggle Buttons for Sections -->
 <div class="container mt-5 text-center">
-  <div class="btn-group btn-group-toggle" data-toggle="buttons">
-    <label class="btn btn-secondary active">
-      <input type="radio" name="sections" id="profiles" autocomplete="off" checked> Profile
-    </label>
-    <label class="btn btn-secondary">
-      <input type="radio" name="sections" id="cart_items" autocomplete="off"> Orders
-    </label>
-  </div>
+	<div class="btn-group btn-group-toggle" data-toggle="buttons">
+		<label class="btn btn-secondary active">
+			<input type="radio" name="sections" id="profiles" autocomplete="off" checked> Profile
+		</label>
+		<label class="btn btn-secondary">
+			<input type="radio" name="sections" id="cart_items" autocomplete="off"> Orders
+		</label>
+	</div>
 </div>
 
 <!-- Profiles Section -->
 <section id="profile_section" class="mt-5">
-  <div class="container">
-    <h2 class="text-center mb-4">{{ profile.user.first_name }}'s Profile</h2>
-    <div class="row {% cycle 'bg-secondary text-light' 'bg-secondary bg-gradient bg-opacity-50 text-dark' %}">
-      <!-- Responsive grid setup for each column -->
-      <div class="col-12 col-md-4 col-lg-2">
-        <i class="fas fa-envelope"></i>
-        Email:<br>
-        {{ profile.user.email }}
-        <br><br>
-      </div>
-      <div class="col-12 col-md-4 col-lg-2">
-        <i class="fas fa-user"></i>
-        First Name:<br>
-        <strong>{{ profile.user.first_name }}</strong>
-        <br><br>
-      </div>
-      <div class="col-12 col-md-4 col-lg-2">
-        <i class="fas fa-user"></i>
-        Last Name:<br>
-        <strong>{{ profile.user.last_name }}</strong>
-        <br><br>
-      </div>
-      <div class="col-12 col-md-6 col-lg-2">
-        <i class="fas fa-home"></i>
-        Street Address:<br>
-        <strong>{{ profile.street_address }}</strong>
-        <br><br>
-      </div>
-      <div class="col-12 col-md-6 col-lg-2">
-        <i class="fas fa-location-dot"></i>
-        City:<br>
-        <strong>{{ profile.city }}</strong>
-        <br><br>
-      </div>
-      <div class="col-12 col-md-6 col-lg-2">
-        <i class="fas fa-phone"></i>
-        Phone:<br>
-        <strong>{{ profile.phone_number }}</strong>
-      </div>
-    </div>
-  </div>
+	<div class="container">
+		<h2 class="text-center mb-4">{{ profile.user.first_name }}'s Profile</h2>
+		<div class="row {% cycle 'bg-secondary text-light' 'bg-secondary bg-gradient bg-opacity-50 text-dark' %}">
+			<!-- Responsive grid setup for each column -->
+			<div class="col-12 col-md-4 col-lg-2">
+				<i class="fas fa-envelope"></i>
+				Email:<br>
+				{{ profile.user.email }}
+				<br><br>
+			</div>
+			<div class="col-12 col-md-4 col-lg-2">
+				<i class="fas fa-user"></i>
+				First Name:<br>
+				<strong>{{ profile.user.first_name }}</strong>
+				<br><br>
+			</div>
+			<div class="col-12 col-md-4 col-lg-2">
+				<i class="fas fa-user"></i>
+				Last Name:<br>
+				<strong>{{ profile.user.last_name }}</strong>
+				<br><br>
+			</div>
+			<div class="col-12 col-md-6 col-lg-2">
+				<i class="fas fa-home"></i>
+				Street Address:<br>
+				<strong>{{ profile.street_address }}</strong>
+				<br><br>
+			</div>
+			<div class="col-12 col-md-6 col-lg-2">
+				<i class="fas fa-location-dot"></i>
+				City:<br>
+				<strong>{{ profile.city }}</strong>
+				<br><br>
+			</div>
+			<div class="col-12 col-md-6 col-lg-2">
+				<i class="fas fa-phone"></i>
+				Phone:<br>
+				<strong>{{ profile.phone_number }}</strong>
+			</div>
+		</div>
+	</div>
 </section>
 
 <!-- Cart Items Section -->
 <section id="cart_items_section" class="mt-5" style="display:none;">
-  <div class="container">
-    <h2 class="text-center mb-4">Orders</h2>
-    {% for cart in carts %}
-      {% for pizza in cart.items.all %}
-      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 my-3 p-3 {% cycle 'bg-secondary text-light' 'bg-secondary bg-gradient bg-opacity-50 text-dark' %}">
-        <div class="col">
-          <i class="fas fa-pizza-slice"></i> <strong>{{ pizza.item.name }}</strong>
-          <br>
-            {% for topping in pizza.toppings.all %}
-              <em>
-                &nbsp; - {{ topping.name }} (+€{{ topping.price }})<br>
-              </em>
-            {% empty %}
-              <em>No additional toppings selected</em>
-            {% endfor %}
-            <br>
-        </div>
-        <div class="col">
-          Quantity: {{ pizza.quantity }}
-          <br><br>
-        </div>
-        <div class="col">
-          Total: €{{ pizza.subtotal }}
-          <br><br>
-        </div>
-        <div class="col">
-          Ordered on:<br>
-          {{ cart.created_at|date:"n F, Y" }}<br>
-          {{ cart.created_at|date:"@G:i" }}
-          <br><br>
-        </div>
-      </div>
-      {% empty %}
-      <div class="row text-center">
-        <div class="col">
-          You do not have any previous orders.
-        </div>
-      </div>
-      {% endfor %}
-    {% empty %}
-      <div class="row text-center">
-        <div class="col">
-          You have not made any purchases yet.
-        </div>
-      </div>
-    {% endfor %}
-  </div>
+	<div class="container">
+		<h2 class="text-center mb-4">Orders</h2>
+		{% for cart in carts %}
+			<div class="row my-0 p-3 bg-secondary bg-gradient bg-opacity-50 text-dark">
+				Order Number: {{ cart.id }}
+				<br>
+				Date:
+				{{ cart.created_at|date:"F d, Y" }}
+				{{ cart.created_at|date:"@G:i" }}
+			</div>
+			<div class="row row-cols-1 row-cols-md-2 p-3 bg-secondary text-light">
+				{% for pizza in cart.items.all %}
+					<div class="col">
+						<i class="fas fa-pizza-slice"></i> {{ pizza.quantity }} x <strong>{{ pizza.item.name }}</strong>
+						<br>
+						{% for topping in pizza.toppings.all %}
+						<em>
+							&nbsp; - {{ topping.name }} (+€{{ topping.price }})<br>
+						</em>
+						{% empty %}
+						<em>No additional toppings selected</em>
+						{% endfor %}
+						<br>
+					</div>
+					<div class="col">
+						Subtotal: €{{ pizza.subtotal }}
+						<br><br>
+					</div>
+				{% endfor %}
+			</div>
+			<div class="row my-0 mb-3 p-3 bg-dark bg-gradient text-light">
+				<div class="col">
+					<a href="{% url 'checkout_success' cart.id %}" class="btn btn-danger btn-lg my-2">View Order</a>
+				</div>
+			</div>
+		{% empty %}
+			<div class="row text-center">
+				<div class="col">
+					You have not made any purchases yet.
+				</div>
+			</div>
+		{% endfor %}
+	</div>
 </section>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-  // Listen for changes on each radio input
-  document.querySelectorAll('input[name="sections"]').forEach(input => {
-    input.addEventListener('change', function () {
-      // Toggle visibility based on which radio is selected
-      const showProfiles = document.getElementById('profiles').checked;
-      document.getElementById('profile_section').style.display = showProfiles ? '' : 'none';
-      document.getElementById('cart_items_section').style.display = showProfiles ? 'none' : '';
-    });
-  });
-});
+	document.addEventListener('DOMContentLoaded', function () {
+		// Listen for changes on each radio input
+		document.querySelectorAll('input[name="sections"]').forEach(input => {
+			input.addEventListener('change', function () {
+				// Toggle visibility based on which radio is selected
+				const showProfiles = document.getElementById('profiles').checked;
+				document.getElementById('profile_section').style.display = showProfiles ? '' : 'none';
+				document.getElementById('cart_items_section').style.display = showProfiles ? 'none' : '';
+			});
+		});
+	});
 </script>
 
 {% endblock %}
