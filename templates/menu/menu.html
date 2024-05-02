@@ -48,6 +48,7 @@
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                         data-bs-target="#itemModal{{ item.id }}">
                         View Details
+                        {% if user.is_superuser %}
                     </button>
                     <a href="{% url 'edit_menu_item' item.id %}" class="btn btn-warning">
                         Edit
@@ -56,7 +57,27 @@
                         data-bs-target="#deleteItemModal{{ item.id }}">
                         Delete
                     </button>
-
+                    <div class="modal fade" id="deleteItemModal{{ item.id }}" tabindex="-1"
+                        aria-labelledby="deleteItemModalLabel{{ item.id }}" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteItemModalLabel{{ item.id }}">Confirm Deletion</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Are you sure you want to delete "{{ item.name }}"?
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="{% url 'delete_menu_item' item.id %}" class="btn btn-danger">Delete</a>
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
             <!-- Modal for Viewing Details -->
@@ -96,31 +117,8 @@
                     </div>
                 </div>
             </div>
-
-            <div class="modal fade" id="deleteItemModal{{ item.id }}" tabindex="-1"
-                aria-labelledby="deleteItemModalLabel{{ item.id }}" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="deleteItemModalLabel{{ item.id }}">Confirm Deletion</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            Are you sure you want to delete "{{ item.name }}"?
-                        </div>
-                        <div class="modal-footer">
-                            <a href="{% url 'delete_menu_item' item.id %}" class="btn btn-danger">Delete</a>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
         {% endfor %}
     </div>
 </div>
-{% endblock %}
-
-{% block javascript %}
-<!-- <script src="{% static 'js/menu_form.js' %}"></script> -->
 {% endblock %}
