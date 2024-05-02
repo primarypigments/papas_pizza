@@ -22,18 +22,22 @@
     /* This adds the shadow */
     margin: auto;
   }
-
 </style>
 
 <div class="container my-5">
   <div class="form-signup shadow">
     <h2 class="form-signup-heading">{% trans "Create an account" %}</h2>
     <p class="text-muted">{% trans "* Required fields" %}</p>
-    <form method="post" action="{% url 'account_signup' %}" class="needs-validation" novalidate>
+    <form method="post" action="{% url 'my_signup_view' %}" class="needs-validation" novalidate>
       {% csrf_token %}
       <!-- Email -->
       <div class="mb-3">
         {{ form.email|as_crispy_field }}
+      </div>
+
+      <!-- Phone Number -->
+      <div class="mb-3">
+        {{ form.phone_number|as_crispy_field }}
       </div>
 
       <!-- Newsletter -->
@@ -78,7 +82,7 @@
 
       <!-- Submit Button -->
       <div class="mt-4 d-flex justify-content-center">
-        <button type="submit"  class="btn btn-dark btn-block btn-lg">{% trans "Create a new account" %}</button>
+        <button type="submit" class="btn btn-dark btn-block btn-lg">{% trans "Create a new account" %}</button>
       </div>
 
     </form>
