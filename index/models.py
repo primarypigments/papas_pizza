@@ -46,3 +46,26 @@ class NewsletterSubscription(models.Model):
     def __str__(self):
         return self.email
         
+
+class ContactMessage(models.Model):
+    """
+    Model to store contact messages submitted by users.
+    Includes fields for name, email,
+    and the message content, along with a
+    timestamp marking when the message was submitted.
+    """
+    name = models.CharField(max_length=40)
+    phone_number = models.CharField(
+        max_length=17, validators=[
+            validate_customer_phone_number], blank=False)
+    email = models.EmailField()
+    message = models.TextField(max_length=350)
+    submitted_at = models.DateTimeField(auto_now_add=True)
+
+
+    def __str__(self):
+        """
+        Returns a string representation of the message,
+        showing the sender's name and email.
+        """
+        return f"Message from {self.name} - {self.email}"
