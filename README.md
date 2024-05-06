@@ -7,69 +7,20 @@ README.md
 [![GitHub last commit](https://img.shields.io/github/last-commit/primarypigments/papas_pizza)](https://github.com/primarypigments/papas_pizza/commits/main)
 [![GitHub repo size](https://img.shields.io/github/repo-size/primarypigments/papas_pizza)](https://github.com/primarypigments/papas_pizza)
 
-🛑🛑🛑🛑🛑🛑🛑🛑🛑START OF NOTES (to be deleted)
 
-!! IMPORTANT !! RE: Table of Contents
+Introducing Papa's Pizza – your ultimate destination for mouthwatering pizzas delivered straight to your doorstep! At Papa's Pizza, we're on a mission to redefine the pizza delivery experience, one slice at a time.
 
-DO NOT add a Table of Contents to your README or TESTING!!
-These are outdated since 2021 when GitHub added them built-in to Markdown files automatically.
+Our project aims to create a seamless and user-friendly online platform where pizza lovers can easily browse through a tantalizing array of pizza options, customize their orders to perfection, and have them swiftly delivered to their homes. We understand the importance of convenience and quality when it comes to enjoying a delicious pizza, which is why we're dedicated to providing an exceptional service that caters to the needs of our customers.
 
-Assessors see this as bad practice since it's outdated for a few years now,
-as if you've taken it from someone else's project that did the same thing.
+Papa's Pizza is designed to target busy individuals and families who crave the convenience of ordering delicious food without sacrificing taste or quality. Whether you're hosting a movie night with friends, having a family dinner, or simply indulging in a solo pizza feast, Papa's Pizza is here to satisfy your cravings with our delectable menu offerings and prompt delivery service.
 
----
+Our platform will be incredibly useful to our target audience by offering a hassle-free way to enjoy gourmet pizzas without ever having to leave the comfort of their homes. With just a few clicks, customers can explore our menu, select their favorite toppings, and ensuring a stress-free and enjoyable dining experience from start to finish.
 
-In this section, you will include a few paragraphs providing an overview of your project.
-Essentially, this part is your "sales pitch".
-
-At this stage, you should have a name for your project so use it!
-Don't introduce the project as a "portfolio project" for the diploma.
-
-In this section, describe what the project hopes to accomplish, who it is intended to target, and how it will be useful to the target audience.
-
-Consider adding a mockup image using the "Am I Responsive" website.
-Here's your deployed site as an example:
-https://ui.dev/amiresponsive?url=https://pappapizza-88bb126828cc.herokuapp.com
-
-Screenshots for the README and testing should not be inside of `assets/` or `static/` image folders.
-(reminder: `assets/` and `static/` are for files used on the live site, not documentation)
-Consider adding a new folder called `documentation`, and add the amiresponsive screenshot inside of that folder.
-To add the image into your README, use this format:
-(assuming you have a new folder called `documentation` with an image called "mockup.png")
+At Papa's Pizza, we're not just about delivering pizzas – we're about delivering happiness, one delicious slice at a time. Join us on our journey to pizza perfection and taste the Papa's Pizza difference today!
 
 ![screenshot](documentation/mockup.png)
 
-Note: Markdown files (.md) should not contain HTML elements like `img`, `br`, `div`, `a`, etc, only Markdown formatting.
-Find out more about using Markdown elements here:
-https://pandao.github.io/editor.md/en.html
-
 ---
-
-GitHub now supports CALLOUTS in Markdown files.
-There are some callouts already embedded in this application for you.
-However, if you feel that you want to add more, there are certain ones you can use.
-
-NOTE: the preview for callouts isn't yet supported in Gitpod/Codeanywhere/VSCode/etc.
-You'll have to commit/push the changes to GitHub to see it in action.
-
-> [!NOTE]  
-> BLUE: Highlights information that users should take into account, even when skimming.
-
-> [!TIP]  
-> GREEN: Optional information to help a user be more successful.
-
-> [!IMPORTANT]  
-> PURPLE: Crucial information necessary for users to succeed.
-
-> [!WARNING]  
-> YELLOW: Critical content demanding immediate user attention due to potential risks.
-
-> [!CAUTION]  
-> RED: Negative potential consequences of an action.
-
-Source: https://github.com/orgs/community/discussions/16925
-
-🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑-END OF NOTES (to be deleted)
 
 ![screenshot](documentation/mockup.png)
 
@@ -160,15 +111,15 @@ In this section, list all of your user stories for the project.
 
 ### New Site Users
 
-- As a new site user, I would like to ____________, so that I can ____________.
-- As a new site user, I would like to ____________, so that I can ____________.
-- As a new site user, I would like to ____________, so that I can ____________.
-- As a new site user, I would like to ____________, so that I can ____________.
-- As a new site user, I would like to ____________, so that I can ____________.
+- As a new site user, I can select a pick-up option, so that I can collect my order from the restaurant at my convenience.
+- As a new site user, I can view the detailed menu with toppings and prices on the website, so that I can choose my meals according to my preference and budget.
+- As a new site user, I can create a user account on the website, so that I can save my preferences and order history for future orders.
+- As a new site user, I want to be able to pay for my orders using Stripe, so that I can securely process my payment online.
+- As a new site user, I can choose a delivery option when placing an order, so that I can have pizzas delivered to my address.
 
 ### Returning Site Users
 
-- As a returning site user, I would like to ____________, so that I can ____________.
+- As a returning site user, I would like to review my past orders, so that I can order the same pizzas.
 - As a returning site user, I would like to ____________, so that I can ____________.
 - As a returning site user, I would like to ____________, so that I can ____________.
 - As a returning site user, I would like to ____________, so that I can ____________.
@@ -526,7 +477,7 @@ when searching online to find my page easily from a search engine.
 This included a series of the following keyword types
 
 - Short-tail (head terms) keywords
-- Long-tail keywords
+- Long-tail keywords #####add to keyword to base template meta
 
 I also played around with [Word Tracker](https://www.wordtracker.com) a bit
 to check the frequency of some of my site's primary keywords (only until the free trial expired).
@@ -572,31 +523,24 @@ provided by Code Institute.
 I have incorporate a newsletter sign-up form on my application, to allow users to supply their
 email address if they are interested in learning more. 
 
-🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑 START OF NOTES (to be deleted)
 
-Option 1 (MailChimp):
-- Sign up for a Mailchimp account
-- This allows up to 2,500 subscription email sends per month
-- Incorporate the code and scripts into your project like in the CI lessons.
-
-Option 2 (Django):
-- Create a custom newsletter app in your project, with a custom model.
-- This method satisfies two assessment criteria:
-    - include a newsletter
-    - one of your custom models
-- It doesn't need anything except the "email" on the model.
-- Example:
     ```python
-    class Newsletter(models.Model):
-    email = models.EmailField(null=False, blank=False)
+    class NewsletterSubscription(models.Model):
+    """
+    Represents a subscription to a newsletter.
+
+    This model stores the email addresses of
+    subscribers and the date they subscribed.
+    Each subscriber's email must be unique to avoid duplicate entries.
+    """
+    email = models.EmailField(unique=True)
+    date_subscribed = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.email
     ```
-- Consider using the same `send_mail()` functionality used on the `webhook_handler.py` file.
-    - You can trigger an email sent out to subscribed users when new products are added to the site!
+- 
 
-🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑-END OF NOTES (to be deleted)
 
 ## Testing
 
@@ -633,131 +577,16 @@ To obtain my own Postgres Database from Code Institute, I followed these steps:
 > - Code Institute students are allowed a maximum of 8 databases.
 > - Databases are subject to deletion after 18 months.
 
-### Amazon AWS
+### Cloudinary API
 
-This project uses [AWS](https://aws.amazon.com) to store media and static files online, due to the fact that Heroku doesn't persist this type of data.
+This project uses the [Cloudinary API](https://cloudinary.com) to store media assets online, due to the fact that Heroku doesn't persist this type of data.
 
-Once you've created an AWS account and logged-in, follow these series of steps to get your project connected.
-Make sure you're on the **AWS Management Console** page.
+To obtain your own Cloudinary API key, create an account and log in.
 
-#### S3 Bucket
-
-- Search for **S3**.
-- Create a new bucket, give it a name (matching your Heroku app name), and choose the region closest to you.
-- Uncheck **Block all public access**, and acknowledge that the bucket will be public (required for it to work on Heroku).
-- From **Object Ownership**, make sure to have **ACLs enabled**, and **Bucket owner preferred** selected.
-- From the **Properties** tab, turn on static website hosting, and type `index.html` and `error.html` in their respective fields, then click **Save**.
-- From the **Permissions** tab, paste in the following CORS configuration:
-
-	```shell
-	[
-		{
-			"AllowedHeaders": [
-				"Authorization"
-			],
-			"AllowedMethods": [
-				"GET"
-			],
-			"AllowedOrigins": [
-				"*"
-			],
-			"ExposeHeaders": []
-		}
-	]
-	```
-
-- Copy your **ARN** string.
-- From the **Bucket Policy** tab, select the **Policy Generator** link, and use the following steps:
-	- Policy Type: **S3 Bucket Policy**
-	- Effect: **Allow**
-	- Principal: `*`
-	- Actions: **GetObject**
-	- Amazon Resource Name (ARN): **paste-your-ARN-here**
-	- Click **Add Statement**
-	- Click **Generate Policy**
-	- Copy the entire Policy, and paste it into the **Bucket Policy Editor**
-
-		```shell
-		{
-			"Id": "Policy1234567890",
-			"Version": "2012-10-17",
-			"Statement": [
-				{
-					"Sid": "Stmt1234567890",
-					"Action": [
-						"s3:GetObject"
-					],
-					"Effect": "Allow",
-					"Resource": "arn:aws:s3:::your-bucket-name/*"
-					"Principal": "*",
-				}
-			]
-		}
-		```
-
-	- Before you click "Save", add `/*` to the end of the Resource key in the Bucket Policy Editor (like above).
-	- Click **Save**.
-- From the **Access Control List (ACL)** section, click "Edit" and enable **List** for **Everyone (public access)**, and accept the warning box.
-	- If the edit button is disabled, you need to change the **Object Ownership** section above to **ACLs enabled** (mentioned above).
-
-#### IAM
-
-Back on the AWS Services Menu, search for and open **IAM** (Identity and Access Management).
-Once on the IAM page, follow these steps:
-
-- From **User Groups**, click **Create New Group**.
-	- Suggested Name: `group-papas_pizza` (group + the project name)
-- Tags are optional, but you must click it to get to the **review policy** page.
-- From **User Groups**, select your newly created group, and go to the **Permissions** tab.
-- Open the **Add Permissions** dropdown, and click **Attach Policies**.
-- Select the policy, then click **Add Permissions** at the bottom when finished.
-- From the **JSON** tab, select the **Import Managed Policy** link.
-	- Search for **S3**, select the `AmazonS3FullAccess` policy, and then **Import**.
-	- You'll need your ARN from the S3 Bucket copied again, which is pasted into "Resources" key on the Policy.
-
-		```shell
-		{
-			"Version": "2012-10-17",
-			"Statement": [
-				{
-					"Effect": "Allow",
-					"Action": "s3:*",
-					"Resource": [
-						"arn:aws:s3:::your-bucket-name",
-						"arn:aws:s3:::your-bucket-name/*"
-					]
-				}
-			]
-		}
-		```
-	
-	- Click **Review Policy**.
-	- Suggested Name: `policy-papas_pizza` (policy + the project name)
-	- Provide a description:
-		- "Access to S3 Bucket for papas_pizza static files."
-	- Click **Create Policy**.
-- From **User Groups**, click your "group-papas_pizza".
-- Click **Attach Policy**.
-- Search for the policy you've just created ("policy-papas_pizza") and select it, then **Attach Policy**.
-- From **User Groups**, click **Add User**.
-	- Suggested Name: `user-papas_pizza` (user + the project name)
-- For "Select AWS Access Type", select **Programmatic Access**.
-- Select the group to add your new user to: `group-papas_pizza`
-- Tags are optional, but you must click it to get to the **review user** page.
-- Click **Create User** once done.
-- You should see a button to **Download .csv**, so click it to save a copy on your system.
-	- **IMPORTANT**: once you pass this page, you cannot come back to download it again, so do it immediately!
-	- This contains the user's **Access key ID** and **Secret access key**.
-	- `AWS_ACCESS_KEY_ID` = **Access key ID**
-	- `AWS_SECRET_ACCESS_KEY` = **Secret access key**
-
-#### Final AWS Setup
-
-- If Heroku Config Vars has `DISABLE_COLLECTSTATIC` still, this can be removed now, so that AWS will handle the static files.
-- Back within **S3**, create a new folder called: `media`.
-- Select any existing media images for your project to prepare them for being uploaded into the new folder.
-- Under **Manage Public Permissions**, select **Grant public read access to this object(s)**.
-- No further settings are required, so click **Upload**.
+- For *Primary interest*, you can choose *Programmable Media for image and video API*.
+- Optional: *edit your assigned cloud name to something more memorable*.
+- On your Cloudinary Dashboard, you can copy your **API Environment Variable**.
+- Be sure to remove the `CLOUDINARY_URL=` as part of the API **value**; this is the **key**.
 
 ### Stripe API
 
@@ -817,17 +646,19 @@ Deployment steps are as follows, after account setup:
 
 | Key | Value |
 | --- | --- |
-| `AWS_ACCESS_KEY_ID` | user's own value |
-| `AWS_SECRET_ACCESS_KEY` | user's own value |
+| `CLOUDINARY_URL` | user's own value |
+| `CLOUNDINARY_API_KEY` | user's own value |
+| `CLOUNDINARY_API_SECRET` | user's own value |
+| `CLOUNDINARY_NAME` | user's own value |
 | `DATABASE_URL` | user's own value |
-| `DISABLE_COLLECTSTATIC` | 1 (*this is temporary, and can be removed for the final deployment*) |
 | `EMAIL_HOST_PASS` | user's own value |
 | `EMAIL_HOST_USER` | user's own value |
+| `HOST` | user's own value |
+| `PAPERTRAIL_API_TOKEN` | user's own value |
 | `SECRET_KEY` | user's own value |
-| `STRIPE_PUBLIC_KEY` | user's own value |
 | `STRIPE_SECRET_KEY` | user's own value |
-| `STRIPE_WH_SECRET` | user's own value |
-| `USE_AWS` | True |
+| `STRIPE_PUBLIC_KEY` | user's own value |
+
 
 Heroku needs three additional files in order to deploy properly.
 
@@ -887,15 +718,18 @@ Sample `env.py` file:
 ```python
 import os
 
-os.environ.setdefault("AWS_ACCESS_KEY_ID", "user's own value")
-os.environ.setdefault("AWS_SECRET_ACCESS_KEY", "user's own value")
+os.environ.setdefault("DEVELOPMENT", "user's own value")
+os.environ.setdefault("DEBUG", "user's own value")
 os.environ.setdefault("DATABASE_URL", "user's own value")
 os.environ.setdefault("EMAIL_HOST_PASS", "user's own value")
 os.environ.setdefault("EMAIL_HOST_USER", "user's own value")
 os.environ.setdefault("SECRET_KEY", "user's own value")
 os.environ.setdefault("STRIPE_PUBLIC_KEY", "user's own value")
 os.environ.setdefault("STRIPE_SECRET_KEY", "user's own value")
-os.environ.setdefault("STRIPE_WH_SECRET", "user's own value")
+os.environ.setdefault("CLOUNDINARY_URL", "user's own value")
+os.environ.setdefault("CLOUNDINARY_NAMEL", "user's own value")
+os.environ.setdefault("CLOUNDINARY_API_KEY", "user's own value")
+os.environ.setdefault("CLOUNDINARY_API_SECRET", "user's own value")
 
 # local environment only (do not include these in production/deployment!)
 os.environ.setdefault("DEBUG", "True")
