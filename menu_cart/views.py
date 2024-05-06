@@ -166,47 +166,49 @@ def checkout(request):
                 items_for_stripe.append({
                     'price_data': {
                         'currency': 'eur',
-                        'product_data': {
-                            'name': item.name,
-                        },
-                        'unit_amount': int(price_per_item * 100), 
+                        'product_data': {'name': item.name},
+                        'unit_amount': int(price_per_item * 100)
                     },
-                    'quantity': quantity,
+                    'quantity': quantity
                 })
 
             if items_for_stripe:
-                try:
-                    session = stripe.checkout.Session.create(
-                        payment_method_types=['card'],
-                        line_items=items_for_stripe,
-                        mode='payment',
-                        success_url=request.build_absolute_uri(
-                            reverse('checkout_success', kwargs={'id': new_cart.id})
-                        ),
-                        cancel_url=request.build_absolute_uri('/cancel/'),
-                    )
-                    send_mail(
-                        "Pappa's Pizza Order Confirmation",
-                        (
-                            f"Your order has been placed successfully.\n\n"
-                            f"Order Total: €{cart_item.subtotal}\n"
-                            f"Order Date: {new_cart.created_at}\n\n"
-                            "Thank you, from Pappa's Pizza!"
-                        ),
-                        settings.DEFAULT_FROM_EMAIL,
-                        [request.user.email],
-                        fail_silently=False,
-                    )
-                    del request.session['cart']
-                    return redirect(session.url, id=new_cart.id)
-                    return redirect(reverse('checkout_success', kwargs={'id': new_cart.id}))
-                except stripe.error.StripeError as e:
-                    return render(request, 'checkout/error.html', {'message': str(e)})
+                session = stripe.checkout.Session.create(
+                    payment_method_types=['card'],
+                    line_items=items_for_stripe,
+                    mode='payment',
+                    success_url=request.build_absolute_uri(reverse('checkout_success', kwargs={'cart_id': new_cart.id})),
+                    cancel_url=request.build_absolute_uri('/cancel/')
+                )
+                request.session['cart'] = {}  # Clear the cart
+                return redirect(session.url)
 
-            return redirect('order_success')
+@login_required
+def checkout_success(request, cart_id):
+    try:
+        cart = Cart.objects.get(id=cart_id, user=request.user)
+        cart_items = CartItem.objects.filter(cart=cart)
+        total = sum(item.subtotal for item in cart_items)
 
-    return render(request, 'checkout/checkout.html', {'cart_total': cart_total})
+        send_mail(
+            "Pappa's Pizza Order Confirmation",
+            (
+                f"Your order has been placed successfully.\n\n"
+                f"Order Total: €{total}\n"
+                f"Order Date: {cart.created_at}\n\n"
+                "Thank you, from Pappa's Pizza!"
+            ),
+            settings.DEFAULT_FROM_EMAIL,
+            [request.user.email],
+            fail_silently=False,
+        )
 
+        return render(request, 'checkout/success.html', {'cart': cart, 'total': total})
+        
+    except Cart.DoesNotExist:
+        return HttpResponseNotFound("Cart not found.")
+    except Exception as e:
+        return render(request, 'checkout/error.html', {'message': str(e)})
 
 def add_to_cart(request, item_id):
     item = get_object_or_404(MenuItem, id=item_id)
@@ -262,9 +264,12 @@ logger = logging.getLogger(__name__)
 
 def menu_view(request):
     """
-    View function for displaying the menu page and processing item additions or updates.
-    It handles both GET and POST requests: GET requests render the menu page with available
-    items and an item form, while POST requests handle the addition or updating of menu items.
+    View function for displaying the menu page and
+    processing item additions or updates.
+    It handles both GET and POST requests: GET requests render
+    the menu page with available
+    items and an item form, while POST requests handle the
+    addition or updating of menu items.
     """
     logger.info("Entering menu_view function")
 

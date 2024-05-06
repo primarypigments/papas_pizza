@@ -28,8 +28,8 @@ urlpatterns = [
     ),
 
     path(
-        'checkout/success/<int:id>/',
-        views.checkout_success,
+        'checkout/success/<int:cart_id>/'
+        , views.checkout_success,
         name='checkout_success'
     ),
 
