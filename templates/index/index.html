@@ -1,7 +1,50 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}" type="text/css">
 
+
+    <div class="container mt-4">
+        <div class="jumbotron">
+            <h1 class="display-4">Welcome to Papa's Pizza!</h1>
+            <p class="lead">Enjoy the best pizza in town delivered right to your door.</p>
+            <hr class="my-4">
+            <p>Check out our most popular pizzas!</p>
+        </div>
+        
+        <div class="row">  <!-- Ensure all cards are within this one 'row' div -->
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="{% static 'images/margherita.jpg' %}" class="card-img-top" alt="Margherita Pizza">
+                    <div class="card-body">
+                        <h5 class="card-title">Margherita</h5>
+                        <p class="card-text">Classic delight with 100% real mozzarella and Parmigiano cheese.</p>
+                        <a href="{% if user.is_authenticated %}{% url 'menu' %}{% else %}{% url 'my_signup_view' %}{% endif %}" class="btn btn-dark btn-block btn-lg">Order Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="{% static 'images/pepperoni.jpg' %}" class="card-img-top" alt="Pepperoni Pizza">
+                    <div class="card-body">
+                        <h5 class="card-title">Pepperoni</h5>
+                        <p class="card-text">A meaty feast of pepperoni, mozzarella cheese, and special sauce.</p>
+                        <a href="{% if user.is_authenticated %}{% url 'menu' %}{% else %}{% url 'my_signup_view' %}{% endif %}" class="btn btn-dark btn-block btn-lg">Order Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="{% static 'images/veggie.jpg' %}" class="card-img-top" alt="Veggie Pizza">
+                    <div class="card-body">
+                        <h5 class="card-title">Veggie</h5>
+                        <p class="card-text">Loaded with green peppers, onions, mushrooms, tomatoes and olives.</p>
+                        <a href="{% if user.is_authenticated %}{% url 'menu' %}{% else %}{% url 'my_signup_view' %}{% endif %}" class="btn btn-dark btn-block btn-lg">Order Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 {% endblock %}
