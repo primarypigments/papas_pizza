@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block head_title %}{% trans "Contact Us" %}{% endblock head_title %}
+
+{% block content %}
+
+<div class="container my-5">
+  <div class="form-contact shadow">
+    <h2 class="form-contact-heading">{% trans "Contact Us" %}</h2>
+    <form method="post" action="{% url 'contact' %}" class="needs-validation" novalidate>
+      {% csrf_token %}
+      <div class="mb-3">
+        {{ form.name|as_crispy_field }}
+      </div>
+      <div class="mb-3">
+        {{ form.email|as_crispy_field }}
+      </div>
+      <div class="mb-3">
+        {{ form.phone_number|as_crispy_field }}
+      </div>
+      <div class="mb-3">
+        {{ form.message|as_crispy_field }}
+      </div>
+      <div class="mt-4 d-flex justify-content-center">
+        <button type="submit" class="btn btn-dark btn-block btn-lg">{% trans "Send Message" %}</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock content %}

@@ -9,9 +9,10 @@ from .validators import (
 from .models import PizzaUserProfile, NewsletterSubscription
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field
-
+from crispy_forms.layout import Layout, Submit, Row, Column
 
 logger = logging.getLogger(__name__)
+
 
 class PizzaSignUpForm(UserCreationForm):
     """
@@ -20,31 +21,39 @@ class PizzaSignUpForm(UserCreationForm):
     """
     first_name = forms.CharField(
         max_length=30, required=True, widget=forms.TextInput(attrs={
-            'placeholder': _('First name')}), help_text='Required.')
+            'placeholder': _('First name')}), help_text='Required.'
+    )
     last_name = forms.CharField(
         max_length=30, required=True, widget=forms.TextInput(attrs={
-            'placeholder': _('Last name')}), help_text='Required.')
+            'placeholder': _('Last name')}), help_text='Required.'
+    )
     email = forms.EmailField(
         max_length=254, widget=forms.EmailInput(attrs={'placeholder': _(
-            'Email')}), help_text='Required. Enter a valid email address.')
+            'Email')}), help_text='Required. Enter a valid email address.'
+    )
     phone_number = forms.CharField(
         max_length=15, required=True, validators=[
             validate_customer_phone_number],
         widget=forms.TextInput(attrs={'placeholder': _(
-            'Phone number')}), help_text='Optional.')
+            'Phone number')}),
+    )
     street_address = forms.CharField(
         max_length=100, required=True, validators=[
             validate_customer_street_address],
-        widget=forms.TextInput(attrs={'placeholder': _('Street address')}))
+        widget=forms.TextInput(attrs={'placeholder': _('Street address')})
+    )
     city = forms.CharField(
         max_length=50, required=True, validators=[validate_customer_city],
-        widget=forms.TextInput(attrs={'placeholder': _('City')}))
+        widget=forms.TextInput(attrs={'placeholder': _('City')})
+    )
     zip_code = forms.CharField(
         max_length=10, required=True, validators=[validate_customer_zip_code],
-        widget=forms.TextInput(attrs={'placeholder': _('Zip code')}))
+        widget=forms.TextInput(attrs={'placeholder': _('Zip code')})
+    )
     newsletter_subscribe = forms.BooleanField(
         required=False, widget=forms.CheckboxInput(), help_text=_(
-            'Check this box if you want to subscribe to our newsletter.'))
+            'Check this box if you want to subscribe to our newsletter.')
+    )
     password1 = forms.CharField(
         label=_("Password"),
         strip=False,
@@ -59,6 +68,7 @@ class PizzaSignUpForm(UserCreationForm):
         strip=False,
         help_text=_("Enter the same password as before, for verification."),
     )    
+
 
     class Meta:
         """
@@ -95,7 +105,6 @@ class PizzaSignUpForm(UserCreationForm):
                 zip_code=self.cleaned_data['zip_code']
             )
 
-        # Check if user opted for newsletter subscription
             if self.cleaned_data.get('newsletter_subscribe'):
                 NewsletterSubscription.objects.create(email=user.email)
         
@@ -103,34 +112,42 @@ class PizzaSignUpForm(UserCreationForm):
 
             return user
 
-class PizzaSignInForm(forms.Form):
-    email = forms.EmailField(widget=forms.EmailInput(
-        attrs={'placeholder': _('Email')}))
-    password = forms.CharField(widget=forms.PasswordInput(
-        attrs={'placeholder': _('Password')}))
-    remember_me = forms.BooleanField(widget=forms.CheckboxInput(
-        attrs={'class': 'custom-checkbox'}), label=_('Remember Me'))
 
+class PizzaSignInForm(forms.Form):
+    email = forms.EmailField(
+        widget=forms.EmailInput(attrs={'placeholder': _('Email')}),
+        label=False
+    )
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'placeholder': _('Password')}),
+        label=False
+    )
+    remember_me = forms.BooleanField(
+        widget=forms.CheckboxInput(attrs={'class': 'custom-checkbox'}),
+        label=_('Remember Me')
+    )
 
     def __init__(self, *args, **kwargs):
         super(PizzaSignInForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.form_show_labels = False
+        self.helper.form_show_labels = False  # Globally hide labels to clean up form
         self.helper.layout = Layout(
             Field('email', placeholder=_('Email'), css_class='mb-2'),
             Field('password', placeholder=_('Password'), css_class='mb-2'),
-            'remember_me',  # This field will keep its label
+            'remember_me',  # We specify the field directly to include its label
         )
-    
 
-
-        
 
 class PasswordResetForm(forms.Form):
     """
     Form for requesting a password reset via email.
     """
-    email = forms.EmailField()
+    email = forms.EmailField(
+        max_length=254,
+        widget=forms.EmailInput(attrs={'placeholder': _(
+            'Email')}),
+        help_text='Required. Enter a valid email address.'
+    )
 
     def __init__(self, *args, **kwargs):
         """
@@ -139,3 +156,35 @@ class PasswordResetForm(forms.Form):
         super(PasswordResetForm, self).__init__(*args, **kwargs)
         if 'initial' in kwargs:
             self.fields['email'].initial = kwargs['initial'].get('email', '')
+
+
+class ContactForm(forms.Form):
+    name = forms.CharField(
+        max_length=30, required=True,
+        widget=forms.TextInput(attrs={'placeholder': _('Enter your name')}),
+        label='',
+        help_text=''
+    )
+    phone_number = forms.CharField(
+        max_length=15, required=True, validators=[validate_customer_phone_number],
+        widget=forms.TextInput(attrs={'placeholder': _('Enter your phone number')}),
+        label='',
+        help_text=''
+    )
+    email = forms.EmailField(
+        max_length=254, required=True,
+        widget=forms.EmailInput(attrs={'placeholder': _('Enter your email')}),
+        label='',
+        help_text=''
+    )
+    message = forms.CharField(
+        max_length=350, required=False,
+        widget=forms.Textarea(attrs={'placeholder': _('Your message here... Up to 350 characters')}),
+        label='',
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+

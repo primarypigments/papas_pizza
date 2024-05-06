@@ -47,9 +47,7 @@ body > footer {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     margin: auto;
   }
-  .form-account-login label:not(.include-label) {
-    display: none;
-  }
+ 
   
   .form-account {
     max-width: 600px;
@@ -60,7 +58,32 @@ body > footer {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     margin: auto;
   }
- 
+
+  .form-contact {
+    max-width: 600px;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    border: 1px solid #ced4da;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+  }
+
+  .form-contact .form-control {
+    max-width: 300px; /* Keep field widths consistent */
+    margin: 10px auto; /* Center fields and add vertical spacing */
+    display: block; /* Ensure fields are block level for centering */
+  }
+  
+  .form-contact .form-control textarea {
+    height: 150px; /* Specific height for text area */
+  }
+  
+  .form-contact .btn {
+    width: 50%; /* Match button width with signup form */
+    margin-top: 1rem; /* Add some top margin for spacing */
+  }
+  
 
 @media (min-width: 1025px) {
  
@@ -78,4 +101,11 @@ body > footer {
     .bg-grey {
     background-color: #eae8e8;
     }
+}
+
+.navbar-toggler {
+  color: white;  /* Changes the color of the icon */
+}
+.navbar-toggler .fa-solid {
+  color: white;
 }
