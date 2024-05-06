@@ -187,7 +187,7 @@ def checkout(request):
                         "Pappa's Pizza Order Confirmation",
                         (
                             f"Your order has been placed successfully.\n\n"
-                            f"Order Total: {cart_item.subtotal}\n"
+                            f"Order Total: €{cart_item.subtotal}\n"
                             f"Order Date: {new_cart.created_at}\n\n"
                             "Thank you, from Pappa's Pizza!"
                         ),
