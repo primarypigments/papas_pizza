@@ -111,8 +111,8 @@
                                 <label for="quantity">Quantity:</label>
                                 <input type="number" name="quantity" id="quantity" min="1" max="99" value="1">
                                 <br>
-                                <a href="{% if user.is_authenticated %}{% url 'cart' %}{% else %}{% url 'my_signup_view' %}{% endif %}" class="btn btn-dark btn-block btn-lg">Order Now</a>
-                            </form>
+                                <button type="submit" "{% if user.is_authenticated %}{% url 'cart' %}{% else %}{% url 'my_signup_view' %}{% endif %}" class="btn btn-dark btn-block btn-lg">Order Now</button>
+                            </form> 
                         </div>
                     </div>
                 </div>
