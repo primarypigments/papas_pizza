@@ -353,10 +353,8 @@ def checkout_success(request, id):
     }
     return render(request, template, context)
 
-@csrf_exempt
-@require_POST
 def stripe_webhook(request):
-    payload = request.body
+    payload = request.body.decode('utf-8')
     sig_header = request.META.get('HTTP_STRIPE_SIGNATURE')
     event = None
 
@@ -373,19 +371,51 @@ def stripe_webhook(request):
         logger.error(f"Invalid signature: {e}")
         return HttpResponse(status=400)
 
-    # Process the webhook event
+    # Handle the events
     if event['type'] == 'checkout.session.completed':
         session = event['data']['object']
-        logger.info(f"Checkout session completed: {session['id']}")
-        # Perform actions here after a successful checkout
-        # e.g., update an order status, send email confirmation, etc.
+        handle_checkout_session_completed(session)
 
     elif event['type'] == 'checkout.session.async_payment_succeeded':
         session = event['data']['object']
-        logger.info(f"Async payment succeeded for session: {session['id']}")
-        # Handle post-payment success for asynchronous payment methods
+        handle_async_payment_succeeded(session)
 
     else:
         logger.warning(f"Unhandled event type: {event['type']}")
 
     return HttpResponse(status=200)
+
+def handle_checkout_session_completed(session):
+    # Assuming you store a reference to the Cart or Order in `client_reference_id` or similar
+    cart_id = session.get('client_reference_id')
+    try:
+        cart = Cart.objects.get(id=cart_id)
+        cart.status = 'completed'  # Update cart status
+        cart.save()
+        send_confirmation_email(cart)
+        logger.info(f"Order updated and confirmation email sent for cart ID: {cart.id}")
+    except Cart.DoesNotExist:
+        logger.error(f"Cart with ID {cart_id} not found.")
+        return
+
+def handle_async_payment_succeeded(session):
+    # Similar to the above function, handle asynchronous payment confirmation
+    cart_id = session.get('client_reference_id')
+    try:
+        cart = Cart.objects.get(id=cart_id)
+        cart.status = 'completed'  # You might have different statuses for async payments
+        cart.save()
+        send_confirmation_email(cart)
+        logger.info(f"Order updated and confirmation email sent for async payment, cart ID: {cart.id}")
+    except Cart.DoesNotExist:
+        logger.error(f"Cart with ID {cart_id} not found.")
+        return
+
+def send_confirmation_email(cart):
+    subject = "Your order has been processed!"
+    message = f"Dear {cart.user.username},\n\nYour order has been successfully processed. Thank you for your purchase!"
+    email_from = settings.DEFAULT_FROM_EMAIL
+    recipient_list = [cart.user.email]
+    send_mail(subject, message, email_from, recipient_list)
+
+    logger.info(f"Confirmation email sent to {cart.user.email}")
