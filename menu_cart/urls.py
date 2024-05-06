@@ -63,4 +63,6 @@ urlpatterns = [
         name='delete_menu_item'
     ),
 
+path('webhooks/stripe/', views.stripe_webhook, name='stripe_webhook'),
+
 ]
