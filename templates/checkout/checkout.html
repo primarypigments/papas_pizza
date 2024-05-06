@@ -4,7 +4,6 @@
 {% block content %}
 <form action="{% url 'checkout' %}" method="post" id="payment-form">
   {% csrf_token %}
-  <!-- Any additional form fields like address, name, etc., if necessary -->
 
   <button class="btn btn-primary" type="submit">Checkout</button>
 </form>
