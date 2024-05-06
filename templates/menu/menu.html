@@ -45,7 +45,7 @@
                     <h5 class="card-title">{{ item.name }}</h5>
                     <p class="card-text">{{ item.description }}</p>
                     <p class="card-text">€{{ item.price }}</p>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                    <button type="button" class="btn btn-dark btn-block btn-lg" data-bs-toggle="modal"
                         data-bs-target="#itemModal{{ item.id }}">
                         View Details
                     </button>
@@ -111,7 +111,7 @@
                                 <label for="quantity">Quantity:</label>
                                 <input type="number" name="quantity" id="quantity" min="1" max="99" value="1">
                                 <br>
-                                <button type="submit">Order this Pizza</button>
+                                <a href="{% if user.is_authenticated %}{% url 'cart' %}{% else %}{% url 'my_signup_view' %}{% endif %}" class="btn btn-dark btn-block btn-lg">Order Now</a>
                             </form>
                         </div>
                     </div>
