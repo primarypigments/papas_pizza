@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="row">
+    <div class="col">
+      <h3>Order Confirmation</h3>
+      <h5>Thank you for placing your order with Pappa's Pizza!</h5>
+      <p>A confirmation email was to <strong>{{ request.user.email }}</strong>.</p>
+      {% for pizza in cart.items.all %}
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 my-3 p-3 {% cycle 'bg-secondary text-light' 'bg-secondary bg-gradient bg-opacity-50 text-dark' %}">
+        <div class="col">
+          <i class="fas fa-pizza-slice"></i> <strong>{{ pizza.item.name }}</strong>
+          <br>
+          {% for topping in pizza.toppings.all %}
+          <em>
+            &nbsp; - {{ topping.name }} (+€{{ topping.price }})<br>
+          </em>
+          {% empty %}
+          <em>No additional toppings selected</em>
+          {% endfor %}
+          <br>
+        </div>
+        <div class="col">
+          Quantity: {{ pizza.quantity }}
+          <br><br>
+        </div>
+        <div class="col">
+          Total Paid:
+          <br>
+          €{{ pizza.subtotal }}
+          <br><br>
+        </div>
+        <div class="col">
+          Purchased:
+          <br>
+          {{ cart.created_at|date:"n F, Y" }}<br>
+          {{ cart.created_at|date:"@G:i" }}
+          <br><br>
+        </div>
+      </div>
+      {% empty %}
+      <div class="row text-center">
+        <div class="col">
+          You do not have any previous orders.
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col mx-auto">
+      <a href="{% url 'menu' %}" class="btn btn-lg btn-danger">Buy More Pizza?</a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

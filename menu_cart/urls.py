@@ -33,6 +33,12 @@ urlpatterns = [
         name='checkout_success'
     ),
 
+path(
+        'checkout/success_pfofile/<int:cart_id>/'
+        , views.checkout_success_profile,
+        name='checkout_success_profile'
+    ),
+
     path(
         'add-to-cart/<int:item_id>/',
         views.add_to_cart,

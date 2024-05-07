@@ -209,6 +209,21 @@ def checkout_success(request, cart_id):
     except Exception as e:
         return render(request, 'checkout/error.html', {'message': str(e)})
 
+
+def checkout_success_profile(request, cart_id):
+    try:
+        cart = Cart.objects.get(id=cart_id, user=request.user)
+        cart_items = CartItem.objects.filter(cart=cart)
+        total = sum(item.subtotal for item in cart_items)
+
+        return render(request, 'checkout/success_profile.html', {'cart': cart, 'total': total})
+        
+    except Cart.DoesNotExist:
+        return HttpResponseNotFound("Cart not found.")
+    except Exception as e:
+        return render(request, 'checkout/error.html', {'message': str(e)})
+
+
 def add_to_cart(request, item_id):
     item = get_object_or_404(MenuItem, id=item_id)
     cart = request.session.get('cart', {})
