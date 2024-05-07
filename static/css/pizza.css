@@ -14,11 +14,13 @@ body > footer {
     top: 100vh;
 }
 
+
 #hero_image {
-    background-image: url('../images/hero_image.jpg');
-    background-size: cover;
-    background-position: center;
-  }
+  background-image: url('/static/images/hero_image.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 400px;
+}
 
 
  
