@@ -114,6 +114,9 @@ class PizzaSignUpForm(UserCreationForm):
 
 
 class PizzaSignInForm(forms.Form):
+    """
+    Form for requesting a sign in from user.
+    """
     email = forms.EmailField(
         widget=forms.EmailInput(attrs={'placeholder': _('Email')}),
         label=False
