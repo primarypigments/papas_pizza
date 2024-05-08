@@ -177,7 +177,6 @@ def checkout(request):
                     line_items=items_for_stripe,
                     mode='payment',
                     success_url=request.build_absolute_uri(reverse('checkout_success', kwargs={'cart_id': new_cart.id})),
-                    error_url=request.build_absolute_uri(reverse('checkout_error')),
                     cancel_url=request.build_absolute_uri('/cancel/')
                 )
                 request.session['cart'] = {}  # Clear the cart
