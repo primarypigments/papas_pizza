@@ -189,18 +189,20 @@ def checkout_success(request, cart_id):
         cart_items = CartItem.objects.filter(cart=cart)
         total = sum(item.subtotal for item in cart_items)
 
-        send_mail(
-            "Pappa's Pizza Order Confirmation",
-            (
+        # Check if the email has already been sent
+        if not request.session.get(f'email_sent_{cart_id}', False):
+            send_mail(
+                "Pappa's Pizza Order Confirmation",
                 f"Your order has been placed successfully.\n\n"
                 f"Order Total: €{total}\n"
                 f"Order Date: {cart.created_at}\n\n"
-                "Thank you, from Pappa's Pizza!"
-            ),
-            settings.DEFAULT_FROM_EMAIL,
-            [request.user.email],
-            fail_silently=False,
-        )
+                "Thank you, from Pappa's Pizza!",
+                settings.DEFAULT_FROM_EMAIL,
+                [request.user.email],
+                fail_silently=False,
+            )
+            # Set the email sent flag in the session
+            request.session[f'email_sent_{cart_id}'] = True
 
         return render(request, 'checkout/success.html', {'cart': cart, 'total': total})
         
