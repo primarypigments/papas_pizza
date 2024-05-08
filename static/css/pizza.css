@@ -60,6 +60,11 @@ body > footer {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     margin: auto;
   }
+  .form-account input[type="email"] {
+    width: 75%; 
+    max-width: 500px; 
+    min-width: 300px; 
+}
 
   .form-contact {
     max-width: 600px;
