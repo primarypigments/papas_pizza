@@ -45,10 +45,11 @@
                     <h5 class="card-title">{{ item.name }}</h5>
                     <p class="card-text">{{ item.description }}</p>
                     <p class="card-text">€{{ item.price }}</p>
-                    <button type="button" class="btn btn-dark btn-block btn-lg" data-bs-toggle="modal"
-                        data-bs-target="#itemModal{{ item.id }}">
+                    <a href="{% if not user.is_authenticated %}{% url 'my_signup_view' %}{% else %}#{% endif %}"
+                        class="btn btn-dark btn-block btn-lg" {% if user.is_authenticated %} data-bs-toggle="modal"
+                        data-bs-target="#itemModal{{ item.id }}" {% endif %}>
                         View Details
-                    </button>
+                    </a>
                     {% if user.is_superuser %}
                     <a href="{% url 'edit_menu_item' item.id %}" class="btn btn-warning">
                         Edit
@@ -111,8 +112,8 @@
                                 <label for="quantity">Quantity:</label>
                                 <input type="number" name="quantity" id="quantity" min="1" max="99" value="1">
                                 <br>
-                                <button type="submit" "{% if user.is_authenticated %}{% url 'cart' %}{% else %}{% url 'my_signup_view' %}{% endif %}" class="btn btn-dark btn-block btn-lg">Order Now</button>
-                            </form> 
+                                <button type="submit" class="btn btn-dark btn-block btn-lg">Order Now</button>
+                            </form>
                         </div>
                     </div>
                 </div>
