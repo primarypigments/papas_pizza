@@ -177,6 +177,7 @@ def checkout(request):
                     line_items=items_for_stripe,
                     mode='payment',
                     success_url=request.build_absolute_uri(reverse('checkout_success', kwargs={'cart_id': new_cart.id})),
+                    error_url=request.build_absolute_uri(reverse('checkout_error')),
                     cancel_url=request.build_absolute_uri('/cancel/')
                 )
                 request.session['cart'] = {}  # Clear the cart
@@ -223,7 +224,12 @@ def checkout_success_profile(request, cart_id):
     except Cart.DoesNotExist:
         return HttpResponseNotFound("Cart not found.")
     except Exception as e:
-        return render(request, 'checkout/error.html', {'message': str(e)})
+        return render(request, 'checkout/error.html')
+
+
+def error_view(request):
+    
+    return render(request, 'checkout/error.html')
 
 
 def add_to_cart(request, item_id):

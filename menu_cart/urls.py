@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .views import error_view
 
 urlpatterns = [
 
@@ -32,6 +33,8 @@ urlpatterns = [
         , views.checkout_success,
         name='checkout_success'
     ),
+
+    path('checkout/error/', error_view, name='error_view'),
 
 path(
         'checkout/success_pfofile/<int:cart_id>/'
