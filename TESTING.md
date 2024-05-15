@@ -68,20 +68,18 @@ I have used the recommended [HTML W3C Validator](https://validator.w3.org) to va
 | Directory | File | Screenshot | Notes |
 | --- | --- | --- | --- |
 | Index | index.html | ![screenshot](documentation/validation/index.png) | |
-| Cart | cart.html | ![screenshot](documentation/validation/cancel_reservation.png) | |
-| Checkout | checkout.html | ![screenshot](documentation/validation/delete_reservation.png) | |
-| Checkout | error.html | ![screenshot](documentation/validation/edit_reservation.png) | |
-| Checkout | success.html | ![screenshot](documentation/validation/make_reservation.png) | |
-| Checkout | success_profile.html | ![screenshot](documentation/validation/profile.png) | |
-| Contact | contact.html | ![screenshot](documentation/validation/logon.png) | |
-| Menu | menu.html | ![screenshot](documentation/validation/profile.png) | |
-| Menu | edit_menu.html | ![screenshot](documentation/validation/profile.png) | |
+| Cart | cart.html | ![screenshot](documentation/validation/cart.png) | |
+| Checkout | error.html | ![screenshot](documentation/validation/error.png) | |
+| Checkout | success.html | ![screenshot](documentation/validation/success.png) | |
+| Checkout | success_profile.html | ![screenshot](documentation/validation/success_profile.png) | |
+| Contact | contact.html | ![screenshot](documentation/validation/contact.png) | |
+| Menu | menu.html | ![screenshot](documentation/validation/menu.png) | |
+| Menu | edit_menu.html | ![screenshot](documentation/validation/edit_menu.png) | |
 | Profile | profile.html | ![screenshot](documentation/validation/profile.png) | |
-| Templates | base.html | ![screenshot](documentation/validation/profile.png) | |
 | Templates | 404.html | ![screenshot](documentation/validation/logout.png) | |
-| Accounts | login.html | ![screenshot](documentation/validation/register.png) | |
-| Accounts | password_reset.html | ![screenshot](documentation/validation/404.png) | |
-### CSS
+| Accounts | login.html | ![screenshot](documentation/validation/logon.png) | |
+| Accounts | password_reset.html | ![screenshot](documentation/validation/forgot.png) | |
+| Accounts | singup.html | ![screenshot](documentation/validation/register.png) | |
 ### CSS
 
 I have used the recommended [CSS Jigsaw Validator](https://jigsaw.w3.org/css-validator) to validate all of my CSS files.
@@ -129,8 +127,8 @@ Use this space to discuss testing the live/deployed site on various device sizes
 
 I've tested my deployed project on multiple devices to check for responsiveness issues.
 
-| Device | Home | Contact | Register | Sign In | Make Res | Profile | Edit Res | Cancel Res | Delete Res | Log Out | 404 | Result |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | 
+| Browser | Home | Contact | Register | Sign In | Menu | Profile | Edit Menu | Cart | Success | Success Profile | 404 | Checkout | Error | Password Reset | Result |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |  
 | Mobile (DevTools) | ![screenshot](documentation/responsiveness/mobile_index.png) | ![screenshot](documentation/responsiveness/mobile_contact.png) | ![screenshot](documentation/responsiveness/mobile_register.png) | ![screenshot](documentation/responsiveness/mobile_signin.png) | ![screenshot](documentation/responsiveness/mobile_reservation.png) | ![screenshot](documentation/responsiveness/mobile_profile.png) | ![screenshot](documentation/responsiveness/mobile_edit.png) | ![screenshot](documentation/responsiveness/mobile_cancel.png) | ![screenshot](documentation/responsiveness/mobile_delete.png)  | ![screenshot](documentation/responsiveness/mobile_signout.png) | ![screenshot](documentation/responsiveness/mobile_404.png) | Works as expected |
 | Tablet (DevTools) | ![screenshot](documentation/responsiveness/tablet_index.png) | ![screenshot](documentation/responsiveness/tablet_contact.png) | ![screenshot](documentation/responsiveness/tablet_register.png) | ![screenshot](documentation/responsiveness/tablet_signin.png) | ![screenshot](documentation/responsiveness/tablet_reservation.png) | ![screenshot](documentation/responsiveness/tablet_profile.png) | ![screenshot](documentation/responsiveness/tablet_edit.png) | ![screenshot](documentation/responsiveness/tablet_cancel.png) | ![screenshot](documentation/responsiveness/tablet_delete.png)  | ![screenshot](documentation/responsiveness/tablet_signout.png) | ![screenshot](documentation/responsiveness/tablet_404.png)  | Works as expected |
 | Desktop | ![screenshot](documentation/browsers/opera_index.png) | ![screenshot](documentation/browsers/opera_contact.png) | ![screenshot](documentation/browsers/opera_register.png) | ![screenshot](documentation/browsers/opera_sign_in.png) | ![screenshot](documentation/browsers/opera_reservation.png) | ![screenshot](documentation/browsers/opera_profile.png) | ![screenshot](documentation/browsers/opera_edit.png) | ![screenshot](documentation/browsers/opera_cancel.png) | ![screenshot](documentation/browsers/opera_delete.png)  | ![screenshot](documentation/browsers/opera_sign_out.png) | ![screenshot](documentation/browsers/opera_404.png) | Works as expected |
@@ -296,13 +294,13 @@ from the respective feature.
 
 | User Story | Screenshot |
 | --- | --- |
-| As a new site user, I would like to ____________, so that I can ____________. | ![screenshot](documentation/features/feature01.png) |
-| As a new site user, I would like to ____________, so that I can ____________. | ![screenshot](documentation/features/feature02.png) |
-| As a new site user, I would like to ____________, so that I can ____________. | ![screenshot](documentation/features/feature03.png) |
-| As a returning site user, I would like to ____________, so that I can ____________. | ![screenshot](documentation/features/feature04.png) |
-| As a returning site user, I would like to ____________, so that I can ____________. | ![screenshot](documentation/features/feature05.png) |
-| As a returning site user, I would like to ____________, so that I can ____________. | ![screenshot](documentation/features/feature06.png) |
-| As a site administrator, I should be able to ____________, so that I can ____________. | ![screenshot](documentation/features/feature07.png) |
+| As a new site user, I can select a pick-up option, so that I can collect my order from the restaurant at my convenience. | ![screenshot](documentation/features/feature01.png) |
+|  As a new site user, I can view the detailed menu with toppings and prices on the website, so that I can choose my meals according to my preference and budget.. | ![screenshot](documentation/features/feature02.png) |
+| As a new site user, I can create a user account on the website, so that I can save my preferences and order history for future orders. | ![screenshot](documentation/features/feature03.png) |
+| As a returning site user, I would like to review my past orders, so that I can order the same pizzas. | ![screenshot](documentation/features/feature04.png) |
+| As a returning site user, I would like to view my past orders, so that I can easily see a previous order or use it as a starting point for a new customization. | ![screenshot](documentation/features/feature05.png) |
+| As a returning site user, I would like to have access to reset my password, so that I can login to my account. | ![screenshot](documentation/features/feature06.png) |
+| As a site administrator, I should be able to reset user passwords upon request, so that I can provide support for account access issues. | ![screenshot](documentation/features/feature07.png) |
 | As a site administrator, I should be able to ____________, so that I can ____________. | ![screenshot](documentation/features/feature08.png) |
 | As a site administrator, I should be able to ____________, so that I can ____________. | ![screenshot](documentation/features/feature09.png) |
 | repeat for all remaining user stories | x |
