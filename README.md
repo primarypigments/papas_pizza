@@ -263,6 +263,18 @@ Cart
 
 ### Future Features
 
+<<<<<<< HEAD
+=======
+🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑 START OF NOTES (to be deleted)
+
+Do you have additional ideas that you'd like to include on your project in the future?
+Fantastic! List them here!
+It's always great to have plans for future improvements!
+Consider adding any helpful links or notes to help remind you in the future, if you revisit the project in a couple years.
+
+🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑-END OF NOTES (to be deleted)
+
+>>>>>>> 7771c2537f3eebc507b3ebc9f9a6d1f6a121cd1e
 - Precise Pick-ups-#1
     - The user receives a notification when the order is ready for pick-up.
 The system provides directions and operating hours of the pick-up location.
@@ -770,8 +782,11 @@ The delployed Heroku application behaves slower.
 | [Django](https://docs.djangoproject.com/en/4.2/ref/contrib/messages/) | forms.py | used for store messages in one request. |
 | [Django](https://docs.djangoproject.com/en/4.2/topics/logging/) | views.py | used to perform system logging. |
 | [Django](https://docs.djangoproject.com/en/4.2/topics/forms/modelforms/) | forms.py | used for creating forms from models automatically. |
+<<<<<<< HEAD
 | [Django](https://docs.djangoproject.com/en/5.0/ref/contrib/admin/#django.contrib.admin.InlineModelAdmin) | admin.py | allow the inclusion and editing of related models directly within the admin interface. |
 | [Django](https://docs.djangoproject.com/en/5.0/ref/contrib/admin/#django.contrib.admin.TabularInline) | admin.py | display related models in a tabular format within the parent model's admin interface. |
+=======
+>>>>>>> 7771c2537f3eebc507b3ebc9f9a6d1f6a121cd1e
 
 ### Media
 

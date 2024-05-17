@@ -35,6 +35,11 @@ urlpatterns = [
         name='checkout_success'
     ),
 
+<<<<<<< HEAD
+=======
+    
+    path('error/', views.error_view, name='checkout_error'),
+>>>>>>> 7771c2537f3eebc507b3ebc9f9a6d1f6a121cd1e
 
     path('error/', views.error_view, name='checkout_error'),
 
