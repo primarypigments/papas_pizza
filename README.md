@@ -85,29 +85,17 @@ I've used CSS `:root` variables to easily update the global colour scheme by cha
 
 ### Typography
 
-🛑🛑🛑🛑🛑🛑🛑🛑🛑START OF NOTES (to be deleted)
+As for icons I decided to use for my website Font Awesome library.
 
-Explain any fonts and icon libraries used, like Google Fonts and/or Font Awesome.
+Fonts
 
-Consider adding a link to each font used, and the Font Awesome site if used (or similar icon library).
+I've integrated Google Fonts to find a typeface that compliments the website's aesthetic. For the main text, I've chosen Roboto Mono due to its optimization for readability on screens across a wide variety of devices and reading environments.
 
-Example:
-
-🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑-END OF NOTES (to be deleted)
-
-- [Montserrat](https://fonts.google.com/specimen/Montserrat) was used for the primary headers and titles.
-
-- [Lato](https://fonts.google.com/specimen/Lato) was used for all other secondary text.
+- [Roboto Mono](https://fonts.google.com/?query=Roboto+Mono) was used for the primary headers and titles and all other secondary text.
 
 - [Font Awesome](https://fontawesome.com) icons were used throughout the site, such as the social media icons in the footer.
 
 ## User Stories
-
-🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑 START OF NOTES (to be deleted)
-
-In this section, list all of your user stories for the project.
-
-🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑-END OF NOTES (to be deleted)
 
 ### New Site Users
 
@@ -120,152 +108,202 @@ In this section, list all of your user stories for the project.
 ### Returning Site Users
 
 - As a returning site user, I would like to review my past orders, so that I can order the same pizzas.
-- As a returning site user, I would like to ____________, so that I can ____________.
-- As a returning site user, I would like to ____________, so that I can ____________.
-- As a returning site user, I would like to ____________, so that I can ____________.
-- As a returning site user, I would like to ____________, so that I can ____________.
+- As a returning site user, I would like to view my past orders, so that I can easily see a previous order or use it as a starting point for a new customization.
+- As a returning site user, I would like to have access to reset my password, so that I can login to my account.
+- 
+- As a site administrator, I should be able to reset user passwords upon request, so that I can provide support for account access issues.
 
 ### Site Admin
 
-- As a site administrator, I should be able to ____________, so that I can ____________.
-- As a site administrator, I should be able to ____________, so that I can ____________.
+- As a site administrator, I should be able to add, update, or remove Pizzas and descriptions, so that I can keep the menu current with available offerings.
+- As a site administrator, I should be able to reset user passwords upon request, so that I can provide support for account access issues.
 - As a site administrator, I should be able to ____________, so that I can ____________.
 - As a site administrator, I should be able to ____________, so that I can ____________.
 - As a site administrator, I should be able to ____________, so that I can ____________.
 
 ## Wireframes
 
-🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑 START OF NOTES (to be deleted)
-
-In this section, display your wireframe screenshots using a Markdown `table`.
-Instructions on how to do Markdown `tables` start on line #213 on this site: https://pandao.github.io/editor.md/en.html
-
-Alternatively, dropdowns are a way to condense several wireframes into a collapsible menu to save space.
-Dropdowns in Markdown are considered some of the only acceptable HTML components that are allowed for assessment purposes.
-
-⚠️ **IMPORTANT**! ⚠️ **IMPORTANT**! ⚠️ **IMPORTANT**! ⚠️
-The example below uses the `details` and `summary` code elements.
-However, for these scripts to work, I've had to add spaces within the `< >` elements.
-
-You MUST remove these spaces for it to work properly on your own README/TESTING files.
-Remove the spaces within the `< >` brackets for the `details` and `summary` code elements,
-for the Mobile, Tablet, and Desktop wireframes.
-
-🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑-END OF NOTES (to be deleted)
-
 To follow best practice, wireframes were developed for mobile, tablet, and desktop sizes.
 I've used [Balsamiq](https://balsamiq.com/wireframes) to design my site wireframes.
 
 ### Mobile Wireframes
 
-< details >
-< summary > Click here to see the Mobile Wireframes < / summary >
+<details>
+<summary> Click here to see the Mobile Wireframes </summary>
 
 Home
-  - ![screenshot](documentation/wireframes/mobile-home.png)
-
-About
-  - ![screenshot](documentation/wireframes/mobile-about.png)
+  - ![screenshot](documentation/wireframe/home_iphone.png)
 
 Contact
-  - ![screenshot](documentation/wireframes/mobile-contact.png)
+  - ![screenshot](documentation/wireframe/contact_iphone.png)
 
-Gallery
-  - ![screenshot](documentation/wireframes/mobile-gallery.png)
+Login
+  - ![screenshot](documentation/wireframe/sign_in_iphone.png)
 
-etc.
-  - repeat for any remaining mobile wireframes
+Register
+  - ![screenshot](documentation/wireframe/register_iphone.png)
 
-< / details >
+Menu
+  - ![screenshot](documentation/wireframe/menu_iphone.png)
+
+Profile
+  - ![screenshot](documentation/wireframe/profile_iphone.png)
+
+Edit Menu
+  - ![screenshot](documentation/wireframe/edit_iphone.png)
+
+
+Success
+  - ![screenshot](documentation/wireframe/success_iphone.png)
+
+
+Success Profile
+  - ![screenshot](documentation/wireframe/success_iphone.png)
+
+Cart
+  - ![screenshot](documentation/wireframe/cart_iphone.png)
+
+404
+  - ![screenshot](documentation/wireframe/404_iphone.png)
+
+</details>
 
 ### Tablet Wireframes
 
-< details >
-< summary > Click here to see the Tablet Wireframes < / summary >
+<details>
+<summary> Click here to see the Tablet Wireframes </summary>
 
 Home
-  - ![screenshot](documentation/wireframes/tablet-home.png)
-
-About
-  - ![screenshot](documentation/wireframes/tablet-about.png)
+  - ![screenshot](documentation/wireframe/home_ipad.png)
 
 Contact
-  - ![screenshot](documentation/wireframes/tablet-contact.png)
+  - ![screenshot](documentation/wireframe/contact_ipad.png)
 
-Gallery
-  - ![screenshot](documentation/wireframes/tablet-gallery.png)
+Login
+  - ![screenshot](documentation/wireframe/sign_out_ipad.png)
 
-etc.
-  - repeat for any remaining tablet wireframes
+Register
+  - ![screenshot](documentation/wireframe/register_ipad.png)
 
-< / details >
+Menu
+  - ![screenshot](documentation/wireframe/make_reservation_ipad.png)
+
+Profile
+  - ![screenshot](documentation/wireframe/profile_ipad.png)
+
+Edit Menu 
+  - ![screenshot](documentation/wireframe/edit_ipad.png)
+
+
+Success
+  - ![screenshot](documentation/wireframe/success_ipad.png)
+
+
+Success profile
+  - ![screenshot](documentation/wireframe/success_profile_ipad.png)
+
+Cart
+  - ![screenshot](documentation/wireframe/cart_ipad.png)
+
+404
+  - ![screenshot](documentation/wireframe/404_ipad.png)
+
+
+</details>
 
 ### Desktop Wireframes
 
-< details >
-< summary > Click here to see the Desktop Wireframes < / summary >
+<details>
+<summary> Click here to see the Desktop Wireframes </summary>
 
 Home
-  - ![screenshot](documentation/wireframes/desktop-home.png)
-
-About
-  - ![screenshot](documentation/wireframes/desktop-about.png)
+  - ![screenshot](documentation/wireframe/home.png)
 
 Contact
-  - ![screenshot](documentation/wireframes/desktop-contact.png)
+  - ![screenshot](documentation/wireframe/contact.png)
 
-Gallery
-  - ![screenshot](documentation/wireframes/desktop-gallery.png)
+Login
+  - ![screenshot](documentation/wireframe/sign_in.png)
 
-etc.
-  - repeat for any remaining desktop wireframes
+Register
+  - ![screenshot](documentation/wireframe/register.png)
 
-< / details >
+Menu
+  - ![screenshot](documentation/wireframe/menu.png)
+
+Profile
+  - ![screenshot](documentation/wireframe/profile.png)
+
+Edit menu
+  - ![screenshot](documentation/wireframe/edit.png)
+
+
+Success
+  - ![screenshot](documentation/wireframe/success.png)
+
+
+Success Profile
+  - ![screenshot](documentation/wireframe/success_profile.png)
+
+Cart
+  - ![screenshot](documentation/wireframe/cart.png)
+
+404
+  - ![screenshot](documentation/wireframe/404.png)
+
+</details>
 
 ## Features
 
-🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑 START OF NOTES (to be deleted)
-
-In this section, you should go over the different parts of your project,
-and describe each in a sentence or so.
-
-You will need to explain what value each of the features provides for the user,
-focusing on who this website is for, what it is that they want to achieve,
-and how your project is the best way to help them achieve these things.
-
-For some/all of your features, you may choose to reference the specific project files that implement them.
-
-IMPORTANT: Remember to always include a screenshot of each individual feature!
-
-🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑-END OF NOTES (to be deleted)
-
 ### Existing Features
 
-- **YOUR-TITLE-FOR-FEATURE-#1**
+- **Newsletter**
 
-    - Details about this particular feature, including the value to the site, and benefit for the user. Be as detailed as possible!
+    - The newsletter serves as a vital tool for enhancing user engagement. By providing regular updates, we keep our audience informed and connected, fostering a sense of loyalty and community. This increased engagement translates into higher site traffic, more interaction with our content, and a stronger overall presence.
 
-![screenshot](documentation/features/feature01.png)
+![screenshot](documentation/features/feature01.png) ![screenshot](documentation/features/feature01.png) ![screenshot](documentation/features/feature01.png)
 
-- **YOUR-TITLE-FOR-FEATURE-#2**
+- **Profile**
 
-    - Details about this particular feature, including the value to the site, and benefit for the user. Be as detailed as possible!
+    - The Profile provides users with the ability to view their past orders and view their personal information!!
 
 ![screenshot](documentation/features/feature02.png)
 
-- **YOUR-TITLE-FOR-FEATURE-#3**
+- **404**
 
-    - Details about this particular feature, including the value to the site, and benefit for the user. Be as detailed as possible!
+    - To improve user experience when they navigate to a non-existent page on your website!
 
 ![screenshot](documentation/features/feature03.png)
 
-🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑 START OF NOTES (to be deleted)
+- **404**
 
-Repeat as necessary for as many features as your site contains.
+    - To improve user experience when they navigate to a non-existent page on your website!
 
-Hint: the more, the merrier!
+![screenshot](documentation/features/feature03.png)
 
-🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑-END OF NOTES (to be deleted)
+- **Password Reset**
+
+    - A password reset feature is crucial for user convenience and security, providing a straightforward way for users to recover their accounts in case they forget their passwords. This functionality underscores your commitment to protecting user data and ensuring easy access to their accounts, thereby fostering trust and reliability in Papa's Pizza website.
+
+![screenshot](documentation/features/feature03.png)
+
+- **Navbar Cart Total**
+
+    - To enhance the user experience, we have implemented a feature that allows users to see their cart total displayed on every page of the website. Now, when users add items to their cart and navigate to other pages, they can easily keep track of their cart total without needing to return to the cart page. This ensures a seamless and convenient shopping experience, making it easier for users to manage their purchases as they browse our site.!
+
+![screenshot](documentation/features/feature03.png)
+
+- **Toppings**
+
+    - The Toppings feature allows users to fully customize their pizzas by selecting from a wide variety of available toppings. This enables users to create a pizza that perfectly suits their tastes and preferences, ensuring a personalized and enjoyable dining experience.
+
+![screenshot](documentation/features/feature03.png)
+
+- **Stripe Checkout Sessions**
+
+    - Stripe Checkout Sessions to our website, offering a seamless and secure payment experience for our users. With Stripe's robust security measures, users can confidently complete transactions knowing their payment information is protected. The integration simplifies the checkout process, providing a smooth and user-friendly interface that supports various payment methods. This enhancement ensures quick, efficient, and reliable transactions, improving overall customer satisfaction and trust in our platform.
+
+![screenshot](documentation/features/feature03.png)
 
 ### Future Features
 
@@ -278,12 +316,14 @@ Consider adding any helpful links or notes to help remind you in the future, if 
 
 🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑-END OF NOTES (to be deleted)
 
-- YOUR-TITLE-FOR-FUTURE-FEATURE-#1
-    - Any additional notes about this feature.
-- YOUR-TITLE-FOR-FUTURE-FEATURE-#2
-    - Any additional notes about this feature.
-- YOUR-TITLE-FOR-FUTURE-FEATURE-#3
-    - Any additional notes about this feature.
+- Precise Pick-ups-#1
+    - The user receives a notification when the order is ready for pick-up.
+The system provides directions and operating hours of the pick-up location.
+- Delivery Enhancement-#2
+    - The user can choose a delivery time or opt for as-soon-as-possible delivery.
+The system displays an estimated delivery time based on the order and location..
+- Toppings Calculation-#3
+    - AThe user sees the updated price dynamically as they customize their pizza.
 
 ## Tools & Technologies Used
 
@@ -814,16 +854,25 @@ Ideally, you should provide an actual link to every resource used, not just a ge
 | --- | --- | --- |
 | [Markdown Builder](https://tim.2bn.dev/markdown-builder) | README and TESTING | tool to help generate the Markdown files |
 | [Chris Beams](https://chris.beams.io/posts/git-commit) | version control | "How to Write a Git Commit Message" |
-| [W3Schools](https://www.w3schools.com/howto/howto_js_topnav_responsive.asp) | entire site | responsive HTML/CSS/JS navbar |
-| [W3Schools](https://www.w3schools.com/howto/howto_css_modals.asp) | contact page | interactive pop-up (modal) |
-| [W3Schools](https://www.w3schools.com/css/css3_variables.asp) | entire site | how to use CSS :root variables |
-| [Flexbox Froggy](https://flexboxfroggy.com/) | entire site | modern responsive layouts |
-| [Grid Garden](https://cssgridgarden.com) | entire site | modern responsive layouts |
-| [StackOverflow](https://stackoverflow.com/a/2450976) | quiz page | Fisher-Yates/Knuth shuffle in JS |
-| [YouTube](https://www.youtube.com/watch?v=YL1F4dCUlLc) | leaderboard | using `localStorage()` in JS for high scores |
-| [YouTube](https://www.youtube.com/watch?v=u51Zjlnui4Y) | PP3 terminal | tutorial for adding color to the Python terminal |
+| [Stack Overflow]( https://stackoverflow.com/questions/59701452/how-to-update-cells-in-a-google-spreadsheet-with-python-s-gspread-wks-update-cel) | entire site | used to update a cell in gsheets. |
+| [Real Python](https://realpython.com/python-enumerate/) | entire site | used for enumerate throughout the code. |
+| [Geeks For Geeks](https://www.geeksforgeeks.org/loops-in-python/) | entire site | used as loops resource. |
+| [Stack Overflow](https://stackoverflow.com/questions/60793155/gspread-append-row-appending-data-to-different-column) | entire site | used for appending data. |
+| [Geeks For Geeks](https://www.geeksforgeeks.org/python-lists/?ref=lbp) | entire site | used for python lists resource. |
+| [W3Schools](https://www.w3schools.com/) | entire site | used for input validation methods. |
+| [Digital Ocean](https://www.digitalocean.com/community/tutorials/python-valueerror-exception-handling-examples) | entire site | used for vauleerror thorughout my code. |
 | [strftime](https://strftime.org) | CRUD functionality | helpful tool to format date/time from string |
 | [WhiteNoise](http://whitenoise.evans.io) | entire site | hosting static files on Heroku temporarily |
+| [ChatGPT](https://chat.openai.com/) | entire site | used for list contents (Villages within 10 km from Kakentrorf) understanding error messages, help with learning the correct vocabulary in commit messages. |
+| [Django](https://docs.djangoproject.com/en/4.2/topics/db/models/) | models.py | core concept of defining models. |
+| [Django](https://docs.djangoproject.com/en/4.2/ref/models/fields/#field-options) | models.py |  Understanding how to use field options such as null, blank, and default. |
+| [Django](https://docs.djangoproject.com/en/4.2/ref/validators/) | validators.py | create and use custom validators for model fields to enforce specific rules or formats. |
+| [Django](https://docs.djangoproject.com/en/4.2/ref/models/fields/#datetimefield) | validators.py | used to automatically set the field to the current date/time. |
+| [Django](https://docs.djangoproject.com/en/4.2/ref/models/options/#unique-together) | Models.py | used to utilized the unique_together. |
+| [Django](https://docs.djangoproject.com/en/4.2/ref/templates/builtins/) | templates | used for built-in template tags and filters. |
+| [Django](https://docs.djangoproject.com/en/4.2/ref/contrib/messages/) | forms.py | used for store messages in one request. |
+| [Django](https://docs.djangoproject.com/en/4.2/topics/logging/) | views.py | used to perform system logging. |
+| [Django](https://docs.djangoproject.com/en/4.2/topics/forms/modelforms/) | forms.py | used for creating forms from models automatically. |
 
 ### Media
 
