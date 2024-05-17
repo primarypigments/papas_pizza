@@ -22,7 +22,6 @@ At Papa's Pizza, we're not just about delivering pizzas – we're about deliveri
 
 ---
 
-![screenshot](documentation/mockup.png)
 
 source: [amiresponsive](https://ui.dev/amiresponsive?url=https://pappapizza-88bb126828cc.herokuapp.com)
 
@@ -217,19 +216,19 @@ Cart
 
     - The newsletter serves as a vital tool for enhancing user engagement. By providing regular updates, we keep our audience informed and connected, fostering a sense of loyalty and community. This increased engagement translates into higher site traffic, more interaction with our content, and a stronger overall presence.
 
-![screenshot](documentation/features/feature01.png) ![screenshot](documentation/features/feature01.png) ![screenshot](documentation/features/feature01.png)
+![screenshot](documentation/features/newsletter.png) ![screenshot](documentation/features/newsletter2.png) ![screenshot](documentation/features/newsletter3.png)
 
 - **Profile**
 
     - The Profile provides users with the ability to view their past orders and view their personal information!!
 
-![screenshot](documentation/features/feature02.png)
+![screenshot](documentation/features/profile_order.png)
 
 - **404**
 
     - To improve user experience when they navigate to a non-existent page on your website!
 
-![screenshot](documentation/features/feature03.png)
+![screenshot](documentation/features/404.png)
 
 - **404**
 
@@ -241,40 +240,28 @@ Cart
 
     - A password reset feature is crucial for user convenience and security, providing a straightforward way for users to recover their accounts in case they forget their passwords. This functionality underscores your commitment to protecting user data and ensuring easy access to their accounts, thereby fostering trust and reliability in Papa's Pizza website.
 
-![screenshot](documentation/features/feature03.png)
+![screenshot](documentation/features/forgot.png)
 
 - **Navbar Cart Total**
 
     - To enhance the user experience, we have implemented a feature that allows users to see their cart total displayed on every page of the website. Now, when users add items to their cart and navigate to other pages, they can easily keep track of their cart total without needing to return to the cart page. This ensures a seamless and convenient shopping experience, making it easier for users to manage their purchases as they browse our site.!
 
-![screenshot](documentation/features/feature03.png)
+![screenshot](documentation/features/navtotal.png)
 
 - **Toppings**
 
     - The Toppings feature allows users to fully customize their pizzas by selecting from a wide variety of available toppings. This enables users to create a pizza that perfectly suits their tastes and preferences, ensuring a personalized and enjoyable dining experience.
 
-![screenshot](documentation/features/feature03.png)
+![screenshot](documentation/features/menu_modal_order.png)
 
 - **Stripe Checkout Sessions**
 
     - Stripe Checkout Sessions to our website, offering a seamless and secure payment experience for our users. With Stripe's robust security measures, users can confidently complete transactions knowing their payment information is protected. The integration simplifies the checkout process, providing a smooth and user-friendly interface that supports various payment methods. This enhancement ensures quick, efficient, and reliable transactions, improving overall customer satisfaction and trust in our platform.
 
-![screenshot](documentation/features/feature03.png)
+![screenshot](documentation/browsers/opera_checkout.png)
 
 ### Future Features
 
-<<<<<<< HEAD
-=======
-🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑 START OF NOTES (to be deleted)
-
-Do you have additional ideas that you'd like to include on your project in the future?
-Fantastic! List them here!
-It's always great to have plans for future improvements!
-Consider adding any helpful links or notes to help remind you in the future, if you revisit the project in a couple years.
-
-🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑-END OF NOTES (to be deleted)
-
->>>>>>> 7771c2537f3eebc507b3ebc9f9a6d1f6a121cd1e
 - Precise Pick-ups-#1
     - The user receives a notification when the order is ready for pick-up.
 The system provides directions and operating hours of the pick-up location.
@@ -782,11 +769,8 @@ The delployed Heroku application behaves slower.
 | [Django](https://docs.djangoproject.com/en/4.2/ref/contrib/messages/) | forms.py | used for store messages in one request. |
 | [Django](https://docs.djangoproject.com/en/4.2/topics/logging/) | views.py | used to perform system logging. |
 | [Django](https://docs.djangoproject.com/en/4.2/topics/forms/modelforms/) | forms.py | used for creating forms from models automatically. |
-<<<<<<< HEAD
 | [Django](https://docs.djangoproject.com/en/5.0/ref/contrib/admin/#django.contrib.admin.InlineModelAdmin) | admin.py | allow the inclusion and editing of related models directly within the admin interface. |
 | [Django](https://docs.djangoproject.com/en/5.0/ref/contrib/admin/#django.contrib.admin.TabularInline) | admin.py | display related models in a tabular format within the parent model's admin interface. |
-=======
->>>>>>> 7771c2537f3eebc507b3ebc9f9a6d1f6a121cd1e
 
 ### Media
 
