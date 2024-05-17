@@ -1,28 +1,37 @@
-.modal img {
-    max-height: 400px; /* Adjust as needed */
-    width: auto;
-    display: block;
-    margin: 0 auto; /* Centers the image */
-}
 
 html, body {
     height: 100%;
+}
+
+body {
+  font-family: 'Roboto Mono', monospace;
+}
+
+button, .navbar {
+  font-family: 'Roboto Mono', monospace;
+  font-weight: 700;
 }
 
 body > footer {
     position: sticky;
     top: 100vh;
 }
-
+/* menu modal images */
+.modal img {
+  max-height: 400px;
+  width: auto;
+  display: block;
+  margin: 0 auto;
+}
 
 #hero_image {
-  background-image: url('/static/images/hero_image.jpg');
+  background-image: url('https://res.cloudinary.com/dujhyidgj/image/upload/v1715179367/static/images/hero_image.743be74313ab.jpg');
   background-size: cover;
   background-position: center;
   height: 400px;
 }
 
-
+/* Forms css signin signout fotgot password regester */
  
   .form-signup-heading {
     margin-bottom: 1rem;
@@ -34,9 +43,7 @@ body > footer {
     padding: 2rem;
     border-radius: 0.5rem;
     border: 1px solid #ced4da;
-    /* Bootstrap 5's border color for outlined inputs */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    /* This adds the shadow */
     margin: auto;
   }
 
@@ -77,30 +84,21 @@ body > footer {
   }
 
   .form-contact .form-control {
-    max-width: 300px; /* Keep field widths consistent */
-    margin: 10px auto; /* Center fields and add vertical spacing */
-    display: block; /* Ensure fields are block level for centering */
+    max-width: 300px; 
+    margin: 10px auto; 
+    display: block; 
   }
   
   .form-contact .form-control textarea {
-    height: 150px; /* Specific height for text area */
+    height: 150px;
   }
   
   .form-contact .btn {
-    width: 50%; /* Match button width with signup form */
-    margin-top: 1rem; /* Add some top margin for spacing */
+    width: 50%;
+    margin-top: 1rem;
   }
   
   
-body {
-  font-family: 'Roboto Mono', monospace;
-}
-
-button, .navbar {
-  font-family: 'Roboto Mono', monospace;
-  font-weight: 700; /* Bold weight for better readability on small UI elements */
-}
-
 @media (min-width: 1025px) {
  
     .card-registration .select-input.form-control[readonly]:not([disabled]) {
@@ -120,7 +118,7 @@ button, .navbar {
 }
 
 .navbar-toggler {
-  color: white;  /* Changes the color of the icon */
+  color: white;
 }
 .navbar-toggler .fa-solid {
   color: white;
