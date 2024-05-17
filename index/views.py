@@ -1,4 +1,6 @@
-from .forms import PasswordResetForm, PizzaSignUpForm, PizzaSignInForm, ContactForm
+from .forms import (
+    PasswordResetForm, PizzaSignUpForm, PizzaSignInForm, ContactForm
+)
 from django.contrib.auth.decorators import login_required
 from .models import PizzaUserProfile, ContactMessage
 from menu_cart.models import CartItem, Cart
@@ -21,7 +23,8 @@ def index(request):
 
 def password_reset_request(request):
     """
-    Handles password reset requests. If the user is authenticated, pre-fills the form with the user's email.
+    Handles password reset requests. If the user is authenticated,
+    pre-fills the form with the user's email.
     Processes the form submission if method is POST and the form is valid.
     """
     if request.user.is_authenticated:
@@ -57,7 +60,7 @@ def profile(request):
         "carts": carts,
     }
     return render(request, template, context)
-    
+
 
 def contact(request):
     """
@@ -72,9 +75,11 @@ def contact(request):
                 email=form.cleaned_data['email'],
                 message=form.cleaned_data['message'],
             )
-            contact_message.save()  
+            contact_message.save()
 
-            messages.success(request, "Thank you for contacting us! We will get back to you soon.")
+            messages.success(
+                request, "Thank you for contacting us!"
+                "We will get back to you soon.")
             return redirect('index')
         else:
             return render(request, 'contact/contact.html', {'form': form})
@@ -83,7 +88,13 @@ def contact(request):
 
     return render(request, 'contact/contact.html', {'form': form})
 
+
 def my_signup_view(request):
+    """
+    Handle user signup, create a user, log events,
+    and redirect to index on success. Render signup
+    form with errors if invalid.
+    """
     if request.method == 'POST':
         form = PizzaSignUpForm(request.POST)
         if form.is_valid():
@@ -92,8 +103,10 @@ def my_signup_view(request):
             logger.info(f"New user signed up: {user.username}")
 
             if form.cleaned_data.get('newsletter_subscribe'):
-                messages.info(request, 'Thank you for signing' 
-                'up for the newsletter!')
+                messages.info(
+                    request, 'Thank you for signing'
+                    ' up for the newsletter!'
+                )
 
             return redirect('index')
         else:
@@ -104,4 +117,3 @@ def my_signup_view(request):
     else:
         form = PizzaSignUpForm()
     return render(request, 'account/signup.html', {'form': form})
-    

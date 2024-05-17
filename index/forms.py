@@ -3,10 +3,11 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
+
+from .models import PizzaUserProfile, NewsletterSubscription
 from .validators import (
     validate_customer_phone_number, validate_customer_street_address,
     validate_customer_city, validate_customer_zip_code)
-from .models import PizzaUserProfile, NewsletterSubscription
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field
 from crispy_forms.layout import Layout, Submit, Row, Column
@@ -84,12 +85,18 @@ class PizzaSignUpForm(UserCreationForm):
 
 
     def __init__(self, *args, **kwargs):
+        """
+        Initialize the form and configure form helper settings.
+        """
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.form_show_labels = False  
 
-
     def save(self, commit=True):
+        """
+        Save the user instance and create associated
+        profile and newsletter subscription.
+        """
         user = super().save(commit=False)
     
         if not user.username:
@@ -131,13 +138,17 @@ class PizzaSignInForm(forms.Form):
     )
 
     def __init__(self, *args, **kwargs):
+        """
+        Initialize the PizzaSignInForm with
+        custom form helper settings and layout.
+        """
         super(PizzaSignInForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.form_show_labels = False  # Globally hide labels to clean up form
+        self.helper.form_show_labels = False
         self.helper.layout = Layout(
             Field('email', placeholder=_('Email'), css_class='mb-2'),
             Field('password', placeholder=_('Password'), css_class='mb-2'),
-            'remember_me',  # We specify the field directly to include its label
+            'remember_me',
         )
 
 
@@ -162,6 +173,9 @@ class PasswordResetForm(forms.Form):
 
 
 class ContactForm(forms.Form):
+    """
+    A form for users to submit contact information and a message.
+    """
     name = forms.CharField(
         max_length=30, required=True,
         widget=forms.TextInput(attrs={'placeholder': _('Enter your name')}),
@@ -169,8 +183,10 @@ class ContactForm(forms.Form):
         help_text=''
     )
     phone_number = forms.CharField(
-        max_length=15, required=True, validators=[validate_customer_phone_number],
-        widget=forms.TextInput(attrs={'placeholder': _('Enter your phone number')}),
+        max_length=15, required=True, validators=[
+            validate_customer_phone_number],
+        widget=forms.TextInput(attrs={
+            'placeholder': _('Enter your phone number')}),
         label='',
         help_text=''
     )
@@ -181,12 +197,16 @@ class ContactForm(forms.Form):
         help_text=''
     )
     message = forms.CharField(
-        max_length=350, required=False,
-        widget=forms.Textarea(attrs={'placeholder': _('Your message here... Up to 350 characters')}),
+        max_length=350, required=True,
+        widget=forms.Textarea(attrs={
+            'placeholder': _('Your message here... Up to 350 characters')}),
         label='',
     )
 
     def __init__(self, *args, **kwargs):
+        """
+        Initialize the ContactForm with custom form helper settings.
+        """
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_method = 'post'

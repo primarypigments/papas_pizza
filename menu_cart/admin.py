@@ -11,8 +11,6 @@ class MenuItemAdmin(admin.ModelAdmin):
     list_display = ('name', 'price', 'description')
 
 
-# https://docs.djangoproject.com/en/5.0/ref/contrib/admin/#django.contrib.admin.InlineModelAdmin
-# https://docs.djangoproject.com/en/5.0/ref/contrib/admin/#django.contrib.admin.TabularInline
 class CartItemInline(admin.TabularInline):
     """
     Defines how CartItem instances are displayed within the Cart admin page.

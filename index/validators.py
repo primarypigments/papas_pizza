@@ -16,7 +16,8 @@ def validate_customer_phone_number(value):
 
 def validate_customer_street_address(value):
     """
-    Validates that the input is a valid street address using common address characters.
+    Validates that the input is a valid street address
+    using common address characters.
     Limits address length to between 10 and 100 characters.
     """
     if not re.match(r'^[\w\s.,\'-]{10,100}$', value):
@@ -28,12 +29,15 @@ def validate_customer_street_address(value):
 def validate_customer_city(value):
     """
     Validates that the input is a valid city name.
-    Allows letters, spaces, hyphens, and periods, with a length of 2 to 50 characters.
+    Allows letters, spaces, hyphens, and periods,
+    with a length of 2 to 50 characters.
     """
     if not re.match(r'^[\w\s.-]{2,50}$', value):
         raise ValidationError(
-        "Enter a valid city name. Only letters, spaces,"
-        "hyphens, and periods are allowed.")
+            "Enter a valid city name. Only letters, spaces, "
+            "hyphens, and periods are allowed."
+        )
+
 
 def validate_customer_zip_code(value):
     """
@@ -41,6 +45,8 @@ def validate_customer_zip_code(value):
     Supports US formats '12345' or '12345-6789' and UK formats like 'A1B 2CD'.
     """
     if not re.match(r'^\d{5}(-\d{4})?$', value) and not re.match(
-        r'^[A-Z0-9 ]{6,7}$', value):
-        raise ValidationError("Enter a valid zip code. For US, use '12345' or" 
-        "'12345-6789'. For UK, use alphanumeric formats like 'A1B 2CD'.")
+            r'^[A-Z0-9 ]{6,7}$', value):
+        raise ValidationError(
+            "Enter a valid zip code. For US, use '12345' or '12345-6789'. "
+            "For UK, use alphanumeric formats like 'A1B 2CD'."
+        )

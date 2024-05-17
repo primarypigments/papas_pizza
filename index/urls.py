@@ -9,14 +9,13 @@ urlpatterns = [
         name='index'
     ),
 
-    path('accounts/password/reset/', views.password_reset_request, name='account_reset_password'),
+    path(
+        'accounts/password/reset/',
+        views.password_reset_request,
+        name='account_reset_password'
+    ),
     path('accounts/', include('allauth.urls')),
 
-    path(
-        "accounts/",
-        include(
-            'allauth.urls')
-    ),
 
   path(
     'signup/',
@@ -37,5 +36,3 @@ urlpatterns = [
     ),
 
 ]
-
-

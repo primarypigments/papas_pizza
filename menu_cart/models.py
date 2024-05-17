@@ -31,7 +31,6 @@ class MenuItem(models.Model):
         max_digits=6, decimal_places=2, validators=[validate_non_negative])
     image = CloudinaryField('image')
 
-
     def __str__(self):
         """
         Returns the name of the menu item
@@ -55,7 +54,7 @@ class Cart(models.Model):
         creating or updating the cart item.
         """
         cart_item, created = CartItem.objects.get_or_create(
-            item=item, cart=self, 
+            item=item, cart=self,
             defaults={'quantity': quantity}
         )
         if not created:

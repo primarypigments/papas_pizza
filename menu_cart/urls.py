@@ -30,17 +30,17 @@ urlpatterns = [
     ),
 
     path(
-        'checkout/success/<int:cart_id>/'
-        , views.checkout_success,
+        'checkout/success/<int:cart_id>/',
+        views.checkout_success,
         name='checkout_success'
     ),
 
-    
+
     path('error/', views.error_view, name='checkout_error'),
 
-path(
-        'checkout/success_pfofile/<int:cart_id>/'
-        , views.checkout_success_profile,
+    path(
+        'checkout/success_pfofile/<int:cart_id>/',
+        views.checkout_success_profile,
         name='checkout_success_profile'
     ),
 
@@ -61,11 +61,10 @@ path(
         views.cart_view,
         name='cart'
     ),
-    
+
     path(
         'edit_menu_item/<int:item_id>/',
-        views.edit_menu_item, name=
-        'edit_menu_item'
+        views.edit_menu_item, name='edit_menu_item'
     ),
 
     path(
@@ -73,6 +72,5 @@ path(
         views.delete_menu_item,
         name='delete_menu_item'
     ),
-
 
 ]

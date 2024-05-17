@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
-from .validators import validate_customer_phone_number, validate_customer_street_address, validate_customer_city, validate_customer_zip_code
+from .validators import (
+    validate_customer_phone_number, validate_customer_street_address,
+    validate_customer_city, validate_customer_zip_code)
 
 
 class PizzaUserProfile(models.Model):
@@ -23,15 +25,14 @@ class PizzaUserProfile(models.Model):
         max_length=10, validators=[
             validate_customer_zip_code], blank=True)
 
-
     def __str__(self):
         """
     Returns the username associated
     with the user profile.
         """
         return self.user.username
-        
-        
+
+
 class NewsletterSubscription(models.Model):
     """
     Represents a subscription to a newsletter.
@@ -45,7 +46,7 @@ class NewsletterSubscription(models.Model):
 
     def __str__(self):
         return self.email
-        
+
 
 class ContactMessage(models.Model):
     """
@@ -61,7 +62,6 @@ class ContactMessage(models.Model):
     email = models.EmailField()
     message = models.TextField(max_length=350)
     submitted_at = models.DateTimeField(auto_now_add=True)
-
 
     def __str__(self):
         """
