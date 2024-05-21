@@ -138,7 +138,7 @@ Register
   - ![screenshot](documentation/wireframe/register_ipad.png)
 
 Menu
-  - ![screenshot](documentation/wireframe/menu.png)
+  - ![screenshot](documentation/wireframe/menu_ipad.png)
 
 Profile
   - ![screenshot](documentation/wireframe/profile_ipad.png)
