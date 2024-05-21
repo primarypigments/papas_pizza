@@ -65,17 +65,15 @@ I've integrated Google Fonts to find a typeface that compliments the website's a
 - As a returning site user, I would like to review my past orders, so that I can order the same pizzas.
 - As a returning site user, I would like to view my past orders, so that I can easily see a previous order or use it as a starting point for a new customization.
 - As a returning site user, I would like to have access to reset my password, so that I can login to my account.
-- 
 - As a site administrator, I should be able to reset user passwords upon request, so that I can provide support for account access issues.
 
 ### Site Admin
 
 - As a site administrator, I should be able to add, update, or remove Pizzas and descriptions, so that I can keep the menu current with available offerings.
 - As a site administrator, I should be able to reset user passwords upon request, so that I can provide support for account access issues.
-- As a site administrator, I should be able to ____________, so that I can ____________.
-- As a site administrator, I should be able to ____________, so that I can ____________.
-- As a site administrator, I should be able to ____________, so that I can ____________.
-
+- As a site administrator, I should be able to add, update, or remove user accounts, so that I can manage customer access and information.
+- As a site administrator, I should be able to configure email notifications, so that I can keep customers informed about their orders and promotions.
+- As a site administrator, I should be able to handle customer feedback and reviews, so that I can address concerns and improve service quality.
 ## Wireframes
 
 To follow best practice, wireframes were developed for mobile, tablet, and desktop sizes.
@@ -135,13 +133,13 @@ Contact
   - ![screenshot](documentation/wireframe/contact_ipad.png)
 
 Login
-  - ![screenshot](documentation/wireframe/sign_out_ipad.png)
+  - ![screenshot](documentation/wireframe/sign_in_ipad.png)
 
 Register
   - ![screenshot](documentation/wireframe/register_ipad.png)
 
 Menu
-  - ![screenshot](documentation/wireframe/make_reservation_ipad.png)
+  - ![screenshot](documentation/wireframe/menu.png)
 
 Profile
   - ![screenshot](documentation/wireframe/profile_ipad.png)
@@ -234,7 +232,7 @@ Cart
 
     - To improve user experience when they navigate to a non-existent page on your website!
 
-![screenshot](documentation/features/feature03.png)
+![screenshot](documentation/features/404.png)
 
 - **Password Reset**
 
@@ -292,7 +290,6 @@ The system displays an estimated delivery time based on the order and location..
 - [![Stripe](https://img.shields.io/badge/Stripe-grey?logo=stripe&logoColor=008CDD)](https://stripe.com) used for online secure payments of ecommerce products/services.
 - [![Gmail API](https://img.shields.io/badge/Gmail_API-grey?logo=gmail&logoColor=EA4335)](https://mail.google.com) used for sending emails in my application.
 - [![Balsamiq](https://img.shields.io/badge/Balsamiq-grey?logo=barmenia&logoColor=CE0908)](https://balsamiq.com/wireframes) used for creating wireframes.
-- [![Leaflet](https://img.shields.io/badge/Leaflet-grey?logo=leaflet&logoColor=199900)](https://leafletjs.com) used as a free open-source interactive map on my site.
 - [![Font Awesome](https://img.shields.io/badge/Font_Awesome-grey?logo=fontawesome&logoColor=528DD7)](https://fontawesome.com) used for the icons.
 - [![ChatGPT](https://img.shields.io/badge/ChatGPT-grey?logo=chromatic&logoColor=75A99C)](https://chat.openai.com) used to help debug, troubleshoot, and explain things.
 
@@ -300,51 +297,6 @@ The system displays an estimated delivery time based on the order and location..
 
 Entity Relationship Diagrams (ERD) help to visualize database architecture before creating models.
 Understanding the relationships between different tables can save time later in the project.
-
-```python
-class Cart(models.Model):
-    """
-    Represents a shopping cart for a user,
-    uniquely linked via one-to-one relationship.
-    """
-    user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='cart')
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def add_item(self, item, quantity=1):
-        """
-        Adds a specified quantity of an item to the cart,
-        creating or updating the cart item.
-        """
-        cart_item, created = CartItem.objects.get_or_create(
-            item=item, cart=self,
-            defaults={'quantity': quantity}
-        )
-        if not created:
-            cart_item.quantity += quantity
-        cart_item.save()
-
-    def remove_item(self, cart_item):
-        """
-        Removes a specified
-        cart item from the cart.
-        """
-        cart_item.delete()
-
-    def total_price(self):
-        """
-        Calculates the total
-        price of all items in the cart.
-        """
-        return sum(item.subtotal for item in self.items.all())
-
-    def __str__(self):
-        """
-        Returns a descriptive string indicating
-        the owner and number of items in the cart.
-        """
-        return f"Cart for {self.user.username} with {self.items.count()} items"
-```
 
 I have used `pygraphviz` and `django-extensions` to auto-generate an ERD.
 
@@ -368,7 +320,6 @@ INSTALLED_APPS = [
 
 ![erd](documentation/erd.png)
 source: [medium.com](https://medium.com/@yathomasi1/1-using-django-extensions-to-visualize-the-database-diagram-in-django-application-c5fa7e710e16)
-
 
 ## Agile Development Process
 
@@ -433,7 +384,7 @@ This included a series of the following keyword types
   - Papa's Pizza
   - Best Pizza
   - Pizza Restaurant
-- Long-tail keywords #####add to keyword to base template meta
+- Long-tail keywords
   - Order Pizza Online
   - Best Pizza Delivery Near Me
   - Papa's Pizza Menu
@@ -495,22 +446,21 @@ provided by Code Institute.
 I have incorporate a newsletter sign-up form on my application, to allow users to supply their
 email address if they are interested in learning more. 
 
+```python
+class NewsletterSubscription(models.Model):
+  """
+  Represents a subscription to a newsletter.
 
-    ```python
-    class NewsletterSubscription(models.Model):
-    """
-    Represents a subscription to a newsletter.
+  This model stores the email addresses of
+  subscribers and the date they subscribed.
+  Each subscriber's email must be unique to avoid duplicate entries.
+  """
+  email = models.EmailField(unique=True)
+  date_subscribed = models.DateTimeField(auto_now_add=True)
 
-    This model stores the email addresses of
-    subscribers and the date they subscribed.
-    Each subscriber's email must be unique to avoid duplicate entries.
-    """
-    email = models.EmailField(unique=True)
-    date_subscribed = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.email
-    ```
+  def __str__(self):
+      return self.email
+```
 ## Testing
 
 > [!NOTE]  
@@ -557,16 +507,6 @@ Once you've created a Stripe account and logged-in, follow these series of steps
 - You'll have two keys here:
 	- `STRIPE_PUBLIC_KEY` = Publishable Key (starts with **pk**)
 	- `STRIPE_SECRET_KEY` = Secret Key (starts with **sk**)
-
-As a backup, in case users prematurely close the purchase-order page during payment, we can include Stripe Webhooks.
-
-- From your Stripe dashboard, click **Developers**, and select **Webhooks**.
-- From there, click **Add Endpoint**.
-	- `https://pappapizza-88bb126828cc.herokuapp.com/checkout/wh/`
-- Click **receive all events**.
-- Click **Add Endpoint** to complete the process.
-- You'll have a new key here:
-	- `STRIPE_WH_SECRET` = Signing Secret (Wehbook) Key (starts with **wh**)
 
 ### Gmail API
 
@@ -658,6 +598,16 @@ Or:
 
 The project should now be connected and deployed to Heroku!
 
+### PaperTrail API Token
+- Open Heroku Dashboard: Go to the Heroku website, log in, and navigate to the dashboard of the app where you want to add Papertrail.
+
+- Access the Add-ons Section: In the app's dashboard, click on the "Resources" tab to view the add-ons section.
+
+- Find and Add Papertrail: In the "Add-ons" search bar, type "Papertrail" and select it from the list. Choose the appropriate plan based on your needs and click "Provision."
+
+- Configure Papertrail: Once added, go to the "Settings" tab of your app, find the Papertrail add-on, and click on it to configure logging preferences and view your logs.
+
+
 ### Local Deployment
 
 This project can be cloned or forked in order to make a local copy on your own system.
@@ -677,9 +627,9 @@ Sample `env.py` file:
 ```python
 import os
 
-os.environ.setdefault("DEVELOPMENT", "user's own value")
-os.environ.setdefault("DEBUG", "user's own value")
 os.environ.setdefault("DATABASE_URL", "user's own value")
+os.environ.setdefault("DATABASE_URL", "user's own value")
+os.environ.setdefault("HOST", "user's own value")
 os.environ.setdefault("EMAIL_HOST_PASS", "user's own value")
 os.environ.setdefault("EMAIL_HOST_USER", "user's own value")
 os.environ.setdefault("SECRET_KEY", "user's own value")
@@ -690,8 +640,10 @@ os.environ.setdefault("CLOUNDINARY_NAMEL", "user's own value")
 os.environ.setdefault("CLOUNDINARY_API_KEY", "user's own value")
 os.environ.setdefault("CLOUNDINARY_API_SECRET", "user's own value")
 
+
 # local environment only (do not include these in production/deployment!)
-os.environ.setdefault("DEBUG", "True")
+os.environ.setdefault("DEVELOPMENT", "user's own value")
+os.environ.setdefault("DEBUG", "user's own value")
 ```
 
 Once the project is cloned or forked, in order to run it locally, you'll need to follow these steps:
@@ -758,8 +710,9 @@ The delployed Heroku application behaves slower.
 | [W3Schools](https://www.w3schools.com/) | entire site | used for input validation methods. |
 | [Digital Ocean](https://www.digitalocean.com/community/tutorials/python-valueerror-exception-handling-examples) | entire site | used for vauleerror thorughout my code. |
 | [strftime](https://strftime.org) | CRUD functionality | helpful tool to format date/time from string |
+| [mdbootstrap](https://mdbootstrap.com/docs/standard/extended/shopping-carts/) | boostrap shopping car #2 | used as cart template |
 | [WhiteNoise](http://whitenoise.evans.io) | entire site | hosting static files on Heroku temporarily |
-| [ChatGPT](https://chat.openai.com/) | entire site | used for list contents (Villages within 10 km from Kakentrorf) understanding error messages, help with learning the correct vocabulary in commit messages. |
+| [ChatGPT](https://chat.openai.com/) | entire site | used for top 10 pizzas in America. |
 | [Django](https://docs.djangoproject.com/en/4.2/topics/db/models/) | models.py | core concept of defining models. |
 | [Django](https://docs.djangoproject.com/en/4.2/ref/models/fields/#field-options) | models.py |  Understanding how to use field options such as null, blank, and default. |
 | [Django](https://docs.djangoproject.com/en/4.2/ref/validators/) | validators.py | create and use custom validators for model fields to enforce specific rules or formats. |
@@ -780,17 +733,7 @@ The delployed Heroku application behaves slower.
 
 ### Acknowledgements
 
-🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑-START OF NOTES (to be deleted)
-
-Use this space to provide attribution to any supports that helped, encouraged, or supported you throughout the development stages of this project.
-A few examples have been provided below to give you some ideas.
-
-⚠️⚠️ EXAMPLES ONLY - REPLACE WITH YOUR OWN ⚠️⚠️
-
-🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑-END OF NOTES (to be deleted)
-
-- I would like to thank my Code Institute mentor, [Tim Nelson](https://github.com/TravelTimN) for his support throughout the development of this project.
-- I would like to thank the [Code Institute](https://codeinstitute.net) tutor team for their assistance with troubleshooting and debugging some project issues.
-- I would like to thank the [Code Institute Slack community](https://code-institute-room.slack.com) for the moral support; it kept me going during periods of self doubt and imposter syndrome.
-- I would like to thank my partner (John/Jane), for believing in me, and allowing me to make this transition into software development.
-- I would like to thank my employer, for supporting me in my career development change towards becoming a software developer.
+- I am deeply grateful to my Code Institute mentor, Tim Nelson, for his invaluable support and guidance throughout the development of this project.
+- My sincere thanks go to the Code Institute tutor team for their help with troubleshooting and debugging, which was crucial in overcoming several project challenges.
+- I appreciate the Code Institute Slack community for their moral support, which sustained me through periods of self-doubt and imposter syndrome.
+- I would like to express my heartfelt thanks to my partner Coleen for believing in me and supporting my transition into software development.
