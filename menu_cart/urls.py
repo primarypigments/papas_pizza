@@ -37,7 +37,7 @@ urlpatterns = [
     path('error/', views.error_view, name='checkout_error'),
 
     path(
-        'checkout/success_pfofile/<int:cart_id>/',
+        'checkout/success_profile/<int:cart_id>/',
         views.checkout_success_profile,
         name='checkout_success_profile'
     ),
