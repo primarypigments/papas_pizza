@@ -228,11 +228,11 @@ Cart
 
 ![screenshot](documentation/features/404.png)
 
-- **404**
+- **500**
 
-    - To improve user experience when they navigate to a non-existent page on your website!
+    - To improve user experience when they navigate to a Server Error page on your website!
 
-![screenshot](documentation/features/404.png)
+![screenshot](documentation/features/500.png)
 
 - **Password Reset**
 
