@@ -104,8 +104,8 @@ def my_signup_view(request):
 
             if form.cleaned_data.get('newsletter_subscribe'):
                 messages.info(
-                    request, 'Thank you for signing'
-                    ' up for the newsletter!'
+                    request, 'Thank you for registering to our newsletter.'
+
                 )
 
             return redirect('index')
