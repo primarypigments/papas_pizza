@@ -712,17 +712,17 @@ The delployed Heroku application behaves slower.
 | [mdbootstrap](https://mdbootstrap.com/docs/standard/extended/shopping-carts/) | boostrap shopping car #2 | used as cart template |
 | [WhiteNoise](http://whitenoise.evans.io) | entire site | hosting static files on Heroku temporarily |
 | [ChatGPT](https://chat.openai.com/) | entire site | used for top 10 pizzas in America. |
-| [Django](https://docs.djangoproject.com/en/4.2/topics/db/models/) | models.py | core concept of defining models. |
-| [Django](https://docs.djangoproject.com/en/4.2/ref/models/fields/#field-options) | models.py |  Understanding how to use field options such as null, blank, and default. |
-| [Django](https://docs.djangoproject.com/en/4.2/ref/validators/) | validators.py | create and use custom validators for model fields to enforce specific rules or formats. |
-| [Django](https://docs.djangoproject.com/en/4.2/ref/models/fields/#datetimefield) | validators.py | used to automatically set the field to the current date/time. |
-| [Django](https://docs.djangoproject.com/en/4.2/ref/models/options/#unique-together) | Models.py | used to utilized the unique_together. |
-| [Django](https://docs.djangoproject.com/en/4.2/ref/templates/builtins/) | templates | used for built-in template tags and filters. |
-| [Django](https://docs.djangoproject.com/en/4.2/ref/contrib/messages/) | forms.py | used for store messages in one request. |
-| [Django](https://docs.djangoproject.com/en/4.2/topics/logging/) | views.py | used to perform system logging. |
-| [Django](https://docs.djangoproject.com/en/4.2/topics/forms/modelforms/) | forms.py | used for creating forms from models automatically. |
+| [Django](https://docs.djangoproject.com/en/5.0/topics/db/models/) | models.py | core concept of defining models. |
+| [Django](https://docs.djangoproject.com/en/5.0/ref/models/fields/#field-options) | models.py |  Understanding how to use field options such as null, blank, and default. |
+| [Django](https://docs.djangoproject.com/en/5.0/ref/validators/) | validators.py | create and use custom validators for model fields to enforce specific rules or formats. |
+| [Django](https://docs.djangoproject.com/en/5.0/topics/db/transactions/) | validators.py | used to automatically set the field to the current date/time. |
+| [Python](https://docs.python.org/3/library/decimal.html) | Views.py | support for fast correctly rounded decimal floating point arithmetic. |
+| [Django](https://docs.djangoproject.com/en/5.0/ref/templates/builtins/) | templates | used for built-in template tags and filters. |
+| [Django](https://docs.djangoproject.com/en/5.0/ref/contrib/messages/) | forms.py | used for store messages in one request. |
+| [Django](https://docs.djangoproject.com/en/5.0/topics/logging/) | views.py | used to perform system logging. |
+| [Django](https://docs.djangoproject.com/en/5.0/topics/forms/modelforms/) | forms.py | used for creating forms from models automatically. |
 | [Django](https://docs.djangoproject.com/en/5.0/ref/contrib/admin/#django.contrib.admin.InlineModelAdmin) | admin.py | allow the inclusion and editing of related models directly within the admin interface. |
-| [Django](https://docs.djangoproject.com/en/5.0/ref/contrib/admin/#django.contrib.admin.TabularInline) | admin.py | display related models in a tabular format within the parent model's admin interface. |
+| [Stripe](https://docs.stripe.com/js/custom_checkout/session) | Views.py | Used to build a stripe checkout session. |
 
 ### Media
 
