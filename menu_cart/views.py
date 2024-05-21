@@ -287,6 +287,7 @@ def add_to_cart(request, item_id):
             }
 
         # Update session
+        messages.success(request, "Cart successfully updated!")
         request.session['cart'] = cart
         request.session.modified = True
 
