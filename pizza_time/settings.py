@@ -139,7 +139,7 @@ DISABLE_COLLECTSTATIC = True
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME':'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+          'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
@@ -212,14 +212,14 @@ else:
 
 # cloudinary
 CLOUDINARY_STORAGE = {
-    "CLOUD_NAME": os.environ.get("CLOUNDINARY_NAME"), 
+    "CLOUD_NAME": os.environ.get("CLOUNDINARY_NAME"),
     "API_KEY": os.environ.get("CLOUNDINARY_API_KEY"),
     "API_SECRET": os.environ.get("CLOUNDINARY_API_SECRET"),
 }
 STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
-#Stripe
+# Stripe
 
 STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
 STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY')

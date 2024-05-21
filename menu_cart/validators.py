@@ -9,6 +9,7 @@ def validate_non_negative(value):
     """
     if value < 0:
         raise ValidationError(f'{value} is not a non-negative number')
+        
 
 def validate_positive(value):
     """

@@ -13,7 +13,7 @@ from django.conf import settings
 from .forms import MenuItemForm
 from .models import MenuItem, CartItem, Cart, Topping
 from .forms import CartAddItemForm, UpdateCartItemForm
-from django.core.mail import send_mail 
+from django.core.mail import send_mail
 from decimal import Decimal
 import stripe
 
@@ -51,8 +51,9 @@ def cart_view(request):
     for key, item_details in cart_items.items():
         item_id, *toppings_key = key.split('-')
         item_details['id'] = item_id
-        item_details['toppings_key'] = '-'.join(toppings_key) if toppings_key else ''
-        
+        item_details['toppings_key'] = '-'.join(
+            toppings_key) if toppings_key else ''
+
         # Recalculate subtotal to ensure it's always up-to-date
         base_price = Decimal(item_details['price'])
         toppings_total = sum(
@@ -61,15 +62,16 @@ def cart_view(request):
         item_details[
             'subtotal'] = str((base_price + toppings_total) * item_details[
                 'quantity'])
-        
+
         cart_total += Decimal(item_details['subtotal'])
         display_items.append(item_details)
-    
+
     context = {
         'cart_items': display_items,
         'cart_total': cart_total,
     }
     return render(request, 'cart/cart.html', context)
+
 
 @login_required
 def update_item(request, item_id):
@@ -109,6 +111,7 @@ def update_item(request, item_id):
 
     return redirect('cart')
 
+
 @login_required
 @require_POST
 def remove_item(request, item_id, toppings_key=None):
@@ -128,7 +131,8 @@ def remove_item(request, item_id, toppings_key=None):
     else:
         logger.error("Item key '%s' not found in cart.", item_key)
         return HttpResponseServerError("Item key not found in cart.")
-        
+
+
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
@@ -152,7 +156,7 @@ def checkout(request):
                 item_id, toppings_key = (cart_key.split('-', 1) + [""])[:2]
                 item = MenuItem.objects.get(id=item_id)
                 quantity = int(item_details['quantity'])
-                price_per_item = Decimal(item_details['subtotal']) / quantity  
+                price_per_item = Decimal(item_details['subtotal']) / quantity
 
                 cart_item = CartItem.objects.create(
                     cart=new_cart,
@@ -186,6 +190,7 @@ def checkout(request):
                 request.session['cart'] = {}  # Clear the cart
                 return redirect(session.url)
 
+
 @login_required
 def checkout_success(request, cart_id):
     """
@@ -213,7 +218,7 @@ def checkout_success(request, cart_id):
 
         return render(
             request, 'checkout/success.html', {'cart': cart, 'total': total})
-        
+
     except Cart.DoesNotExist:
         return HttpResponseNotFound("Cart not found.")
     except Exception as e:
@@ -229,7 +234,7 @@ def checkout_success_profile(request, cart_id):
         return render(
             request, 'checkout/success_profile.html', {
                 'cart': cart, 'total': total})
-        
+
     except Cart.DoesNotExist:
         return HttpResponseNotFound("Cart not found.")
     except Exception as e:
@@ -237,7 +242,7 @@ def checkout_success_profile(request, cart_id):
 
 
 def error_view(request):
-    
+
     return render(request, 'checkout/error.html')
 
 
@@ -293,6 +298,7 @@ def add_to_cart(request, item_id):
 
     return redirect('menu')
 
+
 def menu_view(request):
     """
     View function for displaying the menu page and
@@ -332,6 +338,7 @@ def menu_view(request):
 
     logger.error("No valid conditions met. Redirecting to menu page.")
     return redirect('menu')
+
 
 @login_required
 def edit_menu_item(request, item_id):

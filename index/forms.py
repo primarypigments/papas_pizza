@@ -3,7 +3,6 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
-
 from .models import PizzaUserProfile, NewsletterSubscription
 from .validators import (
     validate_customer_phone_number, validate_customer_street_address,
@@ -68,8 +67,7 @@ class PizzaSignUpForm(UserCreationForm):
                 'Password confirmation')}),
         strip=False,
         help_text=_("Enter the same password as before, for verification."),
-    )    
-
+    )
 
     class Meta:
         """
@@ -83,14 +81,13 @@ class PizzaSignUpForm(UserCreationForm):
             'newsletter_subscribe'
         )
 
-
     def __init__(self, *args, **kwargs):
         """
         Initialize the form and configure form helper settings.
         """
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
-        self.helper.form_show_labels = False  
+        self.helper.form_show_labels = False
 
     def save(self, commit=True):
         """
@@ -98,9 +95,9 @@ class PizzaSignUpForm(UserCreationForm):
         profile and newsletter subscription.
         """
         user = super().save(commit=False)
-    
+
         if not user.username:
-            user.username = self.cleaned_data['email']  
+            user.username = self.cleaned_data['email']
 
         if commit:
             user.save()
@@ -114,7 +111,7 @@ class PizzaSignUpForm(UserCreationForm):
 
             if self.cleaned_data.get('newsletter_subscribe'):
                 NewsletterSubscription.objects.create(email=user.email)
-        
+
             logger.debug("User and profile saved successfully")
 
             return user
@@ -210,4 +207,3 @@ class ContactForm(forms.Form):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_method = 'post'
-

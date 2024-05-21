@@ -11,7 +11,6 @@ class CartAddItemForm(forms.ModelForm):
         model = CartItem
         fields = ['quantity']
 
-
     def clean_quantity(self):
         """
         Ensures that the quantity is a positive integer before saving the form.
@@ -31,7 +30,6 @@ class UpdateCartItemForm(forms.Form):
     """
     quantity = forms.IntegerField(min_value=1)
     action = forms.CharField(max_length=10)
-
 
     def clean_quantity(self):
         """

@@ -36,7 +36,6 @@ class CartAdmin(admin.ModelAdmin):
         'total_quantity', 'total_price', 'created_at')
     inlines = [CartItemInline]
 
-
     def display_added_items(self, obj):
         """
         Returns a comma-separated string of item
@@ -44,14 +43,12 @@ class CartAdmin(admin.ModelAdmin):
         """
         return ', '.join([item.item.name for item in obj.items.all()])
 
-
     def total_quantity(self, obj):
         """
         Returns the total quantity of all items
         in the cart for display in the admin list.
         """
         return sum(item.quantity for item in obj.items.all())
-
 
     def total_price(self, obj):
         """
