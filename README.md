@@ -65,7 +65,6 @@ I've integrated Google Fonts to find a typeface that compliments the website's a
 - As a returning site user, I would like to review my past orders, so that I can order the same pizzas.
 - As a returning site user, I would like to view my past orders, so that I can easily see a previous order or use it as a starting point for a new customization.
 - As a returning site user, I would like to have access to reset my password, so that I can login to my account.
-- As a site administrator, I should be able to reset user passwords upon request, so that I can provide support for account access issues.
 
 ### Site Admin
 

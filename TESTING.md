@@ -155,6 +155,19 @@ Defensive programming was manually tested with the below user acceptance testing
 | Contact  | | | | | |
 | |  Contact form is expected to be required when the user does not not fill it out | Tested the feature by leaving it blank | The feature behaved as expected, and it give the user a message a the input is required | Test concluded and passed | ![screenshot](documentation/features/contact_empty.png) |
 
+| User Story | Screenshot |
+| --- | --- |
+| As a new site user, I can view the detailed menu with toppings and prices on the website, so that I can choose my meals according to my preference and budget. | ![screenshot](documentation/features/menu_modal_order.png) |
+| As a new site user, I can create a user account on the website, so that I can save my preferences and order history for future orders. | ![screenshot](documentation/features/register.png) |
+| As a new site user, I want to be able to pay for my orders using Stripe, so that I can securely process my payment online. | ![screenshot](documentation//browsers/opera_checkout.png) |
+| As a returning site user, I would like to review my past orders, so that I can order the same pizzas. | ![screenshot](documentation/features/profile_order.png) |
+| As a returning site user, I would like to have access to reset my password, so that I can login to my account. | ![screenshot](documentation/features/forgot.png) |
+| As a returning site user, I would like to view my past orders, so that I can easily see a previous order or use it as a starting point for a new customization. | ![screenshot](documentation/features/profile_more.png) |
+| As a site administrator, I should be able to add, update, or remove Pizzas and descriptions, so that I can keep the menu current with available offerings. | ![screenshot](documentation/features/admin_edit.png) |
+| As a site administrator, I should be able to handle customer feedback and reviews, so that I can address concerns and improve service quality. | ![screenshot](documentation/features/admin_contact.png) |
+| As a site administrator, I should be able to add, update, or remove user accounts, so that I can manage customer access and information. | ![screenshot](documentation/features/admin_user.png) |
+| repeat for all remaining user stories | x |
+
 ## Bugs
 
 ### GitHub **Issues**
