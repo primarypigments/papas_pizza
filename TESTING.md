@@ -155,6 +155,8 @@ Defensive programming was manually tested with the below user acceptance testing
 | Contact  | | | | | |
 | |  Contact form is expected to be required when the user does not not fill it out | Tested the feature by leaving it blank | The feature behaved as expected, and it give the user a message a the input is required | Test concluded and passed | ![screenshot](documentation/features/contact_empty.png) |
 
+## User Story Testing
+
 | User Story | Screenshot |
 | --- | --- |
 | As a new site user, I can view the detailed menu with toppings and prices on the website, so that I can choose my meals according to my preference and budget. | ![screenshot](documentation/features/menu_modal_order.png) |
